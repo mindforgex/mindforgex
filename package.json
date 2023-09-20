@@ -11,13 +11,19 @@
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@solana/wallet-adapter-react": "^0.15.28",
+    "@solana/wallet-adapter-react-ui": "^0.9.27",
+    "@solana/wallet-adapter-wallets": "^0.19.11",
     "axios": "^1.4.0",
+    "classnames": "^2.3.2",
     "framer-motion": "^10.12.4",
     "next": "13.3.0",
+    "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-cookies": "^0.1.1",
     "react-dom": "18.2.0",
-    "react-icons": "^4.8.0"
+    "react-icons": "^4.8.0",
+    "react-paginate": "^8.2.0"
   },
   "devDependencies": {
     "eslint": "8.38.0",
