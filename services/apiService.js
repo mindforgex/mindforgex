@@ -10,7 +10,7 @@ const instance = axios.create(options)
 instance.interceptors.request.use(
   (config) => {
     const token = load(STORAGE.ACCESS_TOKEN) || ''
-    if (token) instance.defaults.headers.common.Authorization = `Bearer ${token}`
+    if (token) instance.defaults.headers.common.Authorization = `${token}`
     return config
   },
   (error) => Promise.reject(error),

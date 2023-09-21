@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BreadCrumbs from '../../../components/BreadCrumbs'
 import { ProfileInfo } from '../../../components/ListProfile'
-import { Image } from '@chakra-ui/react'
+import { Image, useToast } from '@chakra-ui/react'
 import Table from '../../../components/Table'
 import { useRouter } from 'next/router'
 import { MOCK_DETAIL_PROFILE_DATA, MOCK_NEW_DATA, MOCK_COLLECTION_DATA, MOCK_DATA_POST, MOCK_INVENTORY } from '../../../utils/data'
@@ -13,18 +13,36 @@ import Head from 'next/head'
 import Section from '../../../components/Section'
 import NFTProfile from '../../../components/NFTProfile'
 import ChannelPost from '../../../components/Channel/Post'
-import { getDetailChannel } from '../../../services'
+import { getDetailChannel, subscribeChannel } from '../../../services'
+import { getUserInfo, numberFormatter } from '../../../utils/helpers'
 
 function DetailChannel() {
   const router = useRouter();
+  const toast = useToast();
+  const userInfo = getUserInfo();
   const [detailChannel, setDetail] = useState(MOCK_DETAIL_PROFILE_DATA);
   const [isUserSubscribed, setSubscribed] = useState(false);
 
+  const userSubscribeChannel = async() => {
+    if (isUserSubscribed) return;
+    let message = "Subscribe channel success!"
+    let status = "success";
+    const res = await subscribeChannel(router.query.id);
+    !res && (message = "Subscribe channel failed!");
+    !res && (status = 'error');
+    toast({
+      title: message,
+      status: status,
+      duration: 9000,
+      isClosable: true,
+      position: 'top'
+    })
+  }
   useEffect(() => {
     const getDetail = async() => {
       const res = await getDetailChannel(router.query.id);
-      console.log(res)
       setDetail(res);
+      setSubscribed(!!res?.userSubcribe.find(user => user === userInfo?.user?.walletAddress));
     }
     getDetail && getDetail();
   }, [router.query?.id]);
@@ -58,16 +76,20 @@ function DetailChannel() {
                         />{" "}
                         <ul className="cyberpress-team-info">
                           <ProfileInfo metadata={{key: "Country", value: detailChannel?.country?.name}} />
-                          <ProfileInfo metadata={{key: "FOUNDED", value: detailChannel?.founder}} />
-                          <ProfileInfo metadata={{key: "Main Game", value: detailChannel?.mainGame}} />
-                          <ProfileInfo metadata={{key: "YOUTUBE FOLLOWERS", value: detailChannel?.follwerYoutube}} />
-                          <ProfileInfo metadata={{key: "TWITCH FOLLOWERS", value: detailChannel?.follwerTwitter}} />
+                          <ProfileInfo metadata={{key: "FOUNDED", value: detailChannel?.founded}} />
+                          <ProfileInfo metadata={{key: "Main Game", value: detailChannel?.mainGame }} />
+                          <ProfileInfo metadata={{key: "FOLLOWERS", value: numberFormatter(detailChannel?.follower)}} />
+                          <ProfileInfo metadata={{key: "YOUTUBE FOLLOWERS", value: numberFormatter(detailChannel?.followerYoutube)}} />
+                          <ProfileInfo metadata={{key: "TWITCH FOLLOWERS", value: numberFormatter(detailChannel?.followerTwitter)}} />
                         </ul>
                       </div>
 
-                      <button className={classNames('nk-btn nk-btn-color-main-1 subscribe-btn ', {
-                        "none": !isUserSubscribed,
-                      })}>Subscribe</button>
+                      <button
+                        className={classNames('nk-btn nk-btn-color-main-1 subscribe-btn')}
+                        onClick={userSubscribeChannel}
+                      >
+                        { isUserSubscribed ? "Subscribed" : "Subscribe" }
+                      </button>
                     </div>
 
                     <div className="mt-10" />

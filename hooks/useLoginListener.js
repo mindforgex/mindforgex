@@ -16,8 +16,8 @@ export default function useLoginListener() {
         return;
       }
 
-      const userInfo = getUserInfo()
-      (userInfo?.user?.walletAddress !== publicKey?.toString()) && clearUserInfo();
+      const userInfo = getUserInfo();
+      if (userInfo?.user?.walletAddress !== publicKey?.toString()) clearUserInfo();
       if (userInfo?.user?.walletAddress === publicKey?.toString()) return;
 
       const message = `${window.location.host
