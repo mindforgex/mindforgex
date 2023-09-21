@@ -1,14 +1,9 @@
 import { Link } from "@chakra-ui/react";
+import Section from "./Section";
 
 export default function SocialList() {
   return (
-    <div
-      id="ghostkit_reusable_widget-15"
-      className="nk-widget nk-widget-highlighted ghostkit-reusable-widget"
-    >
-      <h4 className="nk-widget-title">
-        <span>Social Link</span>
-      </h4>
+    <Section title="Social Link">
       <div className="lazyblock-squadforce-social-links-Z1TH6RW wp-block-lazyblock-squadforce-social-links">
         <ul className="nk-social-links-3 nk-social-links-cols-4">
           <li>
@@ -206,6 +201,7 @@ export default function SocialList() {
           </li> */}
         </ul>
       </div>
-    </div>
+    </Section>
+
   )
 }
