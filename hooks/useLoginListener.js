@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react'
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import bs58 from 'bs58';
 import { ed25519 } from '@noble/curves/ed25519';
 import { getUserInfo, saveUserInfo, clearUserInfo } from '../utils/helpers'
@@ -17,12 +17,8 @@ export default function useLoginListener() {
       }
 
       const userInfo = getUserInfo()
-      // user change wallet
-      if (userInfo?.user?.walletAddress === publicKey?.toString()) {
-        clearUserInfo()
-      } else {
-        return;
-      }
+      (userInfo?.user?.walletAddress !== publicKey?.toString()) && clearUserInfo();
+      if (userInfo?.user?.walletAddress === publicKey?.toString()) return;
 
       const message = `${window.location.host
         } wants you to sign in with your Solana account:\n${publicKey.toBase58()}\n\nPlease sign in.`;

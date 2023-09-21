@@ -749,7 +749,9 @@ ul.cyberpress-row {
 .cyberpress-team-thumbnail img {
   display: block;
   width: 100%;
-  height: auto
+  height: auto;
+  min-height: 265px;
+  object-fit: contain;
 }
 
 .cyberpress-game,
@@ -1075,6 +1077,8 @@ ul.cyberpress-row {
   .cyberpress-team.cyberpress-team.d-flex.justify-content-between .post-thumbnail img {
     aspect-ratio: 1 / 1;
     max-width: 175px;
+    min-width: 175px;
+    object-fit: contain;
   }
 }
 
