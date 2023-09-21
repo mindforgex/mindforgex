@@ -16188,12 +16188,6 @@ img.emoji {
   position: relative;
 }
 
-.subscribe-btn:hover,
-.subscribe-btn:focus {
-  transform: translateY(-6px);
-  outline: none;
-}
-
 .subscribe-btn.none::after {
   content: '';
   width: 30px;
@@ -16220,4 +16214,13 @@ img.emoji {
     height: 300px;
     opacity: 0;
   }
+}
+
+
+button:hover {
+  transform: translateY(-6px);
+}
+
+button:focus {
+  outline: none !important;
 }

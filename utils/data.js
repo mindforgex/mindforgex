@@ -289,3 +289,55 @@ export const MOCK_DATA_POST = [
     createdAt: moment().format("DD/MM/YYYY")
   }
 ]
+
+export const MOCK_INVENTORY = [
+  {
+    id: Math.random(),
+    image: "https://wp.nkdev.info/squadforce/wp-content/uploads/2019/09/product-121-300x384.jpg",
+    description: "He made his passenger captain of one, with four of the men; and himself, his ...",
+    name: "A hundred thousand",
+    releasedAt: new Date()
+  },
+  {
+    id: Math.random(),
+    image: "https://wp.nkdev.info/squadforce/wp-content/uploads/2019/09/product-121-300x384.jpg",
+    description: "He made his passenger captain of one, with four of the men; and himself, his ...",
+    name: "A hundred thousand",
+    releasedAt: new Date()
+  },
+  {
+    id: Math.random(),
+    image: "https://wp.nkdev.info/squadforce/wp-content/uploads/2019/09/product-121-300x384.jpg",
+    description: "He made his passenger captain of one, with four of the men; and himself, his ...",
+    name: "A hundred thousand",
+    releasedAt: new Date()
+  },
+  {
+    id: Math.random(),
+    image: "https://wp.nkdev.info/squadforce/wp-content/uploads/2019/09/product-121-300x384.jpg",
+    description: "He made his passenger captain of one, with four of the men; and himself, his ...",
+    name: "A hundred thousand",
+    releasedAt: new Date()
+  },
+  {
+    id: Math.random(),
+    image: "https://wp.nkdev.info/squadforce/wp-content/uploads/2019/09/product-121-300x384.jpg",
+    description: "He made his passenger captain of one, with four of the men; and himself, his ...",
+    name: "A hundred thousand",
+    releasedAt: new Date()
+  },
+  {
+    id: Math.random(),
+    image: "https://wp.nkdev.info/squadforce/wp-content/uploads/2019/09/product-121-300x384.jpg",
+    description: "He made his passenger captain of one, with four of the men; and himself, his ...",
+    name: "A hundred thousand",
+    releasedAt: new Date()
+  },
+  {
+    id: Math.random(),
+    image: "https://wp.nkdev.info/squadforce/wp-content/uploads/2019/09/product-121-300x384.jpg",
+    description: "He made his passenger captain of one, with four of the men; and himself, his ...",
+    name: "A hundred thousand",
+    releasedAt: new Date()
+  }
+]

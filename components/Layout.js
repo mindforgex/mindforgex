@@ -2,10 +2,13 @@ import React from "react";
 import NavBar from "./NavBar";
 import { Image } from "@chakra-ui/react";
 import Footer from "./Footer";
+import useLoginListener from "../hooks/useLoginListener";
 
 export default function Layout({ children }) {
+  useLoginListener()
+
   return (
-    <div className="content">
+    <div className="content woocommerce woocommerce-page">
       <NavBar />
 
       <div className="nk-main">

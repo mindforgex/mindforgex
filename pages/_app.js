@@ -5,6 +5,7 @@ import "../styles/gallery.css"
 import "../styles/fontawsome.css"
 import "../styles/wpblock.css"
 import "../styles/ghostkit.css"
+import "../styles/woocommerce.css"
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from '../theme/theme';
 import { useEffect, useState } from 'react';
