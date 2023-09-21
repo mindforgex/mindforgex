@@ -16176,10 +16176,48 @@ img.emoji {
   padding: 0 !important;
 }
 
-.wallet-adapter-button-trigger {
-  background-color: var(--cbp-btn-focus__background-color) !important;
+.wallet-adapter-button.wallet-adapter-button-trigger {
+  text-transform: uppercase;
+  border: 1px solid var(--chakra-colors-red-600);
+  background-color: transparent !important;
 }
 
-.wallet-adapter-button {
-  text-transform: uppercase;
+.subscribe-btn {
+  height: fit-content;
+  padding: 15px 20px;
+  position: relative;
+}
+
+.subscribe-btn:hover,
+.subscribe-btn:focus {
+  transform: translateY(-6px);
+  outline: none;
+}
+
+.subscribe-btn.none::after {
+  content: '';
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: 6px solid #eb3154;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
 }

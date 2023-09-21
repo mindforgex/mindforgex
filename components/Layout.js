@@ -15,13 +15,13 @@ export default function Layout({ children }) {
       {/* START: Page Background */}
       <Image
         className="nk-page-background-top"
-        src="./assets/bg-top.png"
+        src="/assets/bg-top.png"
         alt="Top Background Image"
         fill={true}
       />
       <Image
         className="nk-page-background-bottom"
-        src="./assets/bg-bottom.png"
+        src="/assets/bg-bottom.png"
         alt="Bottom Background Image"
         fill={true}
       />
