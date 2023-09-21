@@ -2,7 +2,7 @@ import axios from 'axios'
 import { STORAGE } from '../utils/constants'
 import { load } from 'react-cookies'
 
-const getUrlPrefix = () => ''
+const getUrlPrefix = () => '/v1'
 
 const options = { baseURL: process.env.NEXT_PUBLIC_API_URL }
 const instance = axios.create(options)

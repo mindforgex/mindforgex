@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BreadCrumbs from '../../../components/BreadCrumbs'
 import { ProfileInfo } from '../../../components/ListProfile'
 import { Image } from '@chakra-ui/react'
@@ -12,64 +12,33 @@ import Pagination from "../../../components/Pagination";
 import Head from 'next/head'
 import Section from '../../../components/Section'
 import NFTProfile from '../../../components/NFTProfile'
+import ChannelPost from '../../../components/Channel/Post'
+import { getDetailChannel } from '../../../services'
 
 function DetailChannel() {
-  const router = useRouter()
-  console.log(router.query.id);
-  const detailChannel = MOCK_DETAIL_PROFILE_DATA
-  const isUserSubscribed = false
+  const router = useRouter();
+  const [detailChannel, setDetail] = useState(MOCK_DETAIL_PROFILE_DATA);
+  const [isUserSubscribed, setSubscribed] = useState(false);
 
-  const pageCount = 100
-  const tableColumns = [
-    {
-      keySelector: "image",
-      className: "cyberpress-table-item-small",
-      label: " ",
-      render: (value) => {
-        console.log(value);
-        return (
-          <Image
-            width={150}
-            height={150}
-            src={value}
-            className="cyberpress-team-players-thumb"
-            alt=""
-          />
-        )
-      }
-    },
-    {
-      keySelector: "participants",
-      className: "",
-      label: "Participants"
-    },
-    {
-      keySelector: "nftMinted",
-      className: "",
-      label: "NFT Minted"
-    },
-    {
-      keySelector: "createdAt",
-      className: "",
-      label: "Created At"
+  useEffect(() => {
+    const getDetail = async() => {
+      const res = await getDetailChannel(router.query.id);
+      console.log(res)
+      setDetail(res);
     }
-  ]
+    getDetail && getDetail();
+  }, [router.query?.id]);
 
-  const onPageChange = () => {
-
-  }
 
   return (
     <>
       <Head>
-        <title>{detailChannel.name}</title>
+        <title>{detailChannel.channelName}</title>
       </Head>
       <div id="content" className="site-content">
         <div className="nk-gap-2" />
         <BreadCrumbs label={detailChannel.name} root={[{ label: "Channel", href: "/" }]} />
         <div className="nk-gap-2 mt-10" />
-
-
         <div className="content-area container cyberpress">
           <main id="main" className="site-main" role="main">
             <div className="row">
@@ -81,13 +50,19 @@ function DetailChannel() {
                     <div className="cyberpress-team d-flex justify-content-between">
                       <div className="post-thumbnail d-flex">
                         <Image
-                          width={175}
-                          height={175}
-                          src="/assets/team-queend-300x300.png"
+                          width={300}
+                          height={300}
+                          src={detailChannel.avatarUrl}
                           className="attachment-large size-large mr-3"
                           alt=""
                         />{" "}
-                        <ProfileInfo metadata={detailChannel.metadata} />
+                        <ul className="cyberpress-team-info">
+                          <ProfileInfo metadata={{key: "Country", value: detailChannel?.country?.name}} />
+                          <ProfileInfo metadata={{key: "FOUNDED", value: detailChannel?.founder}} />
+                          <ProfileInfo metadata={{key: "Main Game", value: detailChannel?.mainGame}} />
+                          <ProfileInfo metadata={{key: "YOUTUBE FOLLOWERS", value: detailChannel?.follwerYoutube}} />
+                          <ProfileInfo metadata={{key: "TWITCH FOLLOWERS", value: detailChannel?.follwerTwitter}} />
+                        </ul>
                       </div>
 
                       <button className={classNames('nk-btn nk-btn-color-main-1 subscribe-btn ', {
@@ -98,7 +73,7 @@ function DetailChannel() {
                     <div className="mt-10" />
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: detailChannel.description.replace(/\n/g, "<br />")
+                        __html: detailChannel?.description?.replace(/\n/g, "<br />")
                       }}
                     />
                     <div className="mt-10" />
@@ -115,12 +90,11 @@ function DetailChannel() {
                       />
                     </div>
                     <div className="mt-10" />
-
-                    <h3>Posts</h3>
-                    <Table pageCount={pageCount} onPageChange={onPageChange} tableColumns={tableColumns} data={MOCK_DATA_POST} />
-                    <div className="mt-10" />
-
-
+                    <ChannelPost
+                      posts={detailChannel.posts}
+                      avatar={detailChannel?.avatarUrl}
+                      channelName={detailChannel?.channelName}
+                    />
                   </div>
                 </article>
               </div>
@@ -128,9 +102,7 @@ function DetailChannel() {
               <div className="col-lg-4 nk-sidebar-sticky-parent">
                 <aside className="nk-sidebar nk-sidebar-sticky nk-sidebar-right">
                   <div>
-                    <SocialList />
-
-
+                    <SocialList detail={detailChannel} />
                     <Section title="Collection">
                       <NFTProfile data={MOCK_INVENTORY} className='columns-1' />
                     </Section>
