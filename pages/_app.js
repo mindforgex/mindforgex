@@ -21,7 +21,6 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme} resetCss={false} position="relative">
       <WalletContext>
-
         {isLoading ? (
           <LoadingComponent />
         ) : (

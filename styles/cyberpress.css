@@ -535,7 +535,7 @@ img.cyberpress-flag-img {
 }
 
 .cyberpress-table thead {
-  background-color: var(--cbp-table--thead__background-color)
+  background-color: var(--vp-color-brand);
 }
 
 .cyberpress-table td {
@@ -949,6 +949,7 @@ ul.cyberpress-row {
   height: auto
 }
 
+
 .cyberpress-player {
   --cbp-player__padding: 15px;
   --cbp-player__gap: 15px;
@@ -1049,7 +1050,32 @@ ul.cyberpress-row {
   --cbp-team--title__font-size: 16px;
   --cbp-team--info__margin-bottom: 0;
   padding: var(--cbp-team__padding);
-  background-color: var(--cbp-team__background-color)
+  background-color: var(--cbp-team__background-color);
+}
+
+.cyberpress-team.cyberpress-team.d-flex.justify-content-between,
+.cyberpress-team.cyberpress-team.d-flex.justify-content-between .post-thumbnail {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cyberpress-team.cyberpress-team.d-flex.justify-content-between .post-thumbnail img {
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+
+  .cyberpress-team.cyberpress-team.d-flex.justify-content-between,
+  .cyberpress-team.cyberpress-team.d-flex.justify-content-between .post-thumbnail {
+    flex-direction: row !important;
+  }
+
+
+  .cyberpress-team.cyberpress-team.d-flex.justify-content-between .post-thumbnail img {
+    aspect-ratio: 1 / 1;
+    max-width: 175px;
+  }
 }
 
 .cyberpress-team>*+* {

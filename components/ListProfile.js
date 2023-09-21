@@ -2,7 +2,24 @@ import { Image, Link } from "@chakra-ui/react";
 import PropTypes from 'prop-types'
 import ReactPaginate from "react-paginate";
 
-export default function ListProfile({ data, total = 100, onPageChange = () => { }, skip = 0, pageSize = 6, }) {
+export const ProfileInfo = ({ metadata }) => {
+  return (
+    <ul className="cyberpress-team-info">
+      {
+        metadata.map((_itemMetadata) => {
+          return (
+            <li key={_itemMetadata.key}>
+              <strong>{_itemMetadata.key}</strong>:{" "}
+              {_itemMetadata.value}
+            </li>
+          )
+        })
+      }
+    </ul>
+  )
+}
+
+export default function ListProfile({ data, total = 100, onPageChange = () => { }, pageSize = 6, }) {
   const pageCount = Math.ceil(total / pageSize)
 
   return (
@@ -13,7 +30,7 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
             return (
               <li
                 key={_item.name}
-                className="cyberpress-col cyberpress-team post-807 team type-team status-publish has-post-thumbnail hentry"
+                className="cyberpress-col cyberpress-team team type-team status-publish has-post-thumbnail hentry"
               >
                 <div className="cyberpress-team-thumbnail">
                   <Link href={_item.href}>
@@ -33,18 +50,7 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
                     {_item.name}
                   </Link>
                 </h2>
-                <ul className="cyberpress-team-info">
-                  {
-                    _item.metadata.map((_itemMetadata) => {
-                      return (
-                        <li key={_itemMetadata.key}>
-                          <strong>{_itemMetadata.key}</strong>:{" "}
-                          {_itemMetadata.value}
-                        </li>
-                      )
-                    })
-                  }
-                </ul>
+                <ProfileInfo metadata={_item.metadata} />
               </li>
             )
           })
@@ -70,7 +76,6 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
             onPageChange={({ selected }) => onPageChange(selected)}
             containerClassName="pagination"
             activeClassName="nk-pagination-current"
-            forcePage={skip}
           />
         </nav>
       </div>
@@ -90,6 +95,5 @@ ListProfile.propTypes = {
   })).isRequired,
   total: PropTypes.number,
   pageSize: PropTypes.number,
-  skip: PropTypes.number,
   onPageChange: PropTypes.func // pageNumber
 }

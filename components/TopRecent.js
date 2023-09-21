@@ -1,14 +1,14 @@
 import { Image, Link } from "@chakra-ui/react";
 import PropTypes from 'prop-types'
 
-export default function TopRecent({ data }) {
+export default function TopRecent({ data, total }) {
   return (
     <div
       id="ghostkit_reusable_widget-16"
       className="nk-widget nk-widget-highlighted ghostkit-reusable-widget"
     >
       <h4 className="nk-widget-title">
-        <span>Top Recent</span>
+        <span>Top {total} Recent</span>
       </h4>
       <div className="wp-block-visual-portfolio">
         <div
@@ -90,6 +90,7 @@ TopRecent.propTypes = {
     image: PropTypes.string,
     title: PropTypes.string,
     createdAt: PropTypes.string,
-    href: PropTypes.string
-  }))
+    href: PropTypes.string,
+  })).isRequired,
+  total: PropTypes.number.isRequired,
 }
