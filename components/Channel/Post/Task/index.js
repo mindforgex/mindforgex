@@ -6,9 +6,9 @@ import { getUserInfo } from '../../../../utils/helpers';
 const Task = ({ tasks, channelId }) => {
   const userInfo = getUserInfo();
   const isFinished = useMemo(() => {
-    return userInfo?.user?.walletAddress && tasks.find(t => 
+    return userInfo?.user?.walletAddress && (tasks.filter(t => 
       t.userAddress.find(address => address === userInfo?.user?.walletAddress)
-    );
+    ).length === tasks.length);
   }, [tasks]);
 
   const claimNft = () => {
