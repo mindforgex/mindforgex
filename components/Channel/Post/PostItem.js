@@ -25,7 +25,7 @@ const PostItem = ({ post, avatar, channelName, channelId }) => {
         />
       </Flex>
       <Flex alignItems={'center'} my={4}>
-        <Avatar src={avatar} title="avatar"/>
+        <Avatar src={avatar} title="avatar" />
         <Text as="span" ml={4}>By</Text>
         <Text as="span" ml={2} fontWeight={'bold'} color={'red'}>{channelName}</Text>
         <Text as="span" ml={2}>in {moment(post.createdAt).format('MMMM D, Y')}</Text>

@@ -36,19 +36,22 @@ export default function useLoginListener() {
         return
       }
 
-      post('/auth/signin', {
+      const userData = await post('/auth/signin', {
         "walletAddress": publicKey,
         "message": message,
         "signature": bs58.encode(signature)
-      }).then((data) => {
+      })
+      if (userData) {
         toast({
           title: 'Sign in successfully',
           status: 'success',
           isClosable: true,
           position: 'top'
         })
-        saveUserInfo(data)
-      })
+        saveUserInfo(userData)
+      } else {
+        throw new Error("Sign in failed")
+      }
     } catch (error) {
       toast({
         title: 'Sign Message failed',

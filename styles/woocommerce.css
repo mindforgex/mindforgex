@@ -42,7 +42,11 @@
 .woocommerce img,
 .woocommerce-page img {
   height: auto;
-  max-width: 100%
+  max-width: 100%;
+}
+
+.chakra-avatar .chakra-avatar__img {
+  aspect-ratio: 1 / 1;
 }
 
 .woocommerce #content div.product div.images,

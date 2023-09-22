@@ -5,16 +5,26 @@ import TopRecent from '../components/TopRecent';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { getChannels } from '../services';
+import { getPosts } from '../services/postService';
 
 export default function Channel() {
   const [channels, setChannels] = useState([]);
   const [pageParams] = useState({ pageSize: 6, pageIndex: 1 });
+  const [postParams] = useState({ pageSize: 5, pageIndex: 1 });
+  const [posts, setPosts] = useState([])
+
   useEffect(() => {
-    const getAppChannels = async() => {
+    const getAppChannels = async () => {
       const { items } = await getChannels(pageParams);
       setChannels(items);
     }
+
+    const getTopPost = async () => {
+      const data = await getPosts(postParams);
+      setPosts(data.slice(0, 5))
+    }
     getAppChannels && getAppChannels();
+    getTopPost && getTopPost();
   }, []);
 
   return (
@@ -42,7 +52,7 @@ export default function Channel() {
               <div className="col-lg-4 nk-sidebar-sticky-parent">
                 <aside className="nk-sidebar nk-sidebar-sticky nk-sidebar-right">
                   <div>
-                    <TopRecent total={5} data={MOCK_NEW_DATA} />
+                    <TopRecent total={postParams.pageSize} data={posts} />
                   </div>
                 </aside>
               </div>

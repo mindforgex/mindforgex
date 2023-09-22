@@ -1,4 +1,5 @@
 import { Image, Link } from "@chakra-ui/react";
+import moment from "moment";
 import PropTypes from 'prop-types'
 
 export default function TopRecent({ data, total }) {
@@ -19,7 +20,7 @@ export default function TopRecent({ data, total }) {
               className="vp-portfolio__items vp-portfolio__items-style-squadforce-list"
             >
               {
-                data.map(_item => {
+                Array.isArray(data) && data.map(_item => {
                   return (
                     <article
                       key={_item.id}
@@ -30,14 +31,14 @@ export default function TopRecent({ data, total }) {
                           <div className="row vertical-gap">
                             <div className="col-lg-4">
                               <Link
-                                href={_item.href}
+                                href={`/channel/${_item.channelId}`}
                                 className="nk-post-img nk-widget-img"
                               >
                                 <Image
                                   decoding="async"
                                   width={970}
                                   height={545}
-                                  src={_item.image}
+                                  src={_item.images?.[0]}
                                   className="lazyautosizes ls-is-cached vp-lazyloaded"
                                   alt=""
                                 />
@@ -45,7 +46,7 @@ export default function TopRecent({ data, total }) {
                             </div>
                             <div className="col-lg-8">
                               <h2 className="nk-post-title h5">
-                                <Link href={_item.href}>
+                                <Link href={`/channel/${_item.channelId}`}>
                                   {_item.title}
                                 </Link>
                               </h2>
@@ -66,7 +67,7 @@ export default function TopRecent({ data, total }) {
                                     d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z"
                                   ></path>
                                 </svg>
-                                &nbsp;{_item.createdAt}
+                                &nbsp;{moment(_item.createdAt).format("DD MMM, YYYY")}
                               </div>
                             </div>
                           </div>

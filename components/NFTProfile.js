@@ -13,14 +13,14 @@ export default function NFTProfile({ data, className = '' }) {
             <li key={_item.id} className="product type-product status-publish first instock product_cat-pc has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
               <div className="nk-product-cat-2">
                 <Link
-                  href={window.location.href}
-                  onClick={(event) => { event.preventDefault() }}
+                  href={_item.external_url}
+                  target="_blank"
                   className="woocommerce-LoopProduct-link woocommerce-loop-product__link nk-product-image"
                 >
                   <Image
                     width={300}
                     height={384}
-                    src="https://wp.nkdev.info/squadforce/wp-content/uploads/2019/09/product-121-300x384.jpg"
+                    src={_item.image}
                     className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
                     alt=""
                   />
@@ -28,8 +28,8 @@ export default function NFTProfile({ data, className = '' }) {
                 <div className="nk-product-cont">
                   <h3 className="woocommerce-loop-product__title nk-product-title">
                     <Link
-                      href={window.location.href}
-                      onClick={(event) => { event.preventDefault() }}
+                      href={_item.external_url}
+                      target="_blank"
                     >
                       {_item.name}
                     </Link>
@@ -37,8 +37,9 @@ export default function NFTProfile({ data, className = '' }) {
                   <p>
                     {_item.description}
                   </p>
-                  <span className="h5">
-                    Released at: {moment(data.releasedAt).format("DD MMM, YYYY")}
+                  <span>Symbol: {_item.symbol}</span><br />
+                  <span className="">
+                    Released at: {moment(data.createdAt).format("DD MMM, YYYY")}
                   </span>
                 </div>
               </div>
