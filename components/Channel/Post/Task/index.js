@@ -4,7 +4,7 @@ import TaskItem from './TaskItem';
 import { getUserInfo } from '../../../../utils/helpers';
 import { claimNFT } from '../../../../services/postService';
 
-const Task = ({ tasks, channelId, postId }) => {
+const Task = ({ tasks, channelId, post }) => {
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false)
   const userInfo = getUserInfo();
@@ -12,11 +12,14 @@ const Task = ({ tasks, channelId, postId }) => {
     return userInfo?.user?.walletAddress && tasks.find(t =>
       t.userAddress.find(address => address === userInfo?.user?.walletAddress)
     );
-  }, [tasks]);
+  }, [tasks, userInfo?.user?.walletAddress]);
+  const isClaimed = useMemo(() => (Array.isArray(post?.userAddress) && post?.userAddress?.includes(userInfo?.user?.walletAddress)), [post?.userAddress, userInfo?.user?.walletAddress])
+  const isClaimable = isFinished && !isClaimed
+
 
   const claimNft = async () => {
     setIsLoading(true)
-    const receipt = await claimNFT(postId)
+    const receipt = await claimNFT(post._id)
     const msg = {
       title: "",
       status: "",
@@ -47,14 +50,18 @@ const Task = ({ tasks, channelId, postId }) => {
       <Button
         size='lg'
         style={{
-          cursor: isFinished ? "pointer" : "not-allowed"
+          cursor: isClaimable ? "pointer" : "not-allowed"
         }}
-        colorScheme={isFinished ? "green" : "gray"}
+        colorScheme={isClaimable ? "green" : "gray"}
         onClick={() => {
-          isFinished && claimNft()
+          if (isClaimable) {
+            claimNft()
+          }
         }}
         isLoading={isLoading}
-      >Claim NFT</Button>
+      >
+        {isClaimed ? "Claimed" : "Claim NFT"}
+      </Button>
     </Flex>
   )
 }
