@@ -2,25 +2,25 @@ import Head from "next/head";
 import BreadCrumbs from "../../components/BreadCrumbs";
 // import Pagination from '../../components/Pagination';
 import NFTProfile from "../../components/NFTProfile";
-import { MOCK_INVENTORY } from "../../utils/data";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getInventory } from '../../services/inventoryService'
-import { useWallet } from "@solana/wallet-adapter-react";
 import { getUserInfo } from "../../utils/helpers";
 
 export default function MyInventory() {
   const [inventory, setInventory] = useState([])
   const [params] = useState({ pageIndex: 1, pageSize: 6 })
 
-  useEffect(() => {
-    async function getData() {
-      const userInfo = getUserInfo()
-      if (!userInfo) return
+  const getData = useCallback(async () => {
+    const userInfo = getUserInfo()
+    if (userInfo?.user?.walletAddress) {
       const { items } = await getInventory(userInfo?.user?.walletAddress, params)
       setInventory(items)
     }
-    getData()
   }, [params])
+
+  useEffect(() => {
+    getData()
+  }, [getData])
 
   return (
     <>
