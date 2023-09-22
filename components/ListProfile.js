@@ -16,7 +16,7 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
     <>
       <ul className="cyberpress-row cyberpress-row-3 cyberpress-teams-archive">
         {
-          data.map(_item => {
+          data?.map(_item => {
             return (
               <li
                 key={_item.channelName}

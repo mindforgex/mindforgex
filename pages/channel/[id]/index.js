@@ -25,14 +25,11 @@ function DetailChannel() {
 
   const userSubscribeChannel = async() => {
     if (isUserSubscribed) return;
-    let message = "Subscribe channel success!"
-    let status = "success";
     const res = await subscribeChannel(router.query.id);
-    !res && (message = "Subscribe channel failed!");
-    !res && (status = 'error');
+    res && setSubscribed(true);
     toast({
-      title: message,
-      status: status,
+      title: res ? 'Subscribe channel success!' : 'Subscribe channel failed!',
+      status: res ? 'success' : 'error',
       duration: 9000,
       isClosable: true,
       position: 'top'
@@ -42,7 +39,7 @@ function DetailChannel() {
     const getDetail = async() => {
       const res = await getDetailChannel(router.query.id);
       setDetail(res);
-      setSubscribed(!!res?.userSubcribe.find(user => user === userInfo?.user?.walletAddress));
+      setSubscribed(!!res?.userSubcribe?.find(user => user === userInfo?.user?.walletAddress));
     }
     getDetail && getDetail();
   }, [router.query?.id]);
@@ -55,7 +52,7 @@ function DetailChannel() {
       </Head>
       <div id="content" className="site-content">
         <div className="nk-gap-2" />
-        <BreadCrumbs label={detailChannel.name} root={[{ label: "Channel", href: "/" }]} />
+        <BreadCrumbs label={detailChannel.name} root={{ label: "Channel", href: "/" }} />
         <div className="nk-gap-2 mt-10" />
         <div className="content-area container cyberpress">
           <main id="main" className="site-main" role="main">
@@ -106,8 +103,9 @@ function DetailChannel() {
                         width={854}
                         height={480}
                         src="https://www.youtube.com/embed/lz_yZ6zaXvU"
-                        title="Magnus v Wesley | Can Former 960 Champ Upset World #1? | Speed Chess Championship 2023 SF !coinbase" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen
+                        title="Magnus v Wesley | Can Former 960 Champ Upset World #1? | Speed Chess Championship 2023 SF !coinbase"
+                        frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
                         sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
                       />
                     </div>
@@ -116,6 +114,7 @@ function DetailChannel() {
                       posts={detailChannel.posts}
                       avatar={detailChannel?.avatarUrl}
                       channelName={detailChannel?.channelName}
+                      channelId={detailChannel._id}
                     />
                   </div>
                 </article>

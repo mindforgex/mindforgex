@@ -1,31 +1,32 @@
 import { Flex, Text, Tooltip, useToast } from '@chakra-ui/react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CheckCircleIcon } from '@chakra-ui/icons'
 import { userVerifyTask } from '../../../../services';
 
-const TaskItem = ({ task, index, userInfor }) => {
+const TaskItem = ({ task, index, userInfo, channelId }) => {
   const toast = useToast();
-  const isSubcribed = useMemo(() => {
-    return task.userAddress.find(address => address === userInfor?.user?.walletAddress);
+  const [isSubcribed, setIsSubcribed] = useState(false);
+  useEffect(() => {
+    const handleSubscribe = () => {
+      const hasUser = userInfo?.user?.walletAddress
+        && task.userAddress.find(address => address === userInfo?.user?.walletAddress);
+      setIsSubcribed(hasUser)
+    }
+    handleSubscribe && handleSubscribe();
   }, [task]);
 
   const verifyTask = async() => {
     if (isSubcribed) return;
-    let status = true;
-    let message = "Verify task success!"
-    try {
-      await userVerifyTask(task._id);
-    } catch (err) {
-      status = false;
-      message = "Verify task failed!"
-    }
+    const res = await userVerifyTask(task._id, { channelId });
+    res && setIsSubcribed(true);
     toast({
-      title: message,
-      status: status ? 'success' : 'error',
+      title: res ? "Verify task success!" : "Verify task failed!",
+      status: res ? 'success' : 'error',
       duration: 9000,
       isClosable: true,
       position: 'top'
     })
+    setTimeout(() => window.location.reload(), 1000);
   }
 
   return (
