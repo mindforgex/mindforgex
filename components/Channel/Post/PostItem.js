@@ -31,7 +31,7 @@ const PostItem = ({ post, avatar, channelName, channelId }) => {
         <Text as="span" ml={2}>in {moment(post.createdAt).format('MMMM D, Y')}</Text>
       </Flex>
       <Text as="p" dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br />") }}></Text>
-      <Task tasks={post.tasks} channelId={channelId} />
+      <Task tasks={post.tasks} postId={post._id} channelId={channelId} />
     </Flex>
   )
 }
