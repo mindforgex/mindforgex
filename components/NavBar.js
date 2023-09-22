@@ -33,6 +33,7 @@ export default function NavBar() {
                       <li
                         key={_item.label}
                         className={classNames("menu-item menu-item-type-custom menu-item-object-custom", {
+                          "active": window.location.pathname === _item.path,
                           "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
                         })}
                       >
@@ -105,6 +106,7 @@ export default function NavBar() {
                       <li
                         key={_item.label}
                         className={classNames("menu-item menu-item-type-custom menu-item-object-custom", {
+                          "active": window.location.pathname === _item.path,
                           "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
                         })}
                       >

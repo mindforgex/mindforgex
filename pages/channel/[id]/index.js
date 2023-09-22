@@ -23,7 +23,7 @@ function DetailChannel() {
   const [detailChannel, setDetail] = useState(MOCK_DETAIL_PROFILE_DATA);
   const [isUserSubscribed, setSubscribed] = useState(false);
 
-  const userSubscribeChannel = async() => {
+  const userSubscribeChannel = async () => {
     if (!userInfo?.user?.walletAddress) {
       return toast({
         title: 'Please connect wallet!',
@@ -45,7 +45,7 @@ function DetailChannel() {
     })
   }
   useEffect(() => {
-    const getDetail = async() => {
+    const getDetail = async () => {
       const res = await getDetailChannel(router.query.id);
       setDetail(res);
       setSubscribed(!!res?.userSubcribe?.find(user => user === userInfo?.user?.walletAddress));
@@ -81,12 +81,15 @@ function DetailChannel() {
                           alt=""
                         />{" "}
                         <ul className="cyberpress-team-info">
-                          <ProfileInfo metadata={{key: "Country", value: detailChannel?.country?.name}} />
-                          <ProfileInfo metadata={{key: "FOUNDED", value: detailChannel?.founded}} />
-                          <ProfileInfo metadata={{key: "Main Game", value: detailChannel?.mainGame }} />
-                          <ProfileInfo metadata={{key: "FOLLOWERS", value: numberFormatter(detailChannel?.follower)}} />
-                          <ProfileInfo metadata={{key: "YOUTUBE FOLLOWERS", value: numberFormatter(detailChannel?.followerYoutube)}} />
-                          <ProfileInfo metadata={{key: "TWITCH FOLLOWERS", value: numberFormatter(detailChannel?.followerTwitter)}} />
+                          <ProfileInfo metadata={{ key: "Country", value: detailChannel?.country?.name }} />
+                          <ProfileInfo metadata={{ key: "Sex", value: detailChannel?.sex }} />
+                          <ProfileInfo metadata={{ key: "Date Of Birth", value: detailChannel?.dateOfBirth }} />
+                          <ProfileInfo metadata={{ key: "Professional Field", value: detailChannel?.profestionalFeild }} />
+                          <ProfileInfo metadata={{ key: "FOUNDED", value: detailChannel?.founded }} />
+                          <ProfileInfo metadata={{ key: "Main Game", value: detailChannel?.mainGame }} />
+                          <ProfileInfo metadata={{ key: "FOLLOWERS", value: numberFormatter(detailChannel?.follower) }} />
+                          <ProfileInfo metadata={{ key: "YOUTUBE FOLLOWERS", value: numberFormatter(detailChannel?.followerYoutube) }} />
+                          <ProfileInfo metadata={{ key: "TWITCH FOLLOWERS", value: numberFormatter(detailChannel?.followerTwitter) }} />
                         </ul>
                       </div>
 
@@ -94,7 +97,7 @@ function DetailChannel() {
                         className={classNames('nk-btn nk-btn-color-main-1 subscribe-btn')}
                         onClick={userSubscribeChannel}
                       >
-                        { isUserSubscribed ? "Subscribed" : "Subscribe" }
+                        {isUserSubscribed ? "Subscribed" : "Subscribe"}
                       </button>
                     </div>
 
@@ -106,17 +109,12 @@ function DetailChannel() {
                     />
                     <div className="mt-10" />
 
-                    <h3>Livestream</h3>
-                    <div className="cyberpress-twitch">
-                      <iframe
-                        width={854}
-                        height={480}
-                        src="https://www.youtube.com/embed/lz_yZ6zaXvU"
-                        title="Magnus v Wesley | Can Former 960 Champ Upset World #1? | Speed Chess Championship 2023 SF !coinbase"
-                        frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-                      />
+                    <h3>About Me</h3>
+                    <div className="cyberpress-twitch"
+                      dangerouslySetInnerHTML={{
+                        __html: detailChannel.aboutMe
+                      }}
+                    >
                     </div>
                     <div className="mt-10" />
                     <ChannelPost
@@ -134,7 +132,7 @@ function DetailChannel() {
                   <div>
                     <SocialList detail={detailChannel} />
                     <Section title="Collection">
-                      <NFTProfile data={MOCK_INVENTORY} className='columns-1' />
+                      <NFTProfile data={detailChannel.nftInfos} className='columns-1' />
                     </Section>
                   </div>
                 </aside>

@@ -16186,6 +16186,7 @@ img.emoji {
   height: fit-content;
   padding: 15px 20px;
   position: relative;
+  border-radius: 5px;
 }
 
 .subscribe-btn.none::after {
@@ -16224,6 +16225,7 @@ button:hover {
 button:focus {
   outline: none !important;
 }
+
 .hidden {
   display: none !important;
 }
