@@ -106,14 +106,20 @@ function DetailChannel() {
                     />
                     <div className="mt-10" />
 
-                    <h3>About Me</h3>
+                    <section className='nk-decorated-h-2'>
+                      <h3 className='px-4'>About Me</h3>
+                    </section>
+                    <div className="mt-10" />
                     <div className="cyberpress-twitch"
                       dangerouslySetInnerHTML={{
                         __html: detailChannel.aboutMe
                       }}
-                    >
-                    </div>
+                    />
+
                     <div className="mt-10" />
+                    <section className='nk-decorated-h-2'>
+                      <h3 className='px-4'>Post</h3>
+                    </section>
                     <ChannelPost
                       posts={detailChannel.posts}
                       avatar={detailChannel?.avatarUrl}

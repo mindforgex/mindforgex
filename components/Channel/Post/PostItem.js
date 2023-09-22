@@ -1,4 +1,4 @@
-import { Avatar, Flex, Image, Text } from "@chakra-ui/react";
+import { Avatar, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import moment from "moment";
 import React from "react";
 import Task from "./Task";
@@ -16,6 +16,7 @@ const PostItem = ({ post, avatar, channelName, channelId }) => {
       borderBottomStyle={'solid'}
       py={8}
     >
+      <Heading as='h3' size='lg' mb={4}>{post?.title}</Heading>
       <Flex w={`100%`}>
         <Image
           height={800}

@@ -1,11 +1,12 @@
 import { Button, Flex, Text, useToast } from '@chakra-ui/react';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import TaskItem from './TaskItem';
 import { getUserInfo } from '../../../../utils/helpers';
 import { claimNFT } from '../../../../services/postService';
 
 const Task = ({ tasks, channelId, postId }) => {
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false)
   const userInfo = getUserInfo();
   const isFinished = useMemo(() => {
     return userInfo?.user?.walletAddress && tasks.find(t =>
@@ -14,6 +15,7 @@ const Task = ({ tasks, channelId, postId }) => {
   }, [tasks]);
 
   const claimNft = async () => {
+    setIsLoading(true)
     const receipt = await claimNFT(postId)
     const msg = {
       title: "",
@@ -26,13 +28,14 @@ const Task = ({ tasks, channelId, postId }) => {
     } else {
       msg.title = "Claim NFT successful"
       msg.status = "success"
-      msg.description = receipt.txHash
+      msg.description = <a target='_blank' rel='nofollow' href={`https://translator.shyft.to/tx/${receipt.txnSignature}?cluster=devnet`}>{receipt.txnSignature}</a>
     }
     toast({
       ...msg,
       isClosable: true,
       position: 'top',
     })
+    setIsLoading(false)
   }
 
   return (
@@ -41,9 +44,17 @@ const Task = ({ tasks, channelId, postId }) => {
       {tasks.map((task, index) => (
         <TaskItem key={task._id} task={task} index={index} userInfo={userInfo} channelId={channelId} />
       ))}
-      {isFinished && (
-        <Button colorScheme="green" onClick={claimNft}>Claim NFT</Button>
-      )}
+      <Button
+        size='lg'
+        style={{
+          cursor: isFinished ? "pointer" : "not-allowed"
+        }}
+        colorScheme={isFinished ? "green" : "gray"}
+        onClick={() => {
+          isFinished && claimNft()
+        }}
+        isLoading={isLoading}
+      >Claim NFT</Button>
     </Flex>
   )
 }

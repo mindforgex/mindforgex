@@ -20,9 +20,12 @@ export default function NFTProfile({ data, className = '' }) {
                   <Image
                     width={300}
                     height={384}
-                    src={_item.image}
+                    src={_item.image || "/assets/thumbnail.png"}
                     className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
                     alt=""
+                    onError={(event) => {
+                      event.target.src = "/assets/thumbnail.png"
+                    }}
                   />
                 </Link>
                 <div className="nk-product-cont">
@@ -34,9 +37,12 @@ export default function NFTProfile({ data, className = '' }) {
                       {_item.name}
                     </Link>
                   </h3>
-                  <p>
-                    {_item.description}
-                  </p>
+                  <p
+                    className="nft-desc"
+                    dangerouslySetInnerHTML={{
+                      __html: _item.description.replace(/\n/g, '<br />')
+                    }}
+                  />
                   <span>Symbol: {_item.symbol}</span><br />
                   <span className="">
                     Released at: {moment(data.createdAt).format("DD MMM, YYYY")}
