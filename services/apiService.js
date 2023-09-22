@@ -21,10 +21,13 @@ instance.interceptors.response.use(
 )
 
 
-
 const get = async (url, params = {}) => {
   try {
     const config = { params }
+    if (!instance.defaults.headers.common.Authorization) {
+      const token = load(STORAGE.ACCESS_TOKEN) || ''
+      if (token) instance.defaults.headers.common.Authorization = `${token}`
+    }
     const { data: getData } = await instance.get(getUrlPrefix() + url, config)
     return getData
   } catch (error) {

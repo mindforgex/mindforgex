@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react'
 import BreadCrumbs from '../../../components/BreadCrumbs'
 import { ProfileInfo } from '../../../components/ListProfile'
 import { Image, useToast } from '@chakra-ui/react'
-import Table from '../../../components/Table'
 import { useRouter } from 'next/router'
-import { MOCK_DETAIL_PROFILE_DATA, MOCK_NEW_DATA, MOCK_COLLECTION_DATA, MOCK_DATA_POST, MOCK_INVENTORY } from '../../../utils/data'
+import { MOCK_DETAIL_PROFILE_DATA, } from '../../../utils/data'
 import classNames from 'classnames'
 import SocialList from '../../../components/SocialList'
-import TopRecent from '../../../components/TopRecent'
-import Pagination from "../../../components/Pagination";
 import Head from 'next/head'
 import Section from '../../../components/Section'
 import NFTProfile from '../../../components/NFTProfile'
@@ -109,14 +106,20 @@ function DetailChannel() {
                     />
                     <div className="mt-10" />
 
-                    <h3>About Me</h3>
+                    <section className='nk-decorated-h-2'>
+                      <h3 className='px-4'>About Me</h3>
+                    </section>
+                    <div className="mt-10" />
                     <div className="cyberpress-twitch"
                       dangerouslySetInnerHTML={{
                         __html: detailChannel.aboutMe
                       }}
-                    >
-                    </div>
+                    />
+
                     <div className="mt-10" />
+                    <section className='nk-decorated-h-2'>
+                      <h3 className='px-4'>Post</h3>
+                    </section>
                     <ChannelPost
                       posts={detailChannel.posts}
                       avatar={detailChannel?.avatarUrl}

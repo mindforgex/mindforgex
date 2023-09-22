@@ -15,7 +15,7 @@ const TaskItem = ({ task, index, userInfo, channelId }) => {
     handleSubscribe && handleSubscribe();
   }, [task]);
 
-  const verifyTask = async() => {
+  const verifyTask = async () => {
     if (isSubcribed) return;
     const res = await userVerifyTask(task._id, { channelId });
     res && setIsSubcribed(true);
@@ -42,7 +42,7 @@ const TaskItem = ({ task, index, userInfo, channelId }) => {
         />
       </Tooltip>
       <Flex direction={'column'}>
-        <Text as={'h5'} mb={2}>{index+1}. {task.name}</Text>
+        <Text as={'h5'} mb={2}>{index + 1}. {task.name}</Text>
         <Text as="p" mb={2}>{task.description}</Text>
       </Flex>
     </Flex>
