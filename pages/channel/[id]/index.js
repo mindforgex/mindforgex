@@ -24,6 +24,15 @@ function DetailChannel() {
   const [isUserSubscribed, setSubscribed] = useState(false);
 
   const userSubscribeChannel = async() => {
+    if (!userInfo?.user?.walletAddress) {
+      return toast({
+        title: 'Please connect wallet!',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top'
+      })
+    }
     if (isUserSubscribed) return;
     const res = await subscribeChannel(router.query.id);
     res && setSubscribed(true);
