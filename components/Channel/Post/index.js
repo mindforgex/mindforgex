@@ -8,7 +8,7 @@ const ChannelPost = ({ posts, avatar, channelName, channelId }) => {
       <h3>Post</h3>
       <Flex alignContent={'center'} w={`100%`} direction={'column'} mt={4}>
         {posts?.map((post) => (
-          <PostItem key={post.id} post={post} avatar={avatar} channelName={channelName} />
+          <PostItem key={post.id} post={post} avatar={avatar} channelName={channelName} channelId={channelId} />
         ))}
       </Flex>
     </>
