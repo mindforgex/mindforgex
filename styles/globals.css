@@ -16238,3 +16238,33 @@ button:focus {
   line-clamp: 4;
   -webkit-box-orient: vertical;
 }
+
+.empty-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 26px;
+}
+
+.task-done-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.claim-nft {
+  overflow: visible !important;
+  margin-top: 50px;
+}
+
+.claim-nft img {
+  position: absolute;
+  top: -50px;
+  z-index: 2;
+}
+
+.claim-nft .nft-name {
+  position: absolute;
+  left: 150px;
+}
