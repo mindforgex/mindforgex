@@ -9,7 +9,7 @@ export default function TopRecent({ data, total }) {
       className="nk-widget nk-widget-highlighted ghostkit-reusable-widget"
     >
       <h4 className="nk-widget-title">
-        <span>Top {total} Post</span>
+        <span>Top {total} Posts</span>
       </h4>
       <div className="wp-block-visual-portfolio">
         <div

@@ -16274,10 +16274,14 @@ button:focus {
   border-radius: 5px;
 }
 
-.chakra-alert {
+.custom-modal.chakra-alert {
   background-color: #454d5e !important;
 }
 
-.chakra-modal__body div {
+.custom-modal .chakra-modal__body div {
   color: var(--light);
+}
+
+.custom-modal a {
+  color: #0062cc;
 }
