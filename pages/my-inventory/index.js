@@ -6,9 +6,11 @@ import { useCallback, useEffect, useState } from "react";
 import { getInventory } from '../../services/inventoryService'
 import { getUserInfo } from "../../utils/helpers";
 import axios from "axios";
+import { Flex, Spinner } from "@chakra-ui/react";
 
 export default function MyInventory() {
   const [inventory, setInventory] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const [params] = useState({ pageIndex: 1, pageSize: 6 })
 
   const getData = useCallback(async () => {
@@ -23,6 +25,7 @@ export default function MyInventory() {
         }
       }
       setInventory(items)
+      setIsLoading(false)
     }
   }, [params])
 
@@ -42,8 +45,16 @@ export default function MyInventory() {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <NFTProfile data={inventory} className="columns-2" />
-            {/* <Pagination pageCount={Math.ceil()} onPageChange={() => { }} /> */}
+            {
+              isLoading ? (
+                <Flex justifyContent="center"><Spinner /></Flex>
+              ) : (
+                <>
+                  <NFTProfile data={inventory} className="columns-2" />
+                  {/* <Pagination pageCount={Math.ceil()} onPageChange={() => { }} /> */}
+                </>
+              )
+            }
           </div>
         </div>
       </div>
