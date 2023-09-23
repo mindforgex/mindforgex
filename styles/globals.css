@@ -16268,3 +16268,16 @@ button:focus {
   position: absolute;
   left: 150px;
 }
+
+.chakra-modal__body {
+  background-color: #454d5e !important;
+  border-radius: 5px;
+}
+
+.chakra-alert {
+  background-color: #454d5e !important;
+}
+
+.chakra-modal__body div {
+  color: var(--light);
+}

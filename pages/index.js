@@ -1,6 +1,5 @@
 import BreadCrumbs from '../components/BreadCrumbs';
 import ListProfile from '../components/ListProfile';
-import { MOCK_NEW_DATA, MOCK_PROFILE_DATA } from '../utils/data';
 import TopRecent from '../components/TopRecent';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';

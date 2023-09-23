@@ -5,6 +5,7 @@ import NFTProfile from "../../components/NFTProfile";
 import { useCallback, useEffect, useState } from "react";
 import { getInventory } from '../../services/inventoryService'
 import { getUserInfo } from "../../utils/helpers";
+import axios from "axios";
 
 export default function MyInventory() {
   const [inventory, setInventory] = useState([])
@@ -14,6 +15,13 @@ export default function MyInventory() {
     const userInfo = getUserInfo()
     if (userInfo?.user?.walletAddress) {
       const { items } = await getInventory(userInfo?.user?.walletAddress, params)
+      for (const _item of items) {
+        const resp = await axios.get(_item.metadataUri)
+        if (resp.status === 200) {
+          _item.symbol = resp.data.symbol || ""
+          _item.external_url = resp.data.external_url || ""
+        }
+      }
       setInventory(items)
     }
   }, [params])
@@ -28,7 +36,7 @@ export default function MyInventory() {
         <title>My Inventory</title>
       </Head>
       <div className="nk-gap-2" />
-      <BreadCrumbs label="My Inventory" root={[{ href: '/', label: "Home" }]} />
+      <BreadCrumbs label="My Inventory" root={[{ href: '/', label: "Channel" }]} />
       <div className="nk-gap-2 mt-10" />
 
       <div className="container">
