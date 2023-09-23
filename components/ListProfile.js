@@ -43,7 +43,7 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
                 <ul className="cyberpress-team-info">
                   <ProfileInfo metadata={{ key: "Country", value: _item?.country?.name }} />
                   <ProfileInfo metadata={{ key: "FOUNDED", value: _item?.founded }} />
-                  <ProfileInfo metadata={{ key: "Main Game", value: _item?.mainGame }} />
+                  {/* <ProfileInfo metadata={{ key: "Main Game", value: _item?.mainGame }} /> */}
                   <ProfileInfo metadata={{ key: "FOLLOWERS", value: numberFormatter(_item?.follower || 0) }} />
                   <ProfileInfo metadata={{ key: "YOUTUBE FOLLOWERS", value: numberFormatter(_item?.followerYoutube || 0) }} />
                   <ProfileInfo metadata={{ key: "TWITCH FOLLOWERS", value: numberFormatter(_item?.followerTwitter || 0) }} />

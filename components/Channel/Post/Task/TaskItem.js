@@ -56,7 +56,7 @@ const TaskItem = ({ task, index, userInfo, channelId, setTasks }) => {
           onClick={verifyTask}
           disabled={isSubscribed}
           className={classNames('nk-btn nk-btn-color-main-1 subscribe-btn', { "task-done-btn": isSubscribed })}
-        >{isSubscribed ? "Done!!" : "Verify"}</button>
+        >{isSubscribed ? "Completed" : "Verify"}</button>
       </Flex>
     </Flex>
   )

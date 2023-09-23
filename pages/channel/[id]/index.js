@@ -83,7 +83,7 @@ function DetailChannel() {
                           <ProfileInfo metadata={{ key: "Date Of Birth", value: detailChannel?.dateOfBirth }} />
                           <ProfileInfo metadata={{ key: "Professional Field", value: detailChannel?.profestionalFeild }} />
                           <ProfileInfo metadata={{ key: "FOUNDED", value: detailChannel?.founded }} />
-                          <ProfileInfo metadata={{ key: "Main Game", value: detailChannel?.mainGame }} />
+                          {/* <ProfileInfo metadata={{ key: "Main Game", value: detailChannel?.mainGame }} /> */}
                           <ProfileInfo metadata={{ key: "FOLLOWERS", value: numberFormatter(detailChannel?.follower) }} />
                           <ProfileInfo metadata={{ key: "YOUTUBE FOLLOWERS", value: numberFormatter(detailChannel?.followerYoutube) }} />
                           <ProfileInfo metadata={{ key: "TWITCH FOLLOWERS", value: numberFormatter(detailChannel?.followerTwitter) }} />
@@ -104,8 +104,8 @@ function DetailChannel() {
                         __html: detailChannel?.description?.replace(/\n/g, "<br />")
                       }}
                     />
-                    <div className="mt-10" />
 
+                    <div style={{ marginTop: '60px' }} />
                     <section className='nk-decorated-h-2'>
                       <h3 className='px-4'>About Me</h3>
                     </section>
@@ -116,7 +116,7 @@ function DetailChannel() {
                       }}
                     />
 
-                    <div className="mt-10" />
+                    <div style={{ marginTop: '60px' }} />
                     <section className='nk-decorated-h-2'>
                       <h3 className='px-4'>Post</h3>
                     </section>
