@@ -29,7 +29,6 @@ export default function useLoginListener() {
         toast({
           title: 'Message signature invalid!',
           status: 'error',
-          duration: 9000,
           isClosable: true,
           position: 'top'
         })
@@ -57,7 +56,6 @@ export default function useLoginListener() {
         title: 'Sign Message failed',
         description: error?.message,
         status: 'error',
-        duration: 9000,
         isClosable: true,
         position: 'top'
       })

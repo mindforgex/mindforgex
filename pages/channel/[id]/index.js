@@ -25,7 +25,6 @@ function DetailChannel() {
       return toast({
         title: 'Please connect wallet!',
         status: 'error',
-        duration: 9000,
         isClosable: true,
         position: 'top'
       })
@@ -36,7 +35,6 @@ function DetailChannel() {
     toast({
       title: res ? 'Subscribe channel success!' : 'Subscribe channel failed!',
       status: res ? 'success' : 'error',
-      duration: 9000,
       isClosable: true,
       position: 'top'
     })

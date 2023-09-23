@@ -29,7 +29,6 @@ const TaskItem = ({ task, index, userInfo, channelId, setTasks }) => {
     toast({
       title: res ? "Verify task successful!" : "Verify task failed!",
       status: res ? 'success' : 'error',
-      duration: 9000,
       isClosable: true,
       position: 'top'
     })
