@@ -87,6 +87,7 @@ const Task = ({ channelId, post }) => {
         <ModalContent>
           <ModalBody>
             <Alert
+              className='custom-modal'
               status="success"
               variant='subtle'
               flexDirection='column'
