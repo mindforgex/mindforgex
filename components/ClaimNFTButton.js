@@ -10,11 +10,11 @@ export default function ClaimNFTButton({ btnProps, children, nftData }) {
           <Image
             height={200}
             width={100}
-            src={nftData.image}
+            src={nftData?.image}
             alt=""
           />
           <Text className="h5 nft-name">
-            {nftData.name}
+            {nftData?.name}
           </Text>
         </div>
         <Button
