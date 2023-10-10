@@ -5,8 +5,11 @@ import {
 } from '@solana/wallet-adapter-react-ui';
 import { NAV_BAR_ITEM } from "../utils/constants";
 import classNames from "classnames";
+import { useTranslation } from 'next-i18next';
 
 export default function NavBar() {
+  const { t } = useTranslation('common');
+
   const onToggleMenu = () => {
     document.getElementById("nk-nav-mobile").classList.toggle("open")
     document.getElementsByClassName("nk-navbar-overlay").item(0).classList.toggle("open")
@@ -37,7 +40,7 @@ export default function NavBar() {
                           "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
                         })}
                       >
-                        <Link href={_item.path}>{_item.label}</Link>
+                        <Link href={_item.path}>{t(_item.label)}</Link>
                         {
                           isItemHasChildren && (
                             <ul className="dropdown sub-menu" style={{ marginTop: "43.7656px", marginLeft: "-9px" }}>

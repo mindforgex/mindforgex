@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { CheckCircleIcon } from '@chakra-ui/icons'
 import { userVerifyTask } from '../../../../services';
 import classNames from 'classnames';
+import { useTranslation } from 'next-i18next';
 
 const TaskItem = ({ task, index, userInfo, channelId, setTasks }) => {
-  const toast = useToast()
+  const toast = useToast();
+  const { t } = useTranslation('common');
   const [isSubscribed, setIsSubscribed] = useState(false);
   useEffect(() => {
     const handleSubscribe = () => {
@@ -27,7 +29,7 @@ const TaskItem = ({ task, index, userInfo, channelId, setTasks }) => {
     }
 
     toast({
-      title: res ? "Verify task successful!" : "Verify task failed!",
+      title: t(res ? "verify_success" : "verify_failed"),
       status: res ? 'success' : 'error',
       isClosable: true,
       position: 'top'
@@ -50,12 +52,12 @@ const TaskItem = ({ task, index, userInfo, channelId, setTasks }) => {
         <Text as={'h5'} mb={2}>{index + 1}. {task.name}</Text>
         <Text as="p" mb={2}>{task.description}</Text>
       </Flex>
-      <Flex>
+      <Flex ml={'auto'}>
         <button
           onClick={verifyTask}
           disabled={isSubscribed}
           className={classNames('nk-btn nk-btn-color-main-1 subscribe-btn', { "task-done-btn": isSubscribed })}
-        >{isSubscribed ? "Completed" : "Verify"}</button>
+        >{t(isSubscribed ? "completed" : "verify")}</button>
       </Flex>
     </Flex>
   )

@@ -2,11 +2,12 @@ import { Avatar, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import moment from "moment";
 import React from "react";
 import Task from "./Task";
+import { useTranslation } from "next-i18next";
 
 const PostItem = ({ post, avatar, channelName, channelId }) => {
   const { images } = post;
   const [thumbnail] = images;
-
+  const { t } = useTranslation('common');
   return (
     <Flex
       direction={'column'}
@@ -27,9 +28,9 @@ const PostItem = ({ post, avatar, channelName, channelId }) => {
       </Flex>
       <Flex alignItems={'center'} my={4}>
         <Avatar src={avatar} title="avatar" />
-        <Text as="span" ml={4}>By</Text>
+        <Text as="span" ml={4}>{t('channel.post.by')}</Text>
         <Text as="span" ml={2} fontWeight={'bold'} color={'red'}>{channelName}</Text>
-        <Text as="span" ml={2}>in {moment(post.createdAt).format('MMMM D, Y')}</Text>
+        <Text as="span" ml={2}>{t('channel.post.by', {time: moment(post.createdAt).format('MMMM D, Y')})}</Text>
       </Flex>
       <Text as="p" dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br />") }}></Text>
       <Task post={post} channelId={channelId} />

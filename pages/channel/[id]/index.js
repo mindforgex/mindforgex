@@ -16,6 +16,8 @@ import DonateModel from '../../../components/Channel/DonateModel';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { clusterApiUrl, PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana/web3.js'; 
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 function DetailChannel() {
   const router = useRouter();
@@ -27,6 +29,7 @@ function DetailChannel() {
   const [isLoading, setIsLoading] = useState(false);
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
+  const { t } = useTranslation('common');
 
   const userSubscribeChannel = async () => {
     if (!userInfo?.user?.walletAddress) {
@@ -41,7 +44,7 @@ function DetailChannel() {
     const res = await subscribeChannel(router.query.id);
     res && setSubscribed(true);
     toast({
-      title: res ? 'Subscribe channel success!' : 'Subscribe channel failed!',
+      title: t(res ? 'channel.subscribe_success' : 'channel.subscribe_failed'),
       status: res ? 'success' : 'error',
       isClosable: true,
       position: 'top'
@@ -96,7 +99,7 @@ function DetailChannel() {
     setTimeout(() => {
       setIsLoading(false);
       toast({
-        title: `Donate for idol success with ${args?.donate}SOL`,
+        title: t('channel.donate_success', { donate: args?.donate}),
         status: 'success',
         isClosable: true,
         position: 'top'
@@ -110,7 +113,7 @@ function DetailChannel() {
     } catch (error) {
       setIsLoading(false);
       toast({
-        title: `Donate failed`,
+        title: t('donate_failed'),
         status: 'error',
         isClosable: true,
         position: 'top'
@@ -121,7 +124,7 @@ function DetailChannel() {
   const handleDonate = () => {
     publicKey && setOpen(!isOpen);
     !publicKey &&  toast({
-      title: `Please connect wallet to donate`,
+      title: t('please_connect_wallet'),
       status: 'error',
       isClosable: true,
       position: 'top'
@@ -129,11 +132,11 @@ function DetailChannel() {
   };
 
   const donateTooltip = useMemo(() => {
-    return publicKey ? 'Donate for idol' : 'Please connect wallet';
+    return t(publicKey ? 'channel.donate_idol' : 'please_connect_wallet');
   }, [publicKey]);
 
   const subscribeChannelLabel = useMemo(() => {
-    return isUserSubscribed ? "Subscribed" : "Subscribe"
+    return t(isUserSubscribed ? "subscribed" : "subscribe");
   }, [isUserSubscribed]);
 
   return (
@@ -143,7 +146,7 @@ function DetailChannel() {
       </Head>
       <div id="content" className="site-content">
         <div className="nk-gap-2" />
-        <BreadCrumbs label={detailChannel.name} root={{ label: "Channel", href: "/" }} />
+        <BreadCrumbs label={detailChannel.name} root={{ label: t("channel.label"), href: "/" }} />
         <div className="nk-gap-2 mt-10" />
         <div className="content-area container cyberpress">
           <main id="main" className="site-main" role="main">
@@ -163,15 +166,15 @@ function DetailChannel() {
                           alt=""
                         />{" "}
                         <ul className="cyberpress-team-info">
-                          <ProfileInfo metadata={{ key: "Country", value: detailChannel?.country?.name }} />
-                          <ProfileInfo metadata={{ key: "Sex", value: detailChannel?.sex }} />
-                          <ProfileInfo metadata={{ key: "Date Of Birth", value: detailChannel?.dateOfBirth }} />
-                          <ProfileInfo metadata={{ key: "Professional Field", value: detailChannel?.profestionalFeild }} />
-                          <ProfileInfo metadata={{ key: "FOUNDED", value: detailChannel?.founded }} />
+                          <ProfileInfo metadata={{ key: t("channel.country"), value: detailChannel?.country?.name }} />
+                          <ProfileInfo metadata={{ key: t("channel.sex"), value: detailChannel?.sex }} />
+                          <ProfileInfo metadata={{ key: t("channel.birthday"), value: detailChannel?.dateOfBirth }} />
+                          <ProfileInfo metadata={{ key: t("channel.perfessional_field"), value: detailChannel?.profestionalFeild }} />
+                          <ProfileInfo metadata={{ key: t("channel.founded"), value: detailChannel?.founded }} />
                           {/* <ProfileInfo metadata={{ key: "Main Game", value: detailChannel?.mainGame }} /> */}
-                          <ProfileInfo metadata={{ key: "FOLLOWERS", value: numberFormatter(detailChannel?.follower) }} />
-                          <ProfileInfo metadata={{ key: "YOUTUBE FOLLOWERS", value: numberFormatter(detailChannel?.followerYoutube) }} />
-                          <ProfileInfo metadata={{ key: "TWITCH FOLLOWERS", value: numberFormatter(detailChannel?.followerTwitter) }} />
+                          <ProfileInfo metadata={{ key: t("channel.followers"), value: numberFormatter(detailChannel?.follower) }} />
+                          <ProfileInfo metadata={{ key: t("channel.youtube_followers"), value: numberFormatter(detailChannel?.followerYoutube) }} />
+                          <ProfileInfo metadata={{ key: t("channel.twitch_followers"), value: numberFormatter(detailChannel?.followerTwitter) }} />
                         </ul>
                       </div>
                       <Tooltip label={subscribeChannelLabel} placement='bottom'>
@@ -199,7 +202,7 @@ function DetailChannel() {
                           loadingText='Donating...'
                           isDisabled={!publicKey}
                         >
-                          Donate
+                          {t("channel.donate")}
                         </Button>
                       </Tooltip>
                     </div>
@@ -213,7 +216,7 @@ function DetailChannel() {
 
                     <div style={{ marginTop: '60px' }} />
                     <section className='nk-decorated-h-2'>
-                      <h3 className='px-4'>About Me</h3>
+                      <h3 className='px-4'>{t('channel.about_me')}</h3>
                     </section>
                     <div className="mt-10" />
                     <div className="cyberpress-twitch"
@@ -224,7 +227,7 @@ function DetailChannel() {
 
                     <div style={{ marginTop: '60px' }} />
                     <section className='nk-decorated-h-2'>
-                      <h3 className='px-4'>Post</h3>
+                      <h3 className='px-4'>{t('channel.posts')}</h3>
                     </section>
                     <ChannelPost
                       posts={detailChannel.posts}
@@ -257,3 +260,9 @@ function DetailChannel() {
 }
 
 export default DetailChannel
+
+export const getServerSideProps = async({ locale }) => {
+  return {
+    props: { ...(await serverSideTranslations(locale, ['common'])) }
+  }
+}

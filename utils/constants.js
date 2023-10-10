@@ -5,7 +5,7 @@ export const STORAGE = {
 
 export const NAV_BAR_ITEM = [
   {
-    label: "Channel",
+    label: "menu.channel",
     path: "/",
     // children: [
     //   {
@@ -15,7 +15,7 @@ export const NAV_BAR_ITEM = [
     // ]
   },
   {
-    label: "My Inventory",
+    label: "menu.my_inventory",
     path: "/my-inventory"
   }
 ]

@@ -5,8 +5,10 @@ import { getUserInfo } from '../../../../utils/helpers';
 import { claimNFT } from '../../../../services/postService';
 import ClaimNFTButton from '../../../ClaimNFTButton';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 const Task = ({ channelId, post }) => {
+  const { t } = useTranslation('common');
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false)
   const [tasks, setTasks] = useState(post?.tasks || [])
@@ -35,7 +37,7 @@ const Task = ({ channelId, post }) => {
     const receipt = await claimNFT(post._id)
     if (!receipt) {
       toast({
-        title: "Claim NFT failed",
+        title: t('channel.task.claim_failed'),
         status: "error",
         isClosable: true,
         position: 'top',
@@ -52,7 +54,7 @@ const Task = ({ channelId, post }) => {
 
   return (
     <Flex direction={'column'}>
-      <Text as="h4" my={4}>Tasks</Text>
+      <Text as="h4" my={4}>{t('channel.task.title')}</Text>
       {tasks.map((task, index) => (
         <TaskItem
           key={task._id}
@@ -78,7 +80,7 @@ const Task = ({ channelId, post }) => {
         }}
         nftData={post.nftId}
       >
-        {isClaimed ? "Claimed" : "Claim NFT"}
+        {t(isClaimed ? "channel.task.claimed" : "channel.task.claim_nft")}
       </ClaimNFTButton>
 
       <Modal isOpen={isOpenModal} onClose={onClose}>
@@ -97,17 +99,19 @@ const Task = ({ channelId, post }) => {
             >
               <AlertIcon boxSize='40px' mr={0} />
               <AlertTitle mt={5} mb={1} fontSize='lg'>
-                Claim NFT successful!
+                {t('channel.task.claim_nft_successs')}
               </AlertTitle>
               <AlertDescription maxWidth='sm'>
-                <a ref={resultRef} target='_blank' href="" rel="nofollow">View your NFT on Explorer</a>
+                <a ref={resultRef} target='_blank' href="" rel="nofollow">
+                {t('channel.task.view_nft')}
+                </a>
               </AlertDescription>
             </Alert>
             <Flex justifyContent="center" mb={5}>
               <button className='nk-btn nk-btn-color-main-1 subscribe-btn' mr={3} onClick={() => {
                 router.push('/my-inventory')
               }}>
-                Go to My Inventory
+                {t('channel.task.inventory_page')}
               </button>
             </Flex>
           </ModalBody>

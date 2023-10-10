@@ -1,10 +1,12 @@
 import { Image, Link } from "@chakra-ui/react";
 import classNames from "classnames";
 import moment from "moment";
+import { useTranslation } from "next-i18next";
 import { TbMoodEmpty } from 'react-icons/tb'
 
 export default function NFTProfile({ data, className = '' }) {
   const _data = Array.isArray(data) ? data : []
+  const { t } = useTranslation('common');
 
   return (
     <ul className={classNames("products", { [className]: true })}>
@@ -12,7 +14,7 @@ export default function NFTProfile({ data, className = '' }) {
         _data.length === 0 ? (
           <div className="empty-msg">
             <TbMoodEmpty />
-            Nothing to display
+            {t('nft.no_data')}
           </div>
         ) : (
           _data.map(_item => {
@@ -50,9 +52,9 @@ export default function NFTProfile({ data, className = '' }) {
                         __html: _item?.description?.replace(/\n/g, '<br />')
                       }}
                     />
-                    <span>Symbol: {_item.symbol}</span><br />
+                    <span>{t('nft.symbol', {symbol: _item.symbol})}</span><br />
                     <span className="">
-                      Released at: {moment(data.createdAt).format("DD MMM, YYYY")}
+                      {t('nft.released_at', {time: moment(data.createdAt).format("DD MMM, YYYY")})}
                     </span>
                   </div>
                 </div>

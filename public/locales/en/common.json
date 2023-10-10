@@ -1,0 +1,73 @@
+{
+    "header": "MindForgeX",
+    "top": {
+        "feature_posts": "Top {{total}} posts"
+    },
+    "channel": {
+        "label": "Channel",
+        "country": "Country",
+        "founded": "FOUNDED",
+        "followers": "FOLLOWERS",
+        "youtube_followers": "YOUTUBE FOLLOWERS",
+        "twitch_followers": "TWITCH FOLLOWERS",
+        "sex": "Sex",
+        "birthday": "Date Of Birth",
+        "perfessional_field": "Professional Field",
+        "donate": "Donate",
+        "donate_idol": "Donate for idol",
+        "subscribed": "Subscribed",
+        "subscribe": "Subscribe",
+        "donate_failed": "Donate failed",
+        "donate_success": "Donate for idol success with {{donate}}SOL",
+        "subscribe_success": "Subscribe channel success!",
+        "subscribe_failed": "Subscribe channel failed!",
+        "about_me": "About Me",
+        "posts": "Posts",
+        "post": {
+            "by": "By",
+            "in": "in {{time}}"
+        },
+        "task": {
+            "claim_failed": "Claim NFT failed",
+            "title": "Tasks",
+            "claimed": "Claimed",
+            "claim_nft": "Claim NFT",
+            "claim_nft_successs": "Claim NFT successful!",
+            "view_nft": "View your NFT on Explorer",
+            "inventory_page": "Go to My Inventory",
+            "verify_success": "Verify task successful!",
+            "verify_failed": "Verify task failed!",
+            "completed": "Completed",
+            "verify": "Verify"
+        }
+    },
+    "nft": {
+        "no_data": "Nothing to display",
+        "symbol": "Symbol: {{symbol}}",
+        "released_at": "Released at:"
+    },
+    "modal": {
+        "donate": {
+            "header": "Donate for idol",
+            "amount_placeholder": "Enter donate...",
+            "btn_donate": "Donate",
+            "required_amount": "Please enter donate"
+        },
+        "btn_cancel": "Cancel"
+    },
+    "social_link": "Social Link",
+    "please_connect_wallet": "Please connect wallet",
+    "menu": {
+        "channel": "Channel",
+        "my_inventory": "My Inventory"
+    },
+    "btn_wallet": {
+        "change": "Change wallet",
+        "connecting": "Connecting ...",
+        "copy_address": "Copy address",
+        "copied": "Copied",
+        "disconnect": "Disconnect",
+        "connect": "Connect",
+        "select": "Select Wallet"
+    }
+}

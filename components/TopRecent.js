@@ -1,15 +1,17 @@
 import { Image, Link } from "@chakra-ui/react";
 import moment from "moment";
 import PropTypes from 'prop-types'
+import { useTranslation } from 'next-i18next';
 
 export default function TopRecent({ data, total }) {
+  const { t } = useTranslation('common');
   return (
     <div
       id="ghostkit_reusable_widget-16"
       className="nk-widget nk-widget-highlighted ghostkit-reusable-widget"
     >
       <h4 className="nk-widget-title">
-        <span>Top {total} Posts</span>
+        <span>{t('top.feature_posts', { total: total })}</span>
       </h4>
       <div className="wp-block-visual-portfolio">
         <div

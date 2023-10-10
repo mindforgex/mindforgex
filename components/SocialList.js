@@ -1,11 +1,14 @@
 import { Link } from "@chakra-ui/react";
 import Section from "./Section";
 import { BsTwitch, BsYoutube, BsTwitter, BsInstagram } from 'react-icons/bs'
+import { useTranslation } from "next-i18next";
 
 export default function SocialList({ detail }) {
   const socialLinks = detail?.socialLinks?.reduce((a, v) => ({ ...a, [v.name]: v.url }), {}) || {}
+  const { t } = useTranslation('common');
+
   return (
-    <Section title="Social Link">
+    <Section title={t('social_link')}>
       <div className="lazyblock-squadforce-social-links-Z1TH6RW wp-block-lazyblock-squadforce-social-links">
         <ul className="nk-social-links-3 nk-social-links-cols-4">
           <li>

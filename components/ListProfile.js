@@ -1,6 +1,7 @@
 import { Image, Link } from "@chakra-ui/react";
 import PropTypes from 'prop-types'
 import { numberFormatter } from "../utils/helpers";
+import { useTranslation } from 'next-i18next';
 
 export const ProfileInfo = ({ metadata }) => {
   return (
@@ -12,6 +13,8 @@ export const ProfileInfo = ({ metadata }) => {
 }
 
 export default function ListProfile({ data, total = 100, onPageChange = () => { }, pageSize = 6, }) {
+  const { t } = useTranslation('common');
+
   return (
     <>
       <ul className="cyberpress-row cyberpress-row-3 cyberpress-teams-archive">
@@ -41,12 +44,12 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
                   </Link>
                 </h2>
                 <ul className="cyberpress-team-info">
-                  <ProfileInfo metadata={{ key: "Country", value: _item?.country?.name }} />
-                  <ProfileInfo metadata={{ key: "FOUNDED", value: _item?.founded }} />
+                  <ProfileInfo metadata={{ key: t("channel.country"), value: _item?.country?.name }} />
+                  <ProfileInfo metadata={{ key: t("channel.founded"), value: _item?.founded }} />
                   {/* <ProfileInfo metadata={{ key: "Main Game", value: _item?.mainGame }} /> */}
-                  <ProfileInfo metadata={{ key: "FOLLOWERS", value: numberFormatter(_item?.follower || 0) }} />
-                  <ProfileInfo metadata={{ key: "YOUTUBE FOLLOWERS", value: numberFormatter(_item?.followerYoutube || 0) }} />
-                  <ProfileInfo metadata={{ key: "TWITCH FOLLOWERS", value: numberFormatter(_item?.followerTwitter || 0) }} />
+                  <ProfileInfo metadata={{ key: t("channel.followers"), value: numberFormatter(_item?.follower || 0) }} />
+                  <ProfileInfo metadata={{ key: t("channel.youtube_followers"), value: numberFormatter(_item?.followerYoutube || 0) }} />
+                  <ProfileInfo metadata={{ key: t("channel.twitch_followers"), value: numberFormatter(_item?.followerTwitter || 0) }} />
                 </ul>
               </li>
             )

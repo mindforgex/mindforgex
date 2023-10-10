@@ -14,6 +14,7 @@ import Layout from '../components/Layout';
 import WalletContext from '../components/WalletContext'
 import Head from 'next/head'
 import { SEO_CONTENT, _window } from '../utils/seo'
+import { appWithTranslation } from 'next-i18next'
 
 function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -68,4 +69,4 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-export default MyApp
+export default appWithTranslation(MyApp);
