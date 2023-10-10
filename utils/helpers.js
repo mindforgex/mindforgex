@@ -31,3 +31,5 @@ export const clearUserInfo = () => {
   cookie.remove(STORAGE.USER_INFO)
   cookie.remove(STORAGE.ACCESS_TOKEN)
 }
+const composeReduce = (f, g) => async (...args) => f(await g(...args));
+export const compose = (...fns) => fns.reduce(composeReduce);

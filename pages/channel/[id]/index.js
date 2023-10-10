@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import BreadCrumbs from '../../../components/BreadCrumbs'
 import { ProfileInfo } from '../../../components/ListProfile'
-import { Image, useToast } from '@chakra-ui/react'
+import { Button, Image, Tooltip, useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { MOCK_DETAIL_PROFILE_DATA, } from '../../../utils/data'
 import classNames from 'classnames'
@@ -10,8 +10,12 @@ import Head from 'next/head'
 import Section from '../../../components/Section'
 import NFTProfile from '../../../components/NFTProfile'
 import ChannelPost from '../../../components/Channel/Post'
-import { getDetailChannel, subscribeChannel } from '../../../services'
-import { getUserInfo, numberFormatter } from '../../../utils/helpers'
+import { donateChannel, getDetailChannel, subscribeChannel, generateTransactionEncode } from '../../../services'
+import { compose, confirmTransactionsFromFrontend, getUserInfo, numberFormatter } from '../../../utils/helpers'
+import DonateModel from '../../../components/Channel/DonateModel';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { clusterApiUrl, PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana/web3.js'; 
 
 function DetailChannel() {
   const router = useRouter();
@@ -19,6 +23,10 @@ function DetailChannel() {
   const userInfo = getUserInfo();
   const [detailChannel, setDetail] = useState(MOCK_DETAIL_PROFILE_DATA);
   const [isUserSubscribed, setSubscribed] = useState(false);
+  const [isOpen, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { connection } = useConnection();
+  const { publicKey, sendTransaction } = useWallet();
 
   const userSubscribeChannel = async () => {
     if (!userInfo?.user?.walletAddress) {
@@ -37,7 +45,7 @@ function DetailChannel() {
       status: res ? 'success' : 'error',
       isClosable: true,
       position: 'top'
-    })
+    });
   }
   useEffect(() => {
     const getDetail = async () => {
@@ -48,6 +56,85 @@ function DetailChannel() {
     getDetail && getDetail();
   }, [router.query?.id]);
 
+  const donateForIdol = async (args) => {
+    const { encode: transaction } = args;
+    try {
+      const signature = await sendTransaction(transaction, connection);
+      return {...args, tx: signature};
+    } catch (err) {
+      throw err
+    }
+  };
+
+  const getDonateEndcode = async(args) => {
+    const { donate } = args;
+    setIsLoading(true);
+    const latestBlockhash = await connection.getLatestBlockhash();
+    const transaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: publicKey,
+        toPubkey: new PublicKey(detailChannel.donateReceiver),
+        lamports: LAMPORTS_PER_SOL * donate,
+        latestBlockhash: latestBlockhash.blockhash,
+      })
+    );
+    return { ...args, encode: transaction };
+  };
+
+  const verifyTransaction = async(args) => {
+    const { tx, donate } = args;
+    const { context: {slot}} = await connection.confirmTransaction(tx, 'processed');
+    try {
+      await donateChannel(detailChannel._id, { tx, amount: Number(donate) });
+      return {...args, confirm: slot};
+    } catch(err) {
+      throw err;
+    }
+  }
+
+  const notifyDonate = (args) => {
+    setTimeout(() => {
+      setIsLoading(false);
+      toast({
+        title: `Donate for idol success with ${args?.donate}SOL`,
+        status: 'success',
+        isClosable: true,
+        position: 'top'
+      });
+    }, 1000);
+  };
+
+  const donateForChannel = async(donate) => {
+    try {
+      await compose(notifyDonate, verifyTransaction, donateForIdol, getDonateEndcode)(donate);
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        title: `Donate failed`,
+        status: 'error',
+        isClosable: true,
+        position: 'top'
+      });
+    }
+  };
+
+  const handleDonate = () => {
+    publicKey && setOpen(!isOpen);
+    !publicKey &&  toast({
+      title: `Please connect wallet to donate`,
+      status: 'error',
+      isClosable: true,
+      position: 'top'
+    });
+  };
+
+  const donateTooltip = useMemo(() => {
+    return publicKey ? 'Donate for idol' : 'Please connect wallet';
+  }, [publicKey]);
+
+  const subscribeChannelLabel = useMemo(() => {
+    return isUserSubscribed ? "Subscribed" : "Subscribe"
+  }, [isUserSubscribed]);
 
   return (
     <>
@@ -87,13 +174,34 @@ function DetailChannel() {
                           <ProfileInfo metadata={{ key: "TWITCH FOLLOWERS", value: numberFormatter(detailChannel?.followerTwitter) }} />
                         </ul>
                       </div>
-
-                      <button
-                        className={classNames('nk-btn nk-btn-color-main-1 subscribe-btn')}
-                        onClick={userSubscribeChannel}
-                      >
-                        {isUserSubscribed ? "Subscribed" : "Subscribe"}
-                      </button>
+                      <Tooltip label={subscribeChannelLabel} placement='bottom'>
+                        <button
+                          className={classNames('nk-btn nk-btn-color-main-1 subscribe-btn')}
+                          onClick={userSubscribeChannel}
+                        >
+                          {subscribeChannelLabel}
+                        </button>
+                      </Tooltip>
+                      <Tooltip label={donateTooltip} placement='bottom'>
+                        <Button
+                          colorScheme={'facebook'}
+                          display={'flex'}
+                          alignItems={'center'}
+                          justifyContent={'center'}
+                          px={'20px'}
+                          py={'15px'}
+                          fontSize={'0.87rem'}
+                          textTransform={'uppercase'}
+                          lineHeight={1.2}
+                          height={'fit-content'}
+                          onClick={handleDonate}
+                          isLoading={isLoading}
+                          loadingText='Donating...'
+                          isDisabled={!publicKey}
+                        >
+                          Donate
+                        </Button>
+                      </Tooltip>
                     </div>
 
                     <div className="mt-10" />
@@ -143,6 +251,7 @@ function DetailChannel() {
           </main>
         </div>
       </div>
+      <DonateModel isOpen={isOpen} setOpen={setOpen} onConfirm={donateForChannel} />
     </>
   )
 }

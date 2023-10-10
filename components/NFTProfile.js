@@ -47,7 +47,7 @@ export default function NFTProfile({ data, className = '' }) {
                     <p
                       className="nft-desc"
                       dangerouslySetInnerHTML={{
-                        __html: _item.description.replace(/\n/g, '<br />')
+                        __html: _item?.description?.replace(/\n/g, '<br />')
                       }}
                     />
                     <span>Symbol: {_item.symbol}</span><br />
