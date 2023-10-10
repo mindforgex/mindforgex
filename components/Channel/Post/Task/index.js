@@ -44,7 +44,6 @@ const Task = ({ channelId, post }) => {
       setIsOpenModal(true)
       setClaimed(true)
       setTimeout(() => {
-        console.log(resultRef.current);
         resultRef.current.setAttribute("href", `https://translator.shyft.to/tx/${receipt.txnSignature}?cluster=devnet`)
       }, 500)
     }
