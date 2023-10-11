@@ -7,6 +7,7 @@ import { getInventory } from '../../services/inventoryService'
 import { getUserInfo } from "../../utils/helpers";
 import axios from "axios";
 import { Flex, Spinner } from "@chakra-ui/react";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function MyInventory() {
   const [inventory, setInventory] = useState([])
@@ -61,4 +62,10 @@ export default function MyInventory() {
 
     </>
   )
+}
+
+export const getServerSideProps = async({ locale }) => {
+  return {
+    props: { ...(await serverSideTranslations(locale, ['common'])) }
+  }
 }
