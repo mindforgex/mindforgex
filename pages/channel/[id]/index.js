@@ -69,6 +69,7 @@ function DetailChannel() {
     }
   };
 
+  const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   const getDonateEndcode = async(args) => {
     const { donate } = args;
     setIsLoading(true);
@@ -86,7 +87,8 @@ function DetailChannel() {
 
   const verifyTransaction = async(args) => {
     const { tx, donate } = args;
-    const { context: {slot}} = await connection.confirmTransaction(tx, 'processed');
+    await sleep(5000);
+    const { context: {slot}} = await connection.confirmTransaction(tx, 'finalized');
     try {
       await donateChannel(detailChannel._id, { tx, amount: Number(donate) });
       return {...args, confirm: slot};
