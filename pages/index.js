@@ -36,7 +36,7 @@ export default function Channel() {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event) => {
-      if (event === 'SIGNED_IN') {
+      if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
         router.push('profile')
       } else if (event === 'SIGNED_OUT') {
         toast({
@@ -88,7 +88,7 @@ export default function Channel() {
 }
 
 
-export const getServerSideProps = async({ locale }) => {
+export const getServerSideProps = async ({ locale }) => {
   return {
     props: { ...(await serverSideTranslations(locale, ['common'])) }
   }
