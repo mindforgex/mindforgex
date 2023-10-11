@@ -18,11 +18,13 @@
         "subscribed": "Subscribed",
         "subscribe": "Subscribe",
         "donate_failed": "Donate failed",
-        "donate_success": "Donate for idol success with {{donate}}SOL",
+        "donate_success": "Successful donation to Idol with {{donate}} SOL",
         "subscribe_success": "Subscribe channel success!",
         "subscribe_failed": "Subscribe channel failed!",
         "about_me": "About Me",
         "posts": "Posts",
+        "detail": "Detail",
+        "collection": "Collection",
         "post": {
             "by": "By",
             "in": "in {{time}}"

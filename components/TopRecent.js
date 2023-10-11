@@ -2,9 +2,12 @@ import { Image, Link } from "@chakra-ui/react";
 import moment from "moment";
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next';
+import { useAppRedireact } from "../utils/hook";
 
 export default function TopRecent({ data, total }) {
   const { t } = useTranslation('common');
+  const [generateRouter] = useAppRedireact();
+
   return (
     <div
       id="ghostkit_reusable_widget-16"
@@ -33,7 +36,7 @@ export default function TopRecent({ data, total }) {
                           <div className="row vertical-gap">
                             <div className="col-lg-4">
                               <Link
-                                href={`/channel/${_item.channelId}`}
+                                href={generateRouter(`channel/${_item.channelId}`)}
                                 className="nk-post-img nk-widget-img"
                               >
                                 <Image
@@ -48,7 +51,7 @@ export default function TopRecent({ data, total }) {
                             </div>
                             <div className="col-lg-8">
                               <h2 className="nk-post-title h5">
-                                <Link href={`/channel/${_item.channelId}`}>
+                                <Link href={generateRouter(`channel/${_item.channelId}`)}>
                                   {_item.title}
                                 </Link>
                               </h2>

@@ -48,7 +48,7 @@ const TaskItem = ({ task, index, userInfo, channelId, setTasks }) => {
           onClick={verifyTask}
         />
       </Tooltip>
-      <Flex direction={'column'}>
+      <Flex direction={'column'} width='100%'>
         <Text as={'h5'} mb={2}>{index + 1}. {task.name}</Text>
         <Text as="p" mb={2}>{task.description}</Text>
       </Flex>

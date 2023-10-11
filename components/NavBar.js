@@ -10,7 +10,7 @@ import SwitchLanguage from "./SwitchLanguage";
 import { useAppRedireact } from "../utils/hook";
 
 export default function NavBar() {
-  const { t, i18n: {language}, i18n: appI18n } = useTranslation('common');
+  const { t } = useTranslation('common');
   const [generateRouter] = useAppRedireact();
 
   const onToggleMenu = () => {
@@ -52,7 +52,7 @@ export default function NavBar() {
                                   return (
                                     <li key={_itemChild.label}
                                       className="menu-item menu-item-type-custom menu-item-object-custom ghost_menu__sub-menu__item ghost_menu__sub-menu--1__item">
-                                      <Link href={_itemChild.path}>{_itemChild.label}</Link>
+                                      <Link href={generateRouter(_item.path + _itemChild.path)}>{_itemChild.label}</Link>
                                     </li>
                                   )
                                 })
@@ -97,7 +97,7 @@ export default function NavBar() {
       >
         <div className="nano has-scrollbar">
           <div className="nano-content" tabIndex={0} style={{ right: "-15px" }}>
-            <Link href="/" className="nk-nav-logo">
+            <Link href={generateRouter('')} className="nk-nav-logo">
               <Image
                 src="/assets/logo.svg"
                 fill={true}
@@ -118,7 +118,7 @@ export default function NavBar() {
                           "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
                         })}
                       >
-                        <Link href={_item.path}>{_item.label}</Link>
+                        <Link href={generateRouter(_item.path)}>{_item.label}</Link>
                         {
                           isItemHasChildren && (
                             <ul className="dropdown sub-menu">
@@ -126,7 +126,7 @@ export default function NavBar() {
                                 _item.children.map(_itemChild => {
                                   return (
                                     <li key={_itemChild.label} className="bropdown-back">
-                                      <Link href={_itemChild.path}>{_itemChild.label}</Link>
+                                      <Link href={generateRouter(_item.path + _itemChild.path)}>{_itemChild.label}</Link>
                                     </li>
                                   )
                                 })
@@ -145,6 +145,9 @@ export default function NavBar() {
                   <WalletMultiButton />
                 </li>
 
+                <li>
+                  <SwitchLanguage />
+                </li>
               </ul>
             </div>
           </div >

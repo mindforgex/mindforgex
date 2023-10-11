@@ -5,17 +5,21 @@ export const STORAGE = {
 
 export const NAV_BAR_ITEM = [
   {
-    label: "menu.channel",
+    label: "Channel",
     path: "",
-    // children: [
-    //   {
-    //     label: "Channel",
-    //     path: "/channel",    
-    //   }
-    // ]
   },
   {
-    label: "menu.my_inventory",
-    path: "my-inventory"
+    label: "My Inventory",
+    path: "my-inventory",
+    children: [
+      {
+        label: "Collection",
+        path: "/collection",    
+      },
+      {
+        label: "Reward",
+        path: "/reward",
+      }
+    ]
   }
 ]
