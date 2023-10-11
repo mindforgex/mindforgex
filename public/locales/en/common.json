@@ -48,10 +48,10 @@
     },
     "modal": {
         "donate": {
-            "header": "Donate for idol",
-            "amount_placeholder": "Enter donate...",
+            "header": "Donate to idol",
+            "amount_placeholder": "Enter donation...",
             "btn_donate": "Donate",
-            "required_amount": "Please enter donate"
+            "required_amount": "Please enter donation amount"
         },
         "btn_cancel": "Cancel"
     },

@@ -1,73 +1,73 @@
 {
   "header": "MindForgeX",
   "top": {
-    "feature_posts": "Top {{total}} posts"
+    "feature_posts": "{{total}}人気投稿"
   },
   "channel": {
-    "label": "Channel",
-    "country": "Country",
-    "founded": "FOUNDED",
-    "followers": "FOLLOWERS",
-    "youtube_followers": "YOUTUBE FOLLOWERS",
-    "twitch_followers": "TWITCH FOLLOWERS",
-    "sex": "Sex",
-    "birthday": "Date Of Birth",
-    "perfessional_field": "Professional Field",
-    "donate": "Donate",
-    "donate_idol": "Donate for idol",
-    "subscribed": "Subscribed",
-    "subscribe": "Subscribe",
-    "donate_failed": "Donate failed",
-    "donate_success": "Donate for idol success with {{donate}}SOL",
-    "subscribe_success": "Subscribe channel success!",
-    "subscribe_failed": "Subscribe channel failed!",
-    "about_me": "About Me",
-    "posts": "Posts",
+    "label": "チャンネル",
+    "country": "国",
+    "founded": "開設",
+    "followers": "フォロワーズ",
+    "youtube_followers": "ユーチューブのフォロワーズ",
+    "twitch_followers": "ツイッチのフォロワーズ",
+    "sex": "性別",
+    "birthday": "生年月日",
+    "perfessional_field": "専門的な分野",
+    "donate": "寄付する",
+    "donate_idol": "アイドルに寄付する",
+    "subscribed": "登録済み",
+    "subscribe": "登録する",
+    "donate_failed": "寄付失敗",
+    "donate_success": " {{donate}}SOLでアイドルに寄付した",
+    "subscribe_success": "チャンネル登録が完了した！",
+    "subscribe_failed": "チャンネル登録が失敗した!",
+    "about_me": "プロフィール",
+    "posts": "投稿",
     "post": {
-      "by": "By",
-      "in": "in {{time}}"
+      "by": "によって",
+      "in": "{{time}}に"
     },
     "task": {
-      "claim_failed": "Claim NFT failed",
-      "title": "Tasks",
-      "claimed": "Claimed",
-      "claim_nft": "Claim NFT",
-      "claim_nft_successs": "Claim NFT successful!",
-      "view_nft": "View your NFT on Explorer",
-      "inventory_page": "Go to My Inventory",
-      "verify_success": "Verify task successful!",
-      "verify_failed": "Verify task failed!",
-      "completed": "Completed",
-      "verify": "Verify"
+      "claim_failed": "NFTクレームが失敗した",
+      "title": "タスク",
+      "claimed": "NFTをクレームした",
+      "claim_nft": "NFTをクレームする",
+      "claim_nft_successs": "NFTクレームが完了した!",
+      "view_nft": "エクスプローラーでNFTを見る",
+      "inventory_page": "マイインベントリーへ",
+      "verify_success": "タスクの確認が完了した！",
+      "verify_failed": "タスクの確認が失敗した!",
+      "completed": "完了した",
+      "verify": "確認する"
     }
   },
   "nft": {
-    "no_data": "Nothing to display",
-    "symbol": "Symbol: {{symbol}}",
-    "released_at": "Released at:"
+    "no_data": "何も表示されない",
+    "symbol": "シンボル: {{symbol}}",
+    "released_at": "でリリースした"
   },
   "modal": {
     "donate": {
-      "header": "Donate for idol",
-      "amount_placeholder": "Enter donate...",
-      "btn_donate": "Donate",
-      "required_amount": "Please enter donate"
+      "header": "アイドルに寄付する",
+      "amount_placeholder": "寄付金を入力する",
+      "btn_donate": "寄付する",
+      "required_amount": "寄付金を入力してください"
     },
-    "btn_cancel": "Cancel"
+    "btn_cancel": "キャンセル"
   },
-  "social_link": "Social Link",
-  "please_connect_wallet": "Please connect wallet",
+  "social_link": "ソーシャルのリンク",
+  "please_connect_wallet": "ウォレットを接続してください",
   "menu": {
-    "channel": "Channel",
-    "my_inventory": "My Inventory"
+    "channel": "チャンネル",
+    "my_inventory": "マイインベントリー"
   },
   "btn_wallet": {
-    "change": "Change wallet",
-    "connecting": "Connecting ...",
-    "copy_address": "Copy address",
-    "copied": "Copied",
-    "disconnect": "Disconnect",
-    "connect": "Connect",
-    "select": "Select Wallet"
+    "change": "ウォレットを変更する",
+    "connecting": "接続中",
+    "copy_address": "アドレスをコピーする",
+    "copied": "コピーした",
+    "disconnect": "接続を解除する",
+    "connect": "接続する",
+    "select": "ウォレットを選択する"
   }
 }
