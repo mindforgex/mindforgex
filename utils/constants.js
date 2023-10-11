@@ -21,5 +21,9 @@ export const NAV_BAR_ITEM = [
         path: "/reward",
       }
     ]
+  },
+  {
+    label: "menu.profile",
+    path: "profile"
   }
 ]

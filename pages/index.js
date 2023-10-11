@@ -7,6 +7,9 @@ import { getChannels } from '../services';
 import { getPosts } from '../services/postService';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import supabase from '../utils/supabase';
+import { useRouter } from 'next/router';
+import { useToast } from '@chakra-ui/react';
 
 export default function Channel() {
   const [channels, setChannels] = useState([]);
@@ -14,6 +17,8 @@ export default function Channel() {
   const [postParams] = useState({ pageSize: 5, pageIndex: 1 });
   const [posts, setPosts] = useState([]);
   const { t } = useTranslation('common');
+  const router = useRouter()
+  const toast = useToast()
 
   useEffect(() => {
     const getAppChannels = async () => {
@@ -28,6 +33,22 @@ export default function Channel() {
     getAppChannels && getAppChannels();
     getTopPost && getTopPost();
   }, []);
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange(async (event) => {
+      if (event !== 'SIGNED_OUT') {
+        router.push('profile')
+      } else {
+        toast({
+          title: t('profile.disconnect_discord_success'),
+          description: "",
+          status: 'success',
+          isClosable: true,
+        })
+      }
+    })
+  }, [])
+
 
   return (
     <>
