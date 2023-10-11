@@ -17,9 +17,9 @@ export default function NFTProfile({ data, className = '' }) {
             {t('nft.no_data')}
           </div>
         ) : (
-          _data.map(_item => {
+          _data.map((_item, index) => {
             return (
-              <li key={_item.id} className="product type-product status-publish first instock product_cat-pc has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+              <li key={`item-index-${index}`} className="product type-product status-publish first instock product_cat-pc has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
                 <div className="nk-product-cat-2">
                   <Link
                     href={_item.external_url}

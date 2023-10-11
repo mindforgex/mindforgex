@@ -136,7 +136,7 @@ function DetailChannel() {
   }, [publicKey]);
 
   const subscribeChannelLabel = useMemo(() => {
-    return t(isUserSubscribed ? "subscribed" : "subscribe");
+    return t(isUserSubscribed ? "channel.subscribed" : "channel.subscribe");
   }, [isUserSubscribed]);
 
   return (

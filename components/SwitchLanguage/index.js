@@ -32,6 +32,7 @@ const SwitchLanguage = () => {
             color={'black'}
             alignItems={'center'}
             onClick={() => handleChangeLanguage(l.language)}
+            key={`language-${index}`}
           >
             <Image
               src={l.icon}

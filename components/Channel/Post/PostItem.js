@@ -30,7 +30,7 @@ const PostItem = ({ post, avatar, channelName, channelId }) => {
         <Avatar src={avatar} title="avatar" />
         <Text as="span" ml={4}>{t('channel.post.by')}</Text>
         <Text as="span" ml={2} fontWeight={'bold'} color={'red'}>{channelName}</Text>
-        <Text as="span" ml={2}>{t('channel.post.by', {time: moment(post.createdAt).format('MMMM D, Y')})}</Text>
+        <Text as="span" ml={2}>{t('channel.post.in', {time: moment(post.createdAt).format('MMMM D, Y')})}</Text>
       </Flex>
       <Text as="p" dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br />") }}></Text>
       <Task post={post} channelId={channelId} />
