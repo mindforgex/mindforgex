@@ -1,7 +1,10 @@
 import { Link } from "@chakra-ui/react";
 import PropTypes from 'prop-types';
+import { useAppRedireact } from "../utils/hook";
 
 export default function BreadCrumbs({ root, label }) {
+  const [generateRouter] = useAppRedireact();
+
   return (
     <div className="container">
       <ul className="nk-breadcrumbs">
@@ -10,7 +13,7 @@ export default function BreadCrumbs({ root, label }) {
             return (
               <>
                 <li key={_item.label}>
-                  <Link rel="v:url" href={_item.href}>
+                  <Link rel="v:url" href={generateRouter(_item.href)}>
                     {_item.label}
                   </Link>
                 </li>

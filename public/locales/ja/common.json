@@ -23,6 +23,8 @@
     "subscribe_failed": "チャンネル登録が失敗した!",
     "about_me": "プロフィール",
     "posts": "投稿",
+    "detail": "詳細",
+    "collection": "コレクション",
     "post": {
       "by": "によって",
       "in": "{{time}}に"
@@ -59,7 +61,10 @@
   "please_connect_wallet": "ウォレットを接続してください",
   "menu": {
     "channel": "チャンネル",
-    "my_inventory": "マイインベントリー"
+    "my_inventory": "マイインベントリー",
+    "collection": "コレクション",
+    "reward": "リワード",
+    "detail": "詳細"
   },
   "btn_wallet": {
     "change": "ウォレットを変更する",
@@ -69,5 +74,15 @@
     "disconnect": "接続を解除する",
     "connect": "接続する",
     "select": "ウォレットを選択する"
+  },
+  "inventory": {
+    "nothing_to_display": "何も表示されない",
+    "collection_information": "収集情報",
+    "reward_information": "リワード情報",
+    "exchange": "交換する",
+    "confirm": "確認する",
+    "close": "閉じる",
+    "exchange_msg": "このアクションで、{{name}}というリワードをゲットするために、圧縮NFT取引の{{amount}}にサインしなければなりません",
+    "exchanged_at": "で交換する"
   }
 }

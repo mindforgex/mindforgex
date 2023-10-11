@@ -18,6 +18,7 @@ import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { clusterApiUrl, PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana/web3.js'; 
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import axios from 'axios';
 
 function DetailChannel() {
   const router = useRouter();
@@ -50,9 +51,20 @@ function DetailChannel() {
       position: 'top'
     });
   }
+
   useEffect(() => {
     const getDetail = async () => {
       const res = await getDetailChannel(router.query.id);
+      const nftCollectionData = await Promise.all(
+        res?.nftCollections?.map(async (_item) => {
+          const getMetadataRes = await axios.get(_item.metadata_uri)
+          return {
+            ..._item,
+            ...getMetadataRes.data
+          }  
+        }) || [async () => {}]
+      )
+      res.nftCollections = nftCollectionData || []
       setDetail(res);
       setSubscribed(!!res?.userSubcribe?.find(user => user === userInfo?.user?.walletAddress));
     }
@@ -245,8 +257,12 @@ function DetailChannel() {
                 <aside className="nk-sidebar nk-sidebar-sticky nk-sidebar-right">
                   <div>
                     <SocialList detail={detailChannel} />
-                    <Section title="Collection">
-                      <NFTProfile data={detailChannel.nftInfos} className='columns-1' />
+                    <Section title={t("collection.channel")}>
+                      <NFTProfile data={detailChannel.nftCollections} className='columns-1' />
+                      <button 
+                        className='nk-btn nk-btn-color-main-1'
+                        onClick={() => router.push(window.location.href + '/collections')}
+                      >{t('channel.detail')} {">"}</button>
                     </Section>
                   </div>
                 </aside>
