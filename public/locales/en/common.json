@@ -61,7 +61,8 @@
     "please_connect_wallet": "Please connect wallet",
     "menu": {
         "channel": "Channel",
-        "my_inventory": "My Inventory"
+        "my_inventory": "My Inventory",
+        "profile": "Profile"
     },
     "btn_wallet": {
         "change": "Change wallet",
@@ -71,5 +72,16 @@
         "disconnect": "Disconnect",
         "connect": "Connect",
         "select": "Select Wallet"
+    },
+    "profile": {
+        "authorize_discord_failed": "Authorize Discord failed",
+        "confirm_connect_with_discord_failed": "Confirm connect with Discord failed",
+        "wallet_address": "Wallet address",
+        "connect_with_discord": "Connect to Discord",
+        "disconnect_discord_success": "Disconnect with Discord successful",
+        "disconnect": "Disconnect"
+    },
+    "msg": {
+        "something_went_wrong": "Something went wrong"
     }
 }
