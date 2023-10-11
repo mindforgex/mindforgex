@@ -1,19 +1,22 @@
 import { Image, Link } from "@chakra-ui/react";
-import React from "react";
+import React, { useMemo } from "react";
 import {
   WalletMultiButton
 } from '@solana/wallet-adapter-react-ui';
 import { NAV_BAR_ITEM } from "../utils/constants";
 import classNames from "classnames";
 import { useTranslation } from 'next-i18next';
+import SwitchLanguage from "./SwitchLanguage";
+import { useAppRedireact } from "../utils/hook";
 
 export default function NavBar() {
-  const { t } = useTranslation('common');
+  const { t, i18n: {language}, i18n: appI18n } = useTranslation('common');
+  const [generateRouter] = useAppRedireact();
 
   const onToggleMenu = () => {
     document.getElementById("nk-nav-mobile").classList.toggle("open")
     document.getElementsByClassName("nk-navbar-overlay").item(0).classList.toggle("open")
-  }
+  };
 
   return (
     <>
@@ -21,7 +24,7 @@ export default function NavBar() {
         <nav className="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide nk-onscroll-show">
           <div className="container">
             <div className="nk-nav-table">
-              <Link href="/" className="nk-nav-logo">
+              <Link href={generateRouter('')} className="nk-nav-logo">
                 <Image src="/assets/logo.svg" fill={true} alt="" />
               </Link>
 
@@ -40,7 +43,7 @@ export default function NavBar() {
                           "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
                         })}
                       >
-                        <Link href={_item.path}>{t(_item.label)}</Link>
+                        <Link href={generateRouter(_item.path)}>{t(_item.label)}</Link>
                         {
                           isItemHasChildren && (
                             <ul className="dropdown sub-menu" style={{ marginTop: "43.7656px", marginLeft: "-9px" }}>
@@ -67,6 +70,9 @@ export default function NavBar() {
                 >
                   <WalletMultiButton />
                 </li>
+                <li>
+                  <SwitchLanguage />
+                </li>
               </ul>
 
               <ul className="nk-nav nk-nav-right nk-nav-icons" onClick={onToggleMenu}>
@@ -78,7 +84,6 @@ export default function NavBar() {
                   </span>
                 </li>
               </ul>
-
             </div>
           </div>
         </nav>

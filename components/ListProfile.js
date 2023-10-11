@@ -2,6 +2,7 @@ import { Image, Link } from "@chakra-ui/react";
 import PropTypes from 'prop-types'
 import { numberFormatter } from "../utils/helpers";
 import { useTranslation } from 'next-i18next';
+import { useAppRedireact } from "../utils/hook";
 
 export const ProfileInfo = ({ metadata }) => {
   return (
@@ -14,6 +15,7 @@ export const ProfileInfo = ({ metadata }) => {
 
 export default function ListProfile({ data, total = 100, onPageChange = () => { }, pageSize = 6, }) {
   const { t } = useTranslation('common');
+  const [generateRouter] = useAppRedireact();
 
   return (
     <>
@@ -26,7 +28,7 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
                 className="cyberpress-col cyberpress-team team type-team status-publish has-post-thumbnail hentry"
               >
                 <div className="cyberpress-team-thumbnail">
-                  <Link href={`channel/${_item._id}`}>
+                  <Link href={generateRouter(`channel/${_item._id}`)}>
                     <Image
                       width={300}
                       height={300}
@@ -39,7 +41,7 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
 
                 {/* .post-thumbnail */}
                 <h2 className="cyberpress-team-title">
-                  <Link href={`channel/${_item._id}`}>
+                  <Link href={generateRouter(`channel/${_item._id}`)}>
                     {_item.channelName}
                   </Link>
                 </h2>
