@@ -36,9 +36,9 @@ export default function Channel() {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event) => {
-      if (event !== 'SIGNED_OUT') {
+      if (event === 'SIGNED_IN') {
         router.push('profile')
-      } else {
+      } else if (event === 'SIGNED_OUT') {
         toast({
           title: t('profile.disconnect_discord_success'),
           description: "",

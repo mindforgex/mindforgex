@@ -118,7 +118,7 @@ export default function NavBar() {
                           "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
                         })}
                       >
-                        <Link href={generateRouter(_item.path)}>{_item.label}</Link>
+                        <Link href={generateRouter(_item.path)}>{t(_item.label)}</Link>
                         {
                           isItemHasChildren && (
                             <ul className="dropdown sub-menu">
@@ -126,7 +126,7 @@ export default function NavBar() {
                                 _item.children.map(_itemChild => {
                                   return (
                                     <li key={_itemChild.label} className="bropdown-back">
-                                      <Link href={generateRouter(_item.path + _itemChild.path)}>{_itemChild.label}</Link>
+                                      <Link href={generateRouter(_item.path + _itemChild.path)}>{t(_itemChild.label)}</Link>
                                     </li>
                                   )
                                 })

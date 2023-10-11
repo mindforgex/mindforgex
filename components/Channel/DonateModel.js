@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useToast,
+  Text,
 } from "@chakra-ui/react"
 import { useTranslation } from "next-i18next";
 
@@ -38,7 +39,9 @@ const DonateModal = ({isOpen, setOpen, onConfirm}) => {
       >
         <ModalOverlay />
         <ModalContent bg={'#181c23'}>
-          <ModalHeader color={'white'}>{t('modal.donate.header')}</ModalHeader>
+          <ModalHeader color={'white'}>
+            <Text as='h4'>{t('modal.donate.header')}</Text>
+          </ModalHeader>
           <ModalBody pb={6}>
             <Input
               type="number"

@@ -9,8 +9,11 @@ import { Flex, Spinner } from '@chakra-ui/react';
 import CollectionList from '../../../../components/Inventory/CollectionList';
 import axios from 'axios';
 import { useAppRedireact } from '../../../../utils/hook';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 function ChannelCollections() {
+  const { t } = useTranslation()
   const [generateRouter] = useAppRedireact();
   const router = useRouter();
   const [detailChannel, setDetail] = useState();
@@ -55,11 +58,19 @@ function ChannelCollections() {
   return (
     <>
       <Head>
-        <title>{detailChannel?.name} Collection</title>
+        <title>{detailChannel?.name} {t('menu.collection')}</title>
       </Head>
 
       <div className="nk-gap-2" />
-      <BreadCrumbs label="Collection" root={[{ href: generateRouter(''), label: "Channel" }, { href: generateRouter(`channel/${router.query?.id}`), label: detailChannel?.name || "Detail" }]} />
+      <BreadCrumbs
+        label="Collection"
+        root={
+          [
+            { href: generateRouter(''), label: t('menu.channel') },
+            { href: generateRouter(`channel/${router.query?.id}`), label: detailChannel?.name || t('menu.detail') }
+          ]
+        } 
+      />
       <div className="nk-gap-2 mt-10" />
 
 
@@ -81,3 +92,9 @@ function ChannelCollections() {
 }
 
 export default ChannelCollections
+
+export const getServerSideProps = async ({ locale }) => {
+  return {
+    props: { ...(await serverSideTranslations(locale, ['common'])) }
+  }
+}

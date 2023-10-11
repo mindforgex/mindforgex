@@ -5,19 +5,19 @@ export const STORAGE = {
 
 export const NAV_BAR_ITEM = [
   {
-    label: "Channel",
+    label: "menu.channel",
     path: "",
   },
   {
-    label: "My Inventory",
+    label: "menu.my_inventory",
     path: "my-inventory",
     children: [
       {
-        label: "Collection",
+        label: "menu.collection",
         path: "/collection",    
       },
       {
-        label: "Reward",
+        label: "menu.reward",
         path: "/reward",
       }
     ]

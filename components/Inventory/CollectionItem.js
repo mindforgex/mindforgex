@@ -7,11 +7,13 @@ import { confirmTransactionFromFrontend  } from '../../utils/transactionSigner'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { FaAngleDown } from 'react-icons/fa'
 import classNames from 'classnames'
+import { useTranslation } from 'next-i18next'
 
 function CollectionItem({ data,  }) {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isLoadingTransaction, setIsLoadingTransaction] = useState(false)
   const [isExpanded, setIsExpanded] = useState(true)
+  const { t } = useTranslation()
 
   const { connection } = useConnection()
   const { wallet, signTransaction } = useWallet();
@@ -89,7 +91,7 @@ function CollectionItem({ data,  }) {
                 className={'nk-btn nk-btn-color-main-1'}
                 onClick={onOpenModal}
               >
-                Exchange
+                {t('inventory.exchange')}
               </button>
             
               <FaAngleDown 
@@ -102,8 +104,9 @@ function CollectionItem({ data,  }) {
         </CardHeader>
         <Collapse in={isExpanded} animateOpacity>
           <CardBody>
-            <Text as='h4' textTransform='capitalize' mb={8}>Collection Information:</Text>
-
+            <Text as='h4' textTransform='capitalize' mb={8}>
+            {t('inventory.collection_information')}:
+            </Text>
             <Flex gap={5} flexWrap='wrap'>
               <Image
                 flexBasis={250}
@@ -129,7 +132,9 @@ function CollectionItem({ data,  }) {
             </Flex>
           </CardBody>
           <CardFooter borderTop='1px solid #aaaaaa50' flexDirection='column' mt={8}>
-            <Text as='h4' textTransform='capitalize' mb={8}>Reward Information:</Text>
+            <Text as='h4' textTransform='capitalize' mb={8}>
+              {t('inventory.reward_information')}:
+            </Text>
 
             <Flex gap={5} flexWrap='wrap'>
               <Image
@@ -153,22 +158,23 @@ function CollectionItem({ data,  }) {
         <ModalContent>
           <ModalHeader borderBottom='3px solid #aaaaaa30'>
             <Text as='h3'>
-              Confirm exchange
+              {t(['inventory.confirm', 'inventory.exchange'])}
             </Text>
-
             <ModalCloseButton />
           </ModalHeader>
           
           <ModalBody>
-            By this action, you have to sign {nftInfo.length} burn Compressed NFT transaction to get {data.reward_data?.name} reward! 
+            {t('inventory.exchange_msg', { amount: nftInfo.length, reward_name: data.reward_data?.name })}
           </ModalBody>
           
           <ModalFooter>
             <Flex>
               <Button mr={3} onClick={onCloseModal} variant='ghost' color='#fff'>
-                Close
+                {t('inventory.close')}
               </Button>
-              <Button isLoading={isLoadingTransaction} colorScheme='red' onClick={onExchange}>Confirm</Button>
+              <Button isLoading={isLoadingTransaction} colorScheme='red' onClick={onExchange}>
+                {t('inventory.confirm')}
+              </Button>
             </Flex>
           </ModalFooter>
         </ModalContent>

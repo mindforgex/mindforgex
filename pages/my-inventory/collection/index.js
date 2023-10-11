@@ -8,6 +8,7 @@ import { getUserCollection } from '../../../services/inventoryService'
 import axios from 'axios';
 import { useTranslation } from 'next-i18next';
 import { useAppRedireact } from '../../../utils/hook';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 function Collection() {
   const { t } = useTranslation('common')
@@ -47,7 +48,12 @@ function Collection() {
       </Head>
 
       <div className="nk-gap-2" />
-      <BreadCrumbs label="Collection" root={[{ href: generateRouter('/'), label: "Channel" }, { href: generateRouter('/'), label: "Inventory" }]} />
+      <BreadCrumbs
+        label="Collection"
+        root={
+          [{ href: generateRouter('/'), label: t("menu.channel") }, { href: generateRouter('/'), label: t("menu.my_inventory") }]
+        }
+      />
       <div className="nk-gap-2 mt-10" />
 
 
@@ -69,3 +75,9 @@ function Collection() {
 }
 
 export default Collection
+
+export const getServerSideProps = async ({ locale }) => {
+  return {
+    props: { ...(await serverSideTranslations(locale, ['common'])) }
+  }
+}

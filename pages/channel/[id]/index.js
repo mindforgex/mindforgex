@@ -10,12 +10,11 @@ import Head from 'next/head'
 import Section from '../../../components/Section'
 import NFTProfile from '../../../components/NFTProfile'
 import ChannelPost from '../../../components/Channel/Post'
-import { donateChannel, getDetailChannel, subscribeChannel, generateTransactionEncode } from '../../../services'
-import { compose, confirmTransactionsFromFrontend, getUserInfo, numberFormatter } from '../../../utils/helpers'
+import { donateChannel, getDetailChannel, subscribeChannel } from '../../../services'
+import { compose, getUserInfo, numberFormatter } from '../../../utils/helpers'
 import DonateModel from '../../../components/Channel/DonateModel';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { clusterApiUrl, PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana/web3.js'; 
+import { PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana/web3.js'; 
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import axios from 'axios';
@@ -257,7 +256,7 @@ function DetailChannel() {
                 <aside className="nk-sidebar nk-sidebar-sticky nk-sidebar-right">
                   <div>
                     <SocialList detail={detailChannel} />
-                    <Section title={t("collection.channel")}>
+                    <Section title={t("channel.collection")}>
                       <NFTProfile data={detailChannel.nftCollections} className='columns-1' />
                       <button 
                         className='nk-btn nk-btn-color-main-1'

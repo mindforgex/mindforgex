@@ -1,6 +1,7 @@
 import React from 'react'
 import { TbMoodEmpty } from 'react-icons/tb'
 import CollectionItem from './CollectionItem'
+import EmptyMsg from '../EmptyMsg'
 
 function CollectionList({ data }) {
   return (
@@ -17,10 +18,7 @@ function CollectionList({ data }) {
             }
           </>
         ) : (
-          <div className = "empty-msg">
-            <TbMoodEmpty />
-            Nothing to display
-          </div>
+          <EmptyMsg />
         )
       }
     </div>

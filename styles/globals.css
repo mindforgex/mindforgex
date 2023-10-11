@@ -16322,7 +16322,3 @@ button:focus {
 .expand-icon.rotate-close {
   transform: rotate(90deg);
 }
-
-.chakra-popover__content {
-  background-color: #454d5e !important;
-}

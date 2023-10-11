@@ -1,19 +1,18 @@
 import { Box, Flex, Image, Link } from "@chakra-ui/react";
 import classNames from "classnames";
 import moment from "moment";
-import { TbMoodEmpty } from 'react-icons/tb'
+import EmptyMsg from './EmptyMsg'
+import { useTranslation } from "next-i18next";
 
 export default function NFTProfile({ data, className = '' }) {
   const _data = Array.isArray(data) ? data : []
+  const { t } = useTranslation()
 
   return (
     <Flex gap={24} className={classNames("products", { [className]: true })}>
       {
         _data.length === 0 ? (
-          <div className="empty-msg">
-            <TbMoodEmpty />
-            Nothing to display
-          </div>
+          <EmptyMsg />
         ) : (
           _data.map(_item => {
             const rewardData = _item.reward_data
@@ -34,7 +33,7 @@ export default function NFTProfile({ data, className = '' }) {
                       {rewardData.name}
                     </h3>
                     <span className="">
-                      Exchanged at: {moment(data.createdAt).format("DD MMM, YYYY")}
+                      {t('inventory.exchanged_at')}: {moment(data.createdAt).format("DD MMM, YYYY")}
                     </span>
                   </div>
                 </Flex>

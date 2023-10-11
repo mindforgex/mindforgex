@@ -9,7 +9,7 @@ const SwitchLanguage = () => {
 
   const locales = useMemo(() => {
     return router.locales.map(l => {
-      return { language: l, icon: `/assets/${l}.svg`};
+      return { language: l, icon: `/assets/${l}.png`};
     });
   }, [router]);
   const currentLanguage = useMemo(() => {
@@ -41,6 +41,7 @@ const SwitchLanguage = () => {
               borderWidth={'1px'}
               borderStyle={'solid'}
               borderRadius={'full'}
+              alt={l.language}
             />
           </Flex>
         ))}
@@ -51,14 +52,15 @@ const SwitchLanguage = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button bg={'whiteAlpha.900'} ml={4} py={6} px={8} _hover={{ bg: 'whiteAlpha.900' }}>
+        <Button bg={'transparent'} ml={4} py={6} px={8} _hover={{ bg: 'transparent' }}>
           <Image
-            src={`/assets/${currentLanguage}.svg`}
+            src={`/assets/${currentLanguage}.png`}
             w={'34px'}
             borderColor={'gray.300'}
             borderWidth={'1px'}
             borderStyle={'solid'}
             borderRadius={'full'}
+            alt={currentLanguage}
           />
         </Button>
       </PopoverTrigger>

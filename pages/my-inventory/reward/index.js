@@ -8,6 +8,7 @@ import { getUserInfo } from "../../../utils/helpers";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { useAppRedireact } from "../../../utils/hook";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function MyInventory() {
   const [generateRouter] = useAppRedireact();
@@ -38,10 +39,15 @@ export default function MyInventory() {
   return (
     <>
       <Head>
-        <title>{t('reward')}</title>
+        <title>{t('menu.reward')}</title>
       </Head>
       <div className="nk-gap-2" />
-      <BreadCrumbs label="Reward" root={[{ href: generateRouter(''), label: "Channel" }, { href: generateRouter(''), label: "Inventory" }]} />
+      <BreadCrumbs
+        label="Reward"
+        root={
+          [{ href: generateRouter(''), label: t("menu.channel") }, { href: generateRouter(''), label: t("menu.my_inventory") }]
+        }
+      />
       <div className="nk-gap-2 mt-10" />
       <div className="container">
         <div className="row">
@@ -62,4 +68,10 @@ export default function MyInventory() {
 
     </>
   )
+}
+
+export const getServerSideProps = async ({ locale }) => {
+  return {
+    props: { ...(await serverSideTranslations(locale, ['common'])) }
+  }
 }
