@@ -39,7 +39,7 @@ const DonateModal = ({isOpen, setOpen, onConfirm}) => {
         <ModalOverlay />
         <ModalContent bg={'#181c23'}>
           <ModalHeader color={'white'}>{t('modal.donate.header')}</ModalHeader>
-          <ModalBody pb={6} bg={'#181c23 !important'}>
+          <ModalBody pb={6}>
             <Input
               type="number"
               borderRadius={'20px'}
