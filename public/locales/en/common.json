@@ -46,7 +46,7 @@
     "nft": {
         "no_data": "Nothing to display",
         "symbol": "Symbol: {{symbol}}",
-        "released_at": "Released at:"
+        "released_at": "Released at: {{time}}"
     },
     "modal": {
         "donate": {
@@ -62,6 +62,9 @@
     "menu": {
         "channel": "Channel",
         "my_inventory": "My Inventory",
+        "collection": "Collection",
+        "reward": "Reward",
+        "detail": "Detail",
         "profile": "Profile"
     },
     "btn_wallet": {
@@ -72,6 +75,16 @@
         "disconnect": "Disconnect",
         "connect": "Connect",
         "select": "Select Wallet"
+    },
+    "inventory": {
+        "nothing_to_display": "Nothing to display",
+        "collection_information": "Collection Information",
+        "reward_information": "Reward Information",
+        "exchange": "Exchange", 
+        "confirm": "Confirm",
+        "close": "Close",
+        "exchange_msg": "By this action, you have to sign {{amount}} burn Compressed NFT transaction to get {{name}} reward!",
+        "exchanged_at": "Exchanged at"
     },
     "profile": {
         "authorize_discord_failed": "Authorize Discord failed",
