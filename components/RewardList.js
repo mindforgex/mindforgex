@@ -9,7 +9,7 @@ export default function NFTProfile({ data, className = '' }) {
   const { t } = useTranslation()
 
   return (
-    <Flex gap={24} className={classNames("products", { [className]: true })}>
+    <Flex justifyContent={'center'} gap={24} className={classNames("products", { [className]: true })}>
       {
         _data.length === 0 ? (
           <EmptyMsg />

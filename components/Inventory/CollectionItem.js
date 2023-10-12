@@ -115,7 +115,7 @@ function CollectionItem({ data, onFetchCollection }) {
                 alt={data.name}
                 width={250}
               />
-              <Flex flexWrap='wrap' flexDirection='column' justifyContent='space-between'>
+              <Flex flexWrap='wrap' flexDirection='column' justifyContent='space-between' mb={12}>
                 <Text overflow='auto'>{data.description}</Text>
                 <Flex w='100%' flexWrap='wrap' gap={5} maxHeight={200}>
                   {

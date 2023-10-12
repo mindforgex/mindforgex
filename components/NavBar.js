@@ -52,7 +52,7 @@ export default function NavBar() {
                                   return (
                                     <li key={_itemChild.label}
                                       className="menu-item menu-item-type-custom menu-item-object-custom ghost_menu__sub-menu__item ghost_menu__sub-menu--1__item">
-                                      <Link href={generateRouter(_item.path + _itemChild.path)}>{_itemChild.label}</Link>
+                                      <Link href={generateRouter(_item.path + _itemChild.path)}>{t(_itemChild.label)}</Link>
                                     </li>
                                   )
                                 })
