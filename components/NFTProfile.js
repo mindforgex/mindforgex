@@ -61,13 +61,11 @@ export default function NFTProfile({ data, className = '' }) {
                     </span>
                   </div>
                 </div>
-                <Button colorScheme={'twitter'}>Listing NFT</Button>
               </li>
             )
           })
         )
       }
     </ul>
-
   )
 }
