@@ -1,13 +1,44 @@
-import { Box, Card, CardBody, CardFooter, Divider, Flex, Image, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Text } from '@chakra-ui/react'
+import {
+  Badge,
+  Box,
+  Card,
+  CardBody,
+  CardFooter,
+  Divider,
+  Flex,
+  Icon,
+  Image,
+  Popover,
+  PopoverArrow, PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  Text 
+} from '@chakra-ui/react'
 import React from 'react'
 import { AiFillLock } from 'react-icons/ai'
+import { HiDotsHorizontal } from 'react-icons/hi';
 import ListingItem from '../marketplace/ListingItem';
 
 function CollectionPack({ data }) {
   if (!data) return <></>;
 
   return (
-    <Flex direction={'column'} alignItems={'center'}>
+    <Flex direction={'column'} alignItems={'center'} pos={'relative'}>
+      <Popover>
+        <PopoverTrigger>
+        <Flex pos={'absolute'} top={1} right={3} cursor={'pointer'} zIndex={9}>
+          <Icon as={HiDotsHorizontal} w={6} h={6} />
+        </Flex>
+        </PopoverTrigger>
+        <PopoverContent w={'100%'}>
+          <PopoverArrow />
+          <PopoverBody>
+            <ListingItem data={data} />
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
       <Popover>
         <PopoverTrigger>
           <Box
@@ -15,39 +46,79 @@ function CollectionPack({ data }) {
             position='relative' 
             className='nft-info-item'
             maxHeight={200}
+            direction="column"
+            alignItems="center"
+            py={5}
+            px={5}
+            bgColor={'var(--cbp-color-background)'}
+            boxShadow="0px 3px 16px rgb(47 83 109 / 12%)"
+            transition="all 0.3s ease-in-out"
+            mb="40px"
+            overflow="hidden"
+            borderRadius="20"
+            _hover={{
+              '&>*': { opacity: 1 },
+              transform: 'translateY(-10px)',
+              transition: 'all 0.4s ease',
+            }}
+            role="group"
+            minW={'165px'}
+            css={{ webkitFilter: 'grayscale(0%)' }}
+            pos={'relative'}
           >
+            { data.amount ? (
+              <Flex pos={'absolute'} top={2} left={4}>
+                <Badge
+                  display={'flex'}
+                  alignItems={'center'}
+                  justifyContent={'center'}
+                  fontWeight={'extrabold'}
+                  borderRadius={'full'}
+                  fontSize={'11px'}
+                  w={'16px'}
+                  h={'16px'}
+                >{data?.amount}</Badge>
+              </Flex>
+              ) : ''
+            }
             {
-              !data.owned && (
-                <div className='locked'>
-                  <AiFillLock />
-                </div>
-              )
+              !data.amount ? (
+                <Flex
+                  pos={'absolute'}
+                  top={0}
+                  left={0}
+                  right={0}
+                  bottom={0}
+                  bg={'rgba(0, 0, 0, .6)'}
+                  justifyContent={'center'}
+                  alignItems={'center'}
+                  w={'100%'}
+                  zIndex={9}
+                >
+                  <Icon as={AiFillLock} boxSize={'3rem'} color={'gray.400'} mt={'-2rem'} />
+                </Flex>
+              ) : ''
             }
             <Card
               height='100%'
-              backgroundColor='rgba(0, 0, 0, 0.6)'
-              color='#fff'
-              border='1px solid #aaaaaa50'
-              filter={`contrast(${!data.owned ? '20%' : '100%'})`}
               maxHeight={200}
+              bg={'transparent'}
             >
           
-              <CardBody 
-                display='flex' 
-                justifyContent='center'
-              >
+              <CardBody p={0} w={'100%'}>
                 <Image
                   fill={true}
                   src={data.image}
                   alt={data.name}
-                  w={100}
+                  w={'100%'}
+                  borderRadius={'full'}
                   onError={(event) => {
                     event.target.src="/assets/thumbnail.png"
                   }}
                 />
               </CardBody>
               <CardFooter w='100%' display='flex' justifyContent={'center'} padding='3'>
-                <Text mb='0'>{data.name} ({data.symbol})</Text>
+                <Text mb='0' color={'white'}>{data.name} ({data.symbol})</Text>
               </CardFooter>
             </Card>
           </Box>
@@ -63,7 +134,6 @@ function CollectionPack({ data }) {
           </PopoverBody>
         </PopoverContent>
       </Popover>
-      <ListingItem data={data} />
     </Flex>
   )
 }

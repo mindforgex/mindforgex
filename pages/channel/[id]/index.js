@@ -18,6 +18,7 @@ import { PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import axios from 'axios';
+import Statistic from '../../../components/Channel/Statistic'
 
 function DetailChannel() {
   const router = useRouter();
@@ -226,7 +227,7 @@ function DetailChannel() {
                         __html: detailChannel?.description?.replace(/\n/g, "<br />")
                       }}
                     />
-
+                    <Statistic detail={detailChannel} />
                     <div style={{ marginTop: '60px' }} />
                     <section className='nk-decorated-h-2'>
                       <h3 className='px-4'>{t('channel.about_me')}</h3>
@@ -237,7 +238,6 @@ function DetailChannel() {
                         __html: detailChannel.aboutMe
                       }}
                     />
-
                     <div style={{ marginTop: '60px' }} />
                     <section className='nk-decorated-h-2'>
                       <h3 className='px-4'>{t('channel.posts')}</h3>

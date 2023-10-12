@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { getDetailChannel } from '../../../../services';
 import { getChannelCollection } from '../../../../services/inventoryService';
 import { getUserInfo } from '../../../../utils/helpers';
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Box, Flex, SkeletonCircle, SkeletonText, Spinner } from '@chakra-ui/react';
 import CollectionList from '../../../../components/Inventory/CollectionList';
 import axios from 'axios';
 import { useAppRedireact } from '../../../../utils/hook';
@@ -59,6 +59,24 @@ function ChannelCollections() {
     onFetchCollection()
   }, []);
 
+  const RenderSkeleton = () => {
+    return (
+      <Box
+        p={6}
+        boxShadow='lg'
+        bg={'rgba(0, 0, 0, 0.6)'}
+        borderRadius={'20px'}
+        borderWidth={'1px'}
+        borderColor={'gray.600'}
+        borderStyle={'solid'}
+      >
+        <SkeletonText my='4' noOfLines={4} spacing='2' skeletonHeight='1' />
+        <SkeletonCircle size='10' />
+        <SkeletonText my='4' noOfLines={4} spacing='4' skeletonHeight='2' />
+      </Box>
+    )
+  };
+
   return (
     <>
       <Head>
@@ -82,7 +100,7 @@ function ChannelCollections() {
         <div className="col-lg-12">
           {
             isLoading ? (
-              <Flex justifyContent="center"><Spinner /></Flex>
+              <RenderSkeleton />
             ) : (
               <>
                 <CollectionList data={collectionData} onFetchCollection={onFetchCollection}/>

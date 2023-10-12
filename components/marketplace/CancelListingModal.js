@@ -84,9 +84,9 @@ const CancelListingModal = ({isOpen, setOpen, onConfirm, listingItem, parentCanc
               colorScheme='blue'
               mr={3} onClick={onClose}
               isLoading={isLoading}
-              loadingText='Cannceling...'
+              loadingText='Canceling...'
             >
-              {t('modal.cancel_listing.btn_cancel')}
+              {t('modal.listing.btn_cancel')}
             </Button>
             <Button
               onClick={() => {

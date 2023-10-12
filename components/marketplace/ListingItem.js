@@ -106,13 +106,16 @@ const ListingItem = ({ data }) => {
 
   return (
     <>
-      <Flex mt={2} w={'100%'} direction={'column'}>
+      <Flex mt={2} w={'100%'} direction={'column'} alignItems={'center'}>
         {nonListing.length ? (
           <Button
             isDisabled={!data.owned}
-            colorScheme={'blue'}
+            bg={'#fc4f4f'}
+            _hover={{ bg: '#fc4f4f' }}
             w={'100%'}
             mb={2}
+            fontSize={'11px'}
+            maxW={'80%'}
             onClick={() => (data.owned && setOpen(true))}
           >
             { t('btn.listing') }
@@ -120,8 +123,10 @@ const ListingItem = ({ data }) => {
         ) : ''}
         { listingItem.length ? (
           <Button
-            colorScheme={'blue'}
+            colorScheme={'yellow'}
             w={'100%'}
+            maxW={'80%'}
+            fontSize={'11px'}
             isLoading={isLoading}
             loadingText='Cannceling...'
             onClick={canncelListing}

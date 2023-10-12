@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, CardFooter, Collapse, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useToast } from '@chakra-ui/react'
+import { Avatar, Box, Button, CardFooter, Collapse, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Tooltip, useToast } from '@chakra-ui/react'
 import { Card, CardBody, CardHeader, Flex, Image, Text } from '@chakra-ui/react'
 import CollectionPack from './CollectionPack'
 import { requestExchangeCollection, confirmExchangeCollection } from '../../services/inventoryService'
@@ -76,7 +76,12 @@ function CollectionItem({ data, onFetchCollection }) {
         w='100%'
         backgroundColor='rgba(0, 0, 0, 0.6)'
         color='#fff'
-        border='1px solid #aaaaaa50'
+        borderWidth={'1px'}
+        borderColor={'gray.600'}
+        borderStyle={'solid'}
+        borderRadius={'20px'}
+        boxShadow="0px 3px 16px rgb(47 83 109 / 12%)"
+        transition="all 0.3s ease-in-out"
       >
         <CardHeader borderBottom='1px solid #aaaaaa50' mb={3}>
           <Flex justifyContent='space-between'>
@@ -94,7 +99,7 @@ function CollectionItem({ data, onFetchCollection }) {
                 {t('inventory.exchange')}
               </button>
             
-              <FaAngleDown 
+              <FaAngleDown
                 fontSize='20' 
                 className={classNames('expand-icon', { 'rotate-close': !isExpanded })}
                 onClick={toggleExpand}
@@ -108,16 +113,43 @@ function CollectionItem({ data, onFetchCollection }) {
             {t('inventory.collection_information')}:
             </Text>
             <Flex gap={5} flexWrap='wrap'>
-              <Image
-                flexBasis={250}
-                fill={true}
-                src={data.image}
-                alt={data.name}
-                width={250}
-              />
+              <Flex direction={'column'} maxW={'24%'}>
+                <Flex borderRadius={'full'} pos={'relative'} w={'100%'}>
+                  <Avatar
+                    h={'250px'}
+                    w={'100%'}
+                    display={'flex'}
+                    src={data.image}
+                    alt={data.name}
+                    borderWidth={'5px'}
+                    borderColor={'#dd163b'}
+                  />
+                  <Tooltip label={`${data?.reward_data?.name} - ${data?.reward_data?.description}`}>
+                    <Avatar
+                      pos={'absolute'}
+                      h={20}
+                      w={20}
+                      display={'flex'}
+                      borderWidth={'3px'}
+                      borderColor={'green.900'}
+                      src={data?.reward_data?.image_uri || ""}
+                      alt={data?.reward_data?.name}
+                      bottom={0}
+                      right={6}
+                    />
+                  </Tooltip>
+                </Flex>
+                <Text mt={6} overflow='auto' fontWeight={'semibold'} fontSize={'xl'} align={'center'}>
+                  {data.description}
+                </Text>
+              </Flex>
               <Flex flexWrap='wrap' flexDirection='column' justifyContent='space-between' mb={12}>
-                <Text overflow='auto'>{data.description}</Text>
-                <Flex w='100%' flexWrap='wrap' gap={5} maxHeight={200}>
+                <Flex
+                  w='100%'
+                  flexWrap='wrap'
+                  gap={5}
+                  maxHeight={200}
+                >
                   {
                     nftInfo.map(_item => {
                       return (
@@ -131,25 +163,6 @@ function CollectionItem({ data, onFetchCollection }) {
               </Flex>
             </Flex>
           </CardBody>
-          <CardFooter borderTop='1px solid #aaaaaa50' flexDirection='column' mt={8}>
-            <Text as='h4' textTransform='capitalize' mb={8}>
-              {t('inventory.reward_information')}:
-            </Text>
-
-            <Flex gap={5} flexWrap='wrap'>
-              <Image
-                flexBasis={250}
-                fill={true}
-                src={data?.reward_data?.image_uri || ""}
-                alt={data?.reward_data?.name}
-                width={250}
-              />
-              <Box>
-                <Text as="h4">{data?.reward_data?.name}</Text>
-                <Text overflow='auto'>{data?.reward_data?.description}</Text>
-              </Box>
-            </Flex>
-          </CardFooter>
         </Collapse>
       </Card>
 
@@ -164,12 +177,17 @@ function CollectionItem({ data, onFetchCollection }) {
           </ModalHeader>
           
           <ModalBody>
-            {t('inventory.exchange_msg', { amount: nftInfo.length, reward_name: data.reward_data?.name })}
+            <Flex direction={'column'} alignItems={'center'}>
+              <Avatar src={data.reward_data?.image_uri} boxSize={20} />
+              <Text as={'p'} mt={6}>
+                {t('inventory.exchange_msg', { amount: nftInfo.length, name: data.reward_data?.name })}
+              </Text>
+            </Flex>
           </ModalBody>
           
-          <ModalFooter>
+          <ModalFooter mt={0} pt={0}>
             <Flex>
-              <Button mr={3} onClick={onCloseModal} variant='ghost' color='#fff'>
+              <Button mr={3} onClick={onCloseModal} variant='ghost' color='#fff' _hover={{ bg: 'transparent' }}>
                 {t('inventory.close')}
               </Button>
               <Button isLoading={isLoadingTransaction} colorScheme='red' onClick={onExchange}>

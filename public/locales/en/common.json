@@ -41,7 +41,9 @@
             "verify_failed": "Verify task failed!",
             "completed": "Completed",
             "verify": "Verify"
-        }
+        },
+        "statistic": "Statistic",
+        "published_posts": "Published Posts"
     },
     "nft": {
         "no_data": "Nothing to display",
