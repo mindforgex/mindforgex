@@ -6,6 +6,7 @@ import { claimNFT } from '../../../../services/postService';
 import ClaimNFTButton from '../../../ClaimNFTButton';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { useAppRedireact } from '../../../../utils/hook';
 
 const Task = ({ channelId, post }) => {
   const { t } = useTranslation('common');
@@ -29,6 +30,7 @@ const Task = ({ channelId, post }) => {
   }, [claimed, post?.userAddress, userInfo?.user?.walletAddress])
   const isClaimable = isFinished && !isClaimed
   const router = useRouter()
+  const [generateRouter] = useAppRedireact()
 
   const onClose = () => setIsOpenModal(false)
 
@@ -109,7 +111,7 @@ const Task = ({ channelId, post }) => {
             </Alert>
             <Flex justifyContent="center" mb={5}>
               <button className='nk-btn nk-btn-color-main-1 subscribe-btn' mr={3} onClick={() => {
-                router.push('/my-inventory')
+                router.push(generateRouter('my-inventory/collection'))
               }}>
                 {t('channel.task.inventory_page')}
               </button>

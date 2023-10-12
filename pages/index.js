@@ -10,6 +10,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import supabase from '../utils/supabase';
 import { useRouter } from 'next/router';
 import { useToast } from '@chakra-ui/react';
+import { getUserInfo } from '../utils/helpers';
+import { useAppRedireact } from '../utils/hook';
 
 export default function Channel() {
   const [channels, setChannels] = useState([]);
@@ -19,6 +21,7 @@ export default function Channel() {
   const { t } = useTranslation('common');
   const router = useRouter()
   const toast = useToast()
+  const [generateRouter] = useAppRedireact()
 
   useEffect(() => {
     const getAppChannels = async () => {
@@ -36,15 +39,23 @@ export default function Channel() {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event) => {
-      if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
-        router.push('profile')
-      } else if (event === 'SIGNED_OUT') {
+      if (event === 'SIGNED_OUT') {
         toast({
           title: t('profile.disconnect_discord_success'),
           description: "",
           status: 'success',
           isClosable: true,
         })
+      } else {
+        const userInfo = getUserInfo()
+        const session = await supabase.auth.getSession()
+        if (
+          userInfo && 
+          !(userInfo.user.discordUsername && userInfo.user.discordId) && 
+          session.data.session
+        ) {
+          router.push(generateRouter('profile'))
+        }
       }
     })
   }, [])

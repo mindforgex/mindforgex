@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Button, CardFooter, Collapse, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useToast } from '@chakra-ui/react'
-import { Card, CardBody, CardHeader, Divider, Flex, Heading, Image, Text } from '@chakra-ui/react'
+import { Card, CardBody, CardHeader, Flex, Image, Text } from '@chakra-ui/react'
 import CollectionPack from './CollectionPack'
 import { requestExchangeCollection, confirmExchangeCollection } from '../../services/inventoryService'
 import { confirmTransactionFromFrontend  } from '../../utils/transactionSigner'
@@ -9,7 +9,7 @@ import { FaAngleDown } from 'react-icons/fa'
 import classNames from 'classnames'
 import { useTranslation } from 'next-i18next'
 
-function CollectionItem({ data,  }) {
+function CollectionItem({ data, onFetchCollection }) {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isLoadingTransaction, setIsLoadingTransaction] = useState(false)
   const [isExpanded, setIsExpanded] = useState(true)
@@ -29,7 +29,6 @@ function CollectionItem({ data,  }) {
 
   const onExchange = async () => {
     try {
-
       setIsLoadingTransaction(true)
       const requestExResp = await requestExchangeCollection({
         "collectionId": data._id,
@@ -64,6 +63,7 @@ function CollectionItem({ data,  }) {
       })
       setIsLoadingTransaction(false)
       onCloseModal()
+      onFetchCollection && onFetchCollection()
     } catch (error) {
       console.log(error);
       onCloseModal()

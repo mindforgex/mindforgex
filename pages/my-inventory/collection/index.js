@@ -64,7 +64,7 @@ function Collection() {
               <Flex justifyContent="center"><Spinner /></Flex>
             ) : (
               <>
-                <CollectionList data={collectionData} />
+                <CollectionList data={collectionData} onFetchCollection={getData} />
               </>
             )
           }
