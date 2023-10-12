@@ -30,7 +30,6 @@ function CollectionPack({ data }) {
               border='1px solid #aaaaaa50'
               filter={`contrast(${!data.owned ? '20%' : '100%'})`}
               maxHeight={200}
-              onClick={handleListing}
             >
           
               <CardBody 
