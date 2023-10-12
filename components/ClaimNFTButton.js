@@ -12,6 +12,9 @@ export default function ClaimNFTButton({ btnProps, children, nftData }) {
             width={100}
             src={nftData?.image}
             alt=""
+            onError={(event) =>{ 
+              event.target.src = '/assets/thumbnail.png'
+            }}
           />
           <Text className="h5 nft-name">
             {nftData?.name}

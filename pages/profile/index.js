@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import BreadCrumbs from '../../components/BreadCrumbs'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -20,6 +20,7 @@ function Profile() {
   const [generateRouter] = useAppRedireact()
   const userInfo = getUserInfo()
   const toast = useToast()
+  const [refresh, setRefresh] = useState(0)
 
   const onSignInDiscord = () => {
     signInWithDiscord()
@@ -36,6 +37,8 @@ function Profile() {
   }
 
   useEffect(() => {
+    if (!userInfo || (userInfo.user.discordId && userInfo.user.discordUsername)) return;
+  
     supabase.auth.getSession()
       .then((res) => {
         if (res.data.session) {
@@ -46,9 +49,9 @@ function Profile() {
         if (!resp) return;
         const { data } = resp
         if (data?.user) {
-          userInfo.user.discordId = data.user.id;
+          userInfo.user.discordId = data.user.user_metadata.provider_id;
           userInfo.user.discordUsername = data.user.user_metadata.name
-          return connectToDiscord({ discordId: data.user.id, discordUsername: data.user.user_metadata.name })
+          return connectToDiscord({ discordId: data.user.user_metadata.provider_id, discordUsername: data.user.user_metadata.name })
         } else {
           toast({
             title: t('profile.confirm_connect_with_discord_failed'),
@@ -61,9 +64,10 @@ function Profile() {
       .then((resp) => {
         if (resp && resp.message) {
           saveUserInfo(userInfo)
+          setRefresh(Math.random())
         }
       })
-  }, [])
+  }, [userInfo])
 
   return (
     <>
@@ -86,7 +90,7 @@ function Profile() {
               {
                 userInfo?.user?.discordUsername ? (
                   <Flex alignItems='center'>
-                    <Text mr={8} fontSize='larger'>{userInfo?.user?.discordUsername?.replace('#0', '') || ""}</Text>
+                    <Text mr={8} as='div' fontSize='larger'>{userInfo?.user?.discordUsername?.replace('#0', '') || ""}</Text>
                     <Button
                       className='nk-btn nk-btn-color-main-1'
                       bg='#dd163b !important'

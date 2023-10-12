@@ -1,6 +1,7 @@
 import { TableContainer } from "@chakra-ui/react";
 import { Table as ChakraTable } from "@chakra-ui/react";
 import Pagination from "./Pagination";
+import { useAppRedireact } from "../utils/hook";
 
 export default function Table({
   pageCount,
@@ -10,6 +11,7 @@ export default function Table({
 }) {
   const _tableColumns = Array.isArray(tableColumns) ? tableColumns : []
   const _data = Array.isArray(data) ? data : []
+  const [generateRouter] = useAppRedireact()
 
   return (
     <>
@@ -29,7 +31,7 @@ export default function Table({
           <tbody>
             {_data.map(_item => {
               return (
-                <tr key={_item.id} className='cursor-pointer' onClick={() => router.push(`/post/${_item.id}`)}>
+                <tr key={_item.id} className='cursor-pointer' onClick={() => router.push(generateRouter(`/post/${_item.id}`))}>
                   {
                     _tableColumns.map((_key, index) => {
                       return (

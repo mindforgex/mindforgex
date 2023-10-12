@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import BreadCrumbs from '../../../../components/BreadCrumbs'
 import Head from 'next/head'
 import { useRouter } from 'next/router';
@@ -20,7 +20,7 @@ function ChannelCollections() {
   const [isLoading, setIsLoading] = useState(true);
   const [collectionData, setCollectionData] = useState([])
 
-  useEffect(() => {
+  const onFetchCollection = useCallback(() => {
     const userInfo = getUserInfo()
 
     const getDetail = async () => {
@@ -49,11 +49,15 @@ function ChannelCollections() {
       getCollection && await getCollection();
       setIsLoading(false)
     }
-    
+
     if (router.query?.id) {
       combineFunction()
     }
-  }, [router.query?.id]);
+  }, [router.query?.id])
+
+  useEffect(() => {
+    onFetchCollection()
+  }, []);
 
   return (
     <>
@@ -81,7 +85,7 @@ function ChannelCollections() {
               <Flex justifyContent="center"><Spinner /></Flex>
             ) : (
               <>
-                <CollectionList data={collectionData} />
+                <CollectionList data={collectionData} onFetchCollection={onFetchCollection}/>
               </>
             )
           }
