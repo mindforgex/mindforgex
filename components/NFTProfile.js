@@ -1,10 +1,13 @@
-import { Image, Link } from "@chakra-ui/react";
+import { Button, Image, Link } from "@chakra-ui/react";
 import classNames from "classnames";
 import moment from "moment";
 import { useTranslation } from "next-i18next";
 import { TbMoodEmpty } from 'react-icons/tb'
+import { getUserInfo } from "../utils/helpers";
+import axios from "axios";
 
 export default function NFTProfile({ data, className = '' }) {
+  const userInfo = getUserInfo();
   const _data = Array.isArray(data) ? data : []
   const { t } = useTranslation('common');
 
@@ -58,6 +61,7 @@ export default function NFTProfile({ data, className = '' }) {
                     </span>
                   </div>
                 </div>
+                <Button colorScheme={'twitter'}>Listing NFT</Button>
               </li>
             )
           })

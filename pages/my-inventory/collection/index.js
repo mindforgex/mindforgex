@@ -23,7 +23,7 @@ function Collection() {
     if (userInfo?.user?.walletAddress) {
       const { items } = await getUserCollection(userInfo?.user?.walletAddress, params)
       const data = await Promise.all(
-        items.map(async (_item) => {
+        items?.map(async (_item) => {
           const resp = await axios.get(_item.metadata_uri)
           return {
             ..._item,

@@ -55,7 +55,14 @@
             "btn_donate": "Donate",
             "required_amount": "Please enter donation amount"
         },
-        "btn_cancel": "Cancel"
+        "btn_cancel": "Cancel",
+        "listing": {
+            "header": "Listing nft",
+            "amount_placeholder": "Enter price ...",
+            "select_item_placeholder": "Select listing item...",
+            "btn_listing": "Listing nft",
+            "required_amount": "Please enter price"
+        }
     },
     "social_link": "Social Link",
     "please_connect_wallet": "Please connect wallet",
@@ -65,7 +72,8 @@
         "collection": "Collection",
         "reward": "Reward",
         "detail": "Detail",
-        "profile": "Profile"
+        "profile": "Profile",
+        "marketplace": "Marketplace"
     },
     "btn_wallet": {
         "change": "Change wallet",
@@ -96,5 +104,28 @@
     },
     "msg": {
         "something_went_wrong": "Something went wrong"
+    },
+    "btn": {
+        "listing": "Listing NFT",
+        "cancel_listing": "Cancel Listing"
+    },
+    "listing": {
+        "success": "Listing NFT successfully",
+        "failed": "Listing NFT failed",
+        "cancel_success": "Cancel Listing successfully",
+        "cancel_failed": "Cancel Listing failed"
+    },
+    "marketplace": {
+        "header": "NFT Marketplace",
+        "buy_now": "Buy now",
+        "seller": "Seller",
+        "current_price": "Current price",
+        "noti_buy_nft_success": "Buy NFT successfully",
+        "noti_buy_nft_failed": "Buy NFT failed",
+        "buy": {
+            "header": "Buy NFT",
+            "nft_name": "NFT name: {{name}}",
+            "btn_buy": "Buy"
+        }
     }
 }

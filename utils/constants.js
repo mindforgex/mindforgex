@@ -25,5 +25,9 @@ export const NAV_BAR_ITEM = [
   {
     label: "menu.profile",
     path: "profile"
+  },
+  {
+    label: "menu.marketplace",
+    path: "marketplace"
   }
 ]
