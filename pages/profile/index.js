@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useAppRedireact } from '../../utils/hook'
 import { Button, Flex, Text, useToast } from '@chakra-ui/react';
-import { getUserInfo } from '../../utils/helpers'
+import { getUserInfo, saveUserInfo, setU } from '../../utils/helpers'
 import supabase, { signInWithDiscord } from '../../utils/supabase'
 import { connectToDiscord } from '../../services/authService';
 
@@ -36,10 +36,19 @@ function Profile() {
   }
 
   useEffect(() => {
-    supabase.auth.getUser()
-      .then(({ data }) => {
+    supabase.auth.getSession()
+      .then((res) => {
+        if (res.data.session) {
+          return supabase.auth.getUser()
+        }
+      })
+      .then((resp) => {
+        if (!resp) return;
+        const { data } = resp
         if (data?.user) {
-          connectToDiscord({ discordId: data.user.id, discordUserName: data.user.user_metadata.name })
+          userInfo.user.discordId = data.user.id;
+          userInfo.user.discordUsername = data.user.user_metadata.name
+          return connectToDiscord({ discordId: data.user.id, discordUsername: data.user.user_metadata.name })
         } else {
           toast({
             title: t('profile.confirm_connect_with_discord_failed'),
@@ -47,6 +56,11 @@ function Profile() {
             status: 'error',
             isClosable: true,
           })
+        }
+      })
+      .then((resp) => {
+        if (resp && resp.message) {
+          saveUserInfo(userInfo)
         }
       })
   }, [])
@@ -70,20 +84,20 @@ function Profile() {
             <Flex gap={8} flexWrap='wrap' alignItems='center'>
               <Text flexBasis={150} fontSize='larger' as='label'>Discord:</Text>
               {
-                userInfo?.user?.discordUserName ? (
-                  <>
-                    <Text mr={8} fontSize='larger'>{userInfo?.user?.discordUserName || ""}</Text>
+                userInfo?.user?.discordUsername ? (
+                  <Flex alignItems='center'>
+                    <Text mr={8} fontSize='larger'>{userInfo?.user?.discordUsername?.replace('#0', '') || ""}</Text>
                     <Button
                       className='nk-btn nk-btn-color-main-1'
                       bg='#dd163b !important'
                       color='#fff'
                       onClick={() => { }}
                     >{t('profile.disconnect')}</Button>
-                  </>
+                  </Flex>
                 ) : (
-                  <Button 
-                    className='nk-btn nk-btn-color-main-1' 
-                    bg='#dd163b !important' 
+                  <Button
+                    className='nk-btn nk-btn-color-main-1'
+                    bg='#dd163b !important'
                     color='#fff'
                     onClick={onSignInDiscord}
                   >{t('profile.connect_with_discord')}</Button>
