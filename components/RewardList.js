@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Link } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Image, Link } from "@chakra-ui/react";
 import classNames from "classnames";
 import moment from "moment";
 import EmptyMsg from './EmptyMsg'
@@ -9,7 +9,11 @@ export default function NFTProfile({ data, className = '' }) {
   const { t } = useTranslation()
 
   return (
-    <Flex justifyContent={'center'} gap={24} className={classNames("products", { [className]: true })}>
+    <Grid
+      templateColumns={'repeat(12, 1fr)'}
+      templateRows={'repeat(4, 1fr)'}
+      gap={6}
+    >
       {
         _data.length === 0 ? (
           <EmptyMsg />
@@ -17,31 +21,52 @@ export default function NFTProfile({ data, className = '' }) {
           _data.map(_item => {
             const rewardData = _item.reward_data
             return (
-              <Box key={_item.id}>
-                <Flex gap={4}>
-                  <Image
-                    width={300}
-                    height={384}
-                    src={rewardData.image_uri || "/assets/thumbnail.png"}
-                    alt=""
-                    onError={(event) => {
-                      event.target.src = "/assets/thumbnail.png"
-                    }}
-                  />
-                  <div className="nk-product-cont">
-                    <h3 className="nk-product-title">
-                      {rewardData.name}
-                    </h3>
-                    <span className="">
-                      {t('inventory.exchanged_at')}: {moment(data.createdAt).format("DD MMM, YYYY")}
-                    </span>
-                  </div>
-                </Flex>
-              </Box>
+              <GridItem colSpan={3} rowSpan={1}>
+                <Box
+                  key={_item.id}
+                  direction="column"
+                  alignItems="center"
+                  py={5}
+                  px={5}
+                  bgColor={'var(--cbp-color-background)'}
+                  boxShadow="0px 3px 16px rgb(47 83 109 / 12%)"
+                  transition="all 0.3s ease-in-out"
+                  mb="40px"
+                  overflow="hidden"
+                  borderRadius="20"
+                  _hover={{
+                    '&>*': { opacity: 1 },
+                    transform: 'translateY(-10px)',
+                    transition: 'all 0.4s ease',
+                  }}
+                  role="group"
+                  css={{ webkitFilter: 'grayscale(0%)' }}
+                >
+                  <Flex gap={4} direction={'column'}>
+                    <Image
+                      width={300}
+                      height={384}
+                      src={rewardData.image_uri || "/assets/thumbnail.png"}
+                      alt=""
+                      onError={(event) => {
+                        event.target.src = "/assets/thumbnail.png"
+                      }}
+                    />
+                    <div className="nk-product-cont">
+                      <h3 className="nk-product-title">
+                        {rewardData.name}
+                      </h3>
+                      <span className="">
+                        {t('inventory.exchanged_at')}: {moment(data.createdAt).format("DD MMM, YYYY")}
+                      </span>
+                    </div>
+                  </Flex>
+                </Box>
+              </GridItem>
             )
           })
         )
       }
-    </Flex>
+    </Grid>
   )
 }

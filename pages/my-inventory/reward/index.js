@@ -5,10 +5,11 @@ import RewardItem from "../../../components/RewardList";
 import { useCallback, useEffect, useState } from "react";
 import { getRewardHistory } from '../../../services/inventoryService'
 import { getUserInfo } from "../../../utils/helpers";
-import { Flex, Spinner } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Spinner } from "@chakra-ui/react";
 import { useAppRedireact } from "../../../utils/hook";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import SkeletonCard from "../../../components/marketplace/SkeletonCard";
 
 export default function MyInventory() {
   const [generateRouter] = useAppRedireact();
@@ -26,7 +27,6 @@ export default function MyInventory() {
         _item.nft_collection_data = _item.nft_collection_data[0]
         return _item
       })
-
       setRewardHistory(data)
       setIsLoading(false)
     }
@@ -34,7 +34,19 @@ export default function MyInventory() {
 
   useEffect(() => {
     getData()
-  }, [getData])
+  }, [getData]);
+
+  const RenderSkeleton = () => {
+    return (
+      <Grid templateColumns='repeat(12, 1fr)' templateRows='repeat(2, 1fr)' gap={6} minH={'61rem'}>
+        {Array(8).fill(0).map((_, index) => (
+          <GridItem w='100%' h='auto' colSpan={{ base: 3, sm: 12, md: 6, xl: 3 }} rowSpan={1} key={`card-${index}`}>
+            <SkeletonCard />
+          </GridItem>
+        ))}
+      </Grid>
+    )
+  };
 
   return (
     <>
@@ -50,20 +62,16 @@ export default function MyInventory() {
       />
       <div className="nk-gap-2 mt-10" />
       <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            {
-              isLoading ? (
-                <Flex justifyContent="center"><Spinner /></Flex>
-              ) : (
-                <>
-                  <RewardItem data={rewardHistory} className="columns-2" />
-                  {/* <Pagination pageCount={Math.ceil()} onPageChange={() => { }} /> */}
-                </>
-              )
-            }
-          </div>
-        </div>
+        {
+          isLoading ? (
+            <RenderSkeleton />
+          ) : (
+            <>
+              <RewardItem data={rewardHistory} className="columns-2" />
+              {/* <Pagination pageCount={Math.ceil()} onPageChange={() => { }} /> */}
+            </>
+          )
+        }
       </div>
 
     </>

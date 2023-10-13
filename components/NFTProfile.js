@@ -1,4 +1,4 @@
-import { Button, Image, Link } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Image, Link } from "@chakra-ui/react";
 import classNames from "classnames";
 import moment from "moment";
 import { useTranslation } from "next-i18next";
@@ -21,6 +21,7 @@ export default function NFTProfile({ data, className = '' }) {
           </div>
         ) : (
           _data.map((_item, index) => {
+            console.log(_item)
             return (
               <li key={`item-index-${index}`} className="product type-product status-publish first instock product_cat-pc has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
                 <div className="nk-product-cat-2">
@@ -29,16 +30,18 @@ export default function NFTProfile({ data, className = '' }) {
                     target="_blank"
                     className="woocommerce-LoopProduct-link woocommerce-loop-product__link nk-product-image"
                   >
-                    <Image
-                      width={300}
-                      height={384}
-                      src={_item.image || "/assets/thumbnail.png"}
-                      className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
-                      alt=""
-                      onError={(event) => {
-                        event.target.src = "/assets/thumbnail.png"
-                      }}
-                    />
+                    <Flex pos={'relative'}>
+                      <Avatar
+                        src={_item.image || "/assets/thumbnail.png"}
+                        alt=""
+                        onError={(event) => {
+                          event.target.src = "/assets/thumbnail.png"
+                        }}
+                        width={'152px'}
+                        height={'152px'}
+                        mt={4}
+                      />
+                    </Flex>
                   </Link>
                   <div className="nk-product-cont">
                     <h3 className="woocommerce-loop-product__title nk-product-title">
