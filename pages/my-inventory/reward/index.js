@@ -5,7 +5,7 @@ import RewardItem from "../../../components/RewardList";
 import { useCallback, useEffect, useState } from "react";
 import { getRewardHistory } from '../../../services/inventoryService'
 import { getUserInfo } from "../../../utils/helpers";
-import { Flex, Grid, GridItem, Spinner } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import { useAppRedireact } from "../../../utils/hook";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -21,8 +21,10 @@ export default function MyInventory() {
   const getData = useCallback(async () => {
     const userInfo = getUserInfo()
     if (userInfo?.user) {
-      const { items } = await getRewardHistory()
-      const data = items.map((_item) => {
+      const resp = await getRewardHistory()
+      if (!resp || !resp.items) { return }
+
+      const data = resp.items.map((_item) => {
         _item.reward_data = _item.reward_data[0]
         _item.nft_collection_data = _item.nft_collection_data[0]
         return _item
@@ -55,10 +57,10 @@ export default function MyInventory() {
       </Head>
       <div className="nk-gap-2" />
       <BreadCrumbs
-        label="Reward"
-        root={
-          [{ href: generateRouter(''), label: t("menu.channel") }, { href: generateRouter(''), label: t("menu.my_inventory") }]
-        }
+        label={t("menu.reward")}
+        root={[
+          { href: generateRouter(''), label: t("menu.my_inventory") }
+        ]}
       />
       <div className="nk-gap-2 mt-10" />
       <div className="container">

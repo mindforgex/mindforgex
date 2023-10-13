@@ -57,7 +57,7 @@ function ChannelCollections() {
 
   useEffect(() => {
     onFetchCollection()
-  }, []);
+  }, [onFetchCollection]);
 
   const RenderSkeleton = () => {
     return (
@@ -88,7 +88,6 @@ function ChannelCollections() {
         label="Collection"
         root={
           [
-            { href: generateRouter(''), label: t('menu.channel') },
             { href: generateRouter(`channel/${router.query?.id}`), label: detailChannel?.name || t('menu.detail') }
           ]
         } 
