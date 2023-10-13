@@ -17,11 +17,11 @@
     "donate_idol": "アイドルに寄付する",
     "subscribed": "登録済み",
     "subscribe": "登録する",
-    "donate_failed": "寄付失敗",
+    "donate_failed": "寄付が失敗した",
     "donate_success": " {{donate}}SOLでアイドルに寄付した",
     "subscribe_success": "チャンネル登録が完了した！",
     "subscribe_failed": "チャンネル登録が失敗した!",
-    "about_me": "プロフィール",
+    "about_me": "私について",
     "posts": "投稿",
     "detail": "詳細",
     "collection": "コレクション",
@@ -41,7 +41,9 @@
       "verify_failed": "タスクの確認が失敗した!",
       "completed": "完了した",
       "verify": "確認する"
-    }
+    },
+    "statistic": "統計",
+    "published_posts": "投稿を公開した"
   },
   "nft": {
     "no_data": "何も表示されない",
@@ -55,7 +57,14 @@
       "btn_donate": "寄付する",
       "required_amount": "寄付金を入力してください"
     },
-    "btn_cancel": "キャンセル"
+    "btn_cancel": "キャンセル",
+    "listing": {
+      "header": "NFTリスティング",
+      "amount_placeholder": "金額を入力する",
+      "select_item_placeholder": "リスティングアイテムを選択する",
+      "btn_listing": "NFTリスティング",
+      "required_amount": "金額を入力する"
+    }
   },
   "social_link": "ソーシャルのリンク",
   "please_connect_wallet": "ウォレットを接続してください",
@@ -64,7 +73,9 @@
     "my_inventory": "マイインベントリー",
     "collection": "コレクション",
     "reward": "リワード",
-    "detail": "詳細"
+    "detail": "詳細",
+    "profile": "プロフィール",
+    "marketplace": "マーケットプレイス"
   },
   "btn_wallet": {
     "change": "ウォレットを変更する",
@@ -84,5 +95,39 @@
     "close": "閉じる",
     "exchange_msg": "このアクションで、{{name}}というリワードをゲットするために、圧縮NFT取引の{{amount}}にサインしなければなりません",
     "exchanged_at": "で交換する"
+  },
+  "profile": {
+    "authorize_discord_failed": "Discordの認可が失敗した",
+    "confirm_connect_with_discord_failed": "Discordとの接続確認が失敗した",
+    "wallet_address": "ウォレットのアドレス",
+    "connect_with_discord": "Discordと接続する",
+    "disconnect_discord_success": "Discordと接続した",
+    "disconnect": "接続を解除する"
+  },
+  "msg": {
+    "something_went_wrong": "エラーが発生しました"
+  },
+  "btn": {
+    "listing": "NFTリスティング",
+    "cancel_listing": "リスティングをキャンセルする"
+  },
+  "listing": {
+    "success": "NFT のリスティングが成功した",
+    "failed": "NFT のリスティングが失敗した",
+    "cancel_success": "リスティングのキャンセルが完了した",
+    "cancel_failed": "リスティングのキャンセルが失敗した"
+  },
+  "marketplace": {
+    "header": "NFTマーケットプレイス",
+    "buy_now": "すぐに購入する",
+    "seller": "販売者",
+    "current_price": "現価",
+    "noti_buy_nft_success": "NFTを購入した",
+    "noti_buy_nft_failed": "NFT購入エラー",
+    "buy": {
+      "header": "NFTを購入する",
+      "nft_name": "NFT名： {{name}}",
+      "btn_buy": "購入する"
+    }
   }
 }
