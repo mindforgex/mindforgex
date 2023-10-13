@@ -67,10 +67,10 @@ function Collection() {
 
       <div className="nk-gap-2" />
       <BreadCrumbs
-        label="Collection"
-        root={
-          [{ href: generateRouter('/'), label: t("menu.channel") }, { href: generateRouter('/'), label: t("menu.my_inventory") }]
-        }
+        label={t("menu.collection")}
+        root={[
+          { href: generateRouter('/'), label: t("menu.my_inventory") }
+        ]}
       />
       <div className="nk-gap-2 mt-10" />
 

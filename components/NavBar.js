@@ -1,5 +1,5 @@
 import { Image, Link } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React from "react";
 import {
   WalletMultiButton
 } from '@solana/wallet-adapter-react-ui';
@@ -18,6 +18,10 @@ export default function NavBar() {
     document.getElementsByClassName("nk-navbar-overlay").item(0).classList.toggle("open")
   };
 
+  const activeClassName = (path) => classNames({
+    'selected': path === '' ? window.location.pathname === '/' : window.location.pathname.includes(path)
+  })
+
   return (
     <>
       <header className="nk-header nk-header-opaque">
@@ -35,6 +39,7 @@ export default function NavBar() {
                 {
                   NAV_BAR_ITEM.map(_item => {
                     const isItemHasChildren = Array.isArray(_item.children) && _item.children.length > 0
+
                     return (
                       <li
                         key={_item.label}
@@ -43,7 +48,10 @@ export default function NavBar() {
                           "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
                         })}
                       >
-                        <Link href={generateRouter(_item.path)}>{t(_item.label)}</Link>
+                        <Link
+                          className={activeClassName(_item.path)}
+                          href={generateRouter(_item.path)}
+                        >{t(_item.label)}</Link>
                         {
                           isItemHasChildren && (
                             <ul className="dropdown sub-menu" style={{ marginTop: "43.7656px", marginLeft: "-9px" }}>
@@ -52,7 +60,7 @@ export default function NavBar() {
                                   return (
                                     <li key={_itemChild.label}
                                       className="menu-item menu-item-type-custom menu-item-object-custom ghost_menu__sub-menu__item ghost_menu__sub-menu--1__item">
-                                      <Link href={generateRouter(_item.path + _itemChild.path)}>{t(_itemChild.label)}</Link>
+                                      <Link className={activeClassName(_itemChild.path)} href={generateRouter(_item.path + _itemChild.path)}>{t(_itemChild.label)}</Link>
                                     </li>
                                   )
                                 })
@@ -106,10 +114,11 @@ export default function NavBar() {
             </Link>
             <div className="nk-navbar-mobile-content">
               <ul className="nk-nav">
-
                 {
                   NAV_BAR_ITEM.map(_item => {
                     const isItemHasChildren = Array.isArray(_item.children) && _item.children.length > 0
+                    const isSelected = window.location.pathname
+
                     return (
                       <li
                         key={_item.label}
@@ -118,7 +127,7 @@ export default function NavBar() {
                           "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
                         })}
                       >
-                        <Link href={generateRouter(_item.path)}>{t(_item.label)}</Link>
+                        <Link className={activeClassName(_item.path)} href={generateRouter(_item.path)}>{t(_item.label)}</Link>
                         {
                           isItemHasChildren && (
                             <ul className="dropdown sub-menu">
@@ -126,7 +135,7 @@ export default function NavBar() {
                                 _item.children.map(_itemChild => {
                                   return (
                                     <li key={_itemChild.label} className="bropdown-back">
-                                      <Link href={generateRouter(_item.path + _itemChild.path)}>{t(_itemChild.label)}</Link>
+                                      <Link className={activeClassName(_itemChild.path)} href={generateRouter(_item.path + _itemChild.path)}>{t(_itemChild.label)}</Link>
                                     </li>
                                   )
                                 })

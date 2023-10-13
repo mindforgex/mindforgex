@@ -109,9 +109,6 @@ function CollectionItem({ data, onFetchCollection }) {
         </CardHeader>
         <Collapse in={isExpanded} animateOpacity>
           <CardBody>
-            <Text as='h4' textTransform='capitalize' mb={8}>
-            {t('inventory.collection_information')}:
-            </Text>
             <Flex gap={5} flexWrap='wrap'>
               <Flex direction={'column'} maxW={'24%'}>
                 <Flex borderRadius={'full'} pos={'relative'} w={'100%'}>

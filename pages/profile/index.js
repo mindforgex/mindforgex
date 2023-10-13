@@ -75,7 +75,7 @@ function Profile() {
         <title>{t('menu.profile')}</title>
       </Head>
       <div className="nk-gap-2" />
-      <BreadCrumbs label={t('menu.profile')} root={[{ href: generateRouter(''), label: t("menu.channel") }]} />
+      <BreadCrumbs label={t('menu.profile')} />
       <div className="nk-gap-2 mt-10" />
 
       <div className="container">

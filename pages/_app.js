@@ -1,6 +1,6 @@
+import '../styles/bootstrap.css'
 import '../styles/globals.css'
 import "../styles/cyberpress.css"
-import '../styles/bootstrap.css'
 import "../styles/gallery.css"
 import "../styles/fontawsome.css"
 import "../styles/wpblock.css"

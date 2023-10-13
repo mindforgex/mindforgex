@@ -31,6 +31,10 @@ a:hover {
   color: #dd163b;
 }
 
+a.selected {
+  color: #dd163b !important;
+}
+
 ::-moz-selection {
   color: #fff;
   background-color: #313947;

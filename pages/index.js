@@ -67,10 +67,10 @@ export default function Channel() {
         <title>{t('header')}</title>
       </Head>
       <div id="content" className="site-content">
-        <div className="nk-gap-2" />
+        {/* <div className="nk-gap-2" /> */}
 
-        <BreadCrumbs label={t("channel.label")} />
-        <div className="nk-gap-2 mt-10" />
+        {/* <BreadCrumbs label={t("channel.label")} /> */}
+        <div className="nk-gap-2" />
 
         <div id="primary" className="content-area container cyberpress">
           <main id="main" className="site-main" role="main">
