@@ -160,7 +160,7 @@ function DetailChannel() {
       </Head>
       <div id="content" className="site-content">
         <div className="nk-gap-2" />
-        <BreadCrumbs label={detailChannel.name} root={{ label: t("channel.label"), href: "/" }} />
+        <BreadCrumbs label={detailChannel.name} root={{ label: t("channel.label"), href: '' }} />
         <div className="nk-gap-2 mt-10" />
         <div className="content-area container cyberpress">
           <main id="main" className="site-main" role="main">

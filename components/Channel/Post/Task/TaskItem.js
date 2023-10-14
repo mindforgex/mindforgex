@@ -1,9 +1,10 @@
-import { Flex, Text, Tooltip, useToast } from '@chakra-ui/react';
+import { Flex, Link, Text, Tooltip, useToast } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { CheckCircleIcon } from '@chakra-ui/icons'
 import { userVerifyTask } from '../../../../services';
 import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
+import { TASK_TYPE } from '../../../../utils/constants';
 
 const TaskItem = ({ task, index, userInfo, channelId, setTasks }) => {
   const toast = useToast();
@@ -50,7 +51,20 @@ const TaskItem = ({ task, index, userInfo, channelId, setTasks }) => {
       </Tooltip>
       <Flex direction={'column'} width='100%'>
         <Text as={'h5'} mb={2}>{index + 1}. {task.name}</Text>
-        <Text as="p" mb={2}>{task.description}</Text>
+        <Text as="p" mb={2}>
+          {task.description}
+          {
+            task.taskType === TASK_TYPE.JOIN_DISCORD && (
+              <>
+                <br />
+                {t('channel.task.join_channel')}
+                <Link ml='1' color="#dd163b" href={task.taskInfo?.link || '#'} target='_blank'>
+                  {task.taskInfo?.title}
+                </Link>
+              </>
+            )
+          }
+        </Text>
       </Flex>
       <Flex ml={'auto'}>
         <button

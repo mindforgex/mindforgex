@@ -31,3 +31,9 @@ export const NAV_BAR_ITEM = [
     path: "marketplace"
   }
 ]
+
+
+export const TASK_TYPE = {
+  SUBSCRIBE_WEB3_CHANNEL: 'SUBSCRIBE_WEB3_CHANNEL',
+  JOIN_DISCORD: 'JOIN_DISCORD',
+}
