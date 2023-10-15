@@ -54,9 +54,9 @@ export default function NFTProfile({ data, className = '' }) {
                           }}
                         />
                         <div className="nk-product-cont">
-                          <h3 className="nk-product-title">
+                          <h4 className="nk-product-title mb-5">
                             {rewardData.name}
-                          </h3>
+                          </h4>
                           <span className="">
                             {t('inventory.exchanged_at')}: {moment(data.createdAt).format("DD MMM, YYYY")}
                           </span>
