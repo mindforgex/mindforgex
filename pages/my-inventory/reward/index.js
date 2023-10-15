@@ -26,7 +26,6 @@ export default function MyInventory() {
 
       const data = resp.items.map((_item) => {
         _item.reward_data = _item.reward_data[0]
-        _item.nft_collection_data = _item.nft_collection_data[0]
         return _item
       })
       setRewardHistory(data)
@@ -59,7 +58,7 @@ export default function MyInventory() {
       <BreadCrumbs
         label={t("menu.reward")}
         root={[
-          { href: generateRouter(''), label: t("menu.my_inventory") }
+          { href: '', label: t("menu.my_inventory") }
         ]}
       />
       <div className="nk-gap-2 mt-10" />

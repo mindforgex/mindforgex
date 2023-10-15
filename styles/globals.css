@@ -16304,8 +16304,10 @@ button:focus {
 }
 
 .nft-info-item img {
-  aspect-ratio: 1 / 1.2;
-  max-height: 120px;
+  aspect-ratio: 1 / 1;
+  height: unset;
+  max-width: unset;
+  width: 140px;
 }
 
 .nft-info-item .locked {

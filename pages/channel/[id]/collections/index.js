@@ -85,15 +85,14 @@ function ChannelCollections() {
 
       <div className="nk-gap-2" />
       <BreadCrumbs
-        label="Collection"
+        label={t("menu.collection")}
         root={
           [
-            { href: generateRouter(`channel/${router.query?.id}`), label: detailChannel?.name || t('menu.detail') }
+            { href: `channel/${router.query?.id}`, label: detailChannel?.name || t('menu.detail') }
           ]
         } 
       />
       <div className="nk-gap-2 mt-10" />
-
 
       <div className="container">
         <div className="col-lg-12">

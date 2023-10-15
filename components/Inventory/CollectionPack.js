@@ -45,11 +45,11 @@ function CollectionPack({ data }) {
             cursor='pointer'
             position='relative' 
             className='nft-info-item'
-            maxHeight={200}
             direction="column"
             alignItems="center"
             py={5}
             px={5}
+            width="230px"
             bgColor={'var(--cbp-color-background)'}
             boxShadow="0px 3px 16px rgb(47 83 109 / 12%)"
             transition="all 0.3s ease-in-out"
@@ -101,24 +101,35 @@ function CollectionPack({ data }) {
             }
             <Card
               height='100%'
-              maxHeight={200}
               bg={'transparent'}
             >
-          
-              <CardBody p={0} w={'100%'}>
+              <CardBody p={0} mb={4} w={'100%'} justifyContent='center' display='flex'>
                 <Image
                   fill={true}
                   src={data.image}
                   alt={data.name}
                   w={'100%'}
+                  aspectRatio='1 / 1'
                   borderRadius={'full'}
                   onError={(event) => {
                     event.target.src="/assets/thumbnail.png"
                   }}
                 />
               </CardBody>
-              <CardFooter w='100%' display='flex' justifyContent={'center'} padding='3'>
-                <Text mb='0' color={'white'}>{data.name} ({data.symbol})</Text>
+              <CardFooter 
+                w='100%' 
+                display='flex' 
+                justifyContent={'center'}
+                padding='3'
+              >
+                <Text 
+                  height='20px'
+                  textOverflow='ellipsis'
+                  overflow='hidden'
+                  whiteSpace='nowrap'
+                  mb='0' 
+                  color={'white'}
+                >{data.name} ({data.symbol})</Text>
               </CardFooter>
             </Card>
           </Box>
@@ -130,7 +141,7 @@ function CollectionPack({ data }) {
           <PopoverBody>
             <Text as={'p'}>{data.description}</Text>
             <Divider w={'100%'} maxW={'unset !important'} />
-            <Text as={'p'}>Nft balance: {data.order?.length}</Text>
+            <Text as={'p'}>Nft balance: {data.order?.length || 0}</Text>
           </PopoverBody>
         </PopoverContent>
       </Popover>

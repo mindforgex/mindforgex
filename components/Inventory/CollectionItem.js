@@ -71,7 +71,7 @@ function CollectionItem({ data, onFetchCollection }) {
   }
 
   return (
-    <section id={data.address}>
+    <section className='mb-80' id={data.address}>
       <Card 
         w='100%'
         backgroundColor='rgba(0, 0, 0, 0.6)'
@@ -109,8 +109,8 @@ function CollectionItem({ data, onFetchCollection }) {
         </CardHeader>
         <Collapse in={isExpanded} animateOpacity>
           <CardBody>
-            <Flex gap={5} flexWrap='wrap'>
-              <Flex direction={'column'} maxW={'24%'}>
+            <Flex gap={12}>
+              <Flex direction={'column'} flexBasis='350px'>
                 <Flex borderRadius={'full'} pos={'relative'} w={'100%'}>
                   <Avatar
                     h={'250px'}
@@ -140,8 +140,8 @@ function CollectionItem({ data, onFetchCollection }) {
                   {data.description}
                 </Text>
               </Flex>
-              <Flex flexWrap='wrap' flexDirection='column' justifyContent='space-between' mb={12}>
-                <Flex
+
+              <Flex
                   w='100%'
                   flexWrap='wrap'
                   gap={5}
@@ -156,8 +156,8 @@ function CollectionItem({ data, onFetchCollection }) {
                       )
                     })
                   }
-                </Flex>
               </Flex>
+
             </Flex>
           </CardBody>
         </Collapse>
