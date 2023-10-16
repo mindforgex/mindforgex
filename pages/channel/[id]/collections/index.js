@@ -95,17 +95,15 @@ function ChannelCollections() {
       <div className="nk-gap-2 mt-10" />
 
       <div className="container">
-        <div className="col-lg-12">
-          {
-            isLoading ? (
-              <RenderSkeleton />
-            ) : (
-              <>
-                <CollectionList data={collectionData} onFetchCollection={onFetchCollection}/>
-              </>
-            )
-          }
-        </div>
+        {
+          isLoading ? (
+            <RenderSkeleton />
+          ) : (
+            <>
+              <CollectionList data={collectionData} onFetchCollection={onFetchCollection}/>
+            </>
+          )
+        }
       </div>
     </>
   )

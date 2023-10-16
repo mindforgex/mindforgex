@@ -81,16 +81,25 @@ function Profile() {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <Flex gap={8} flexWrap='wrap'>
-              <Text flexBasis={150} fontSize='larger' as='label'>{t('profile.wallet_address')}:</Text>
-              <Text flexBasis={150} fontSize='larger'>{userInfo?.user?.walletAddress}</Text>
+            <Flex columnGap={8} rowGap={1} flexWrap='wrap'>
+              <Text 
+                flexBasis={150} 
+                fontSize='larger' 
+                as='label'
+              >{t('profile.wallet_address')}:</Text>
+              <Text 
+                flexBasis={450}
+                fontSize='larger' 
+                textOverflow='ellipsis'
+                overflow='clip'
+              >{userInfo?.user?.walletAddress}</Text>
             </Flex>
-            <Flex gap={8} flexWrap='wrap' alignItems='center'>
+            <Flex columnGap={8} rowGap={1} flexWrap='wrap' alignItems='center'>
               <Text flexBasis={150} fontSize='larger' as='label'>Discord:</Text>
               {
                 userInfo?.user?.discordUsername ? (
                   <Flex alignItems='center'>
-                    <Text mr={8} as='div' fontSize='larger'>{userInfo?.user?.discordUsername?.replace('#0', '') || ""}</Text>
+                    <Text mr={8} as='div' fontSize='larger'>{userInfo?.user?.discordUsername?.split('#')[0] || ""}</Text>
                     <Button
                       className='nk-btn nk-btn-color-main-1'
                       bg='#dd163b !important'

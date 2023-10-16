@@ -43,23 +43,27 @@ export default function NavBar() {
                     return (
                       <li
                         key={_item.label}
-                        className={classNames("menu-item menu-item-type-custom menu-item-object-custom", {
+                        className={classNames("", {
                           "active": window.location.pathname === _item.path,
-                          "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
+                          "nk-drop-item": isItemHasChildren
                         })}
                       >
                         <Link
                           className={activeClassName(_item.path)}
                           href={generateRouter(_item.path)}
+                          onClick={(e) => {
+                            if (isItemHasChildren) {
+                              e.preventDefault();
+                            }
+                          }}
                         >{t(_item.label)}</Link>
                         {
                           isItemHasChildren && (
-                            <ul className="dropdown sub-menu" style={{ marginTop: "43.7656px", marginLeft: "-9px" }}>
+                            <ul className="dropdown" style={{ marginTop: "43.7656px", marginLeft: "-9px" }}>
                               {
                                 _item.children.map(_itemChild => {
                                   return (
-                                    <li key={_itemChild.label}
-                                      className="menu-item menu-item-type-custom menu-item-object-custom ghost_menu__sub-menu__item ghost_menu__sub-menu--1__item">
+                                    <li key={_itemChild.label}>
                                       <Link className={activeClassName(_itemChild.path)} href={generateRouter(_item.path + _itemChild.path)}>{t(_itemChild.label)}</Link>
                                     </li>
                                   )
@@ -74,7 +78,7 @@ export default function NavBar() {
                 }
 
                 <li
-                  className="menu-item menu-item-type-custom menu-item-object-custom ghost_menu__item"
+                  className=" ghost_menu__item"
                 >
                   <WalletMultiButton />
                 </li>
@@ -117,20 +121,32 @@ export default function NavBar() {
                 {
                   NAV_BAR_ITEM.map(_item => {
                     const isItemHasChildren = Array.isArray(_item.children) && _item.children.length > 0
-                    const isSelected = window.location.pathname
 
                     return (
                       <li
                         key={_item.label}
-                        className={classNames("menu-item menu-item-type-custom menu-item-object-custom", {
+                        className={classNames("", {
                           "active": window.location.pathname === _item.path,
-                          "menu-item-has-children ghost_menu__item nk-drop-item": isItemHasChildren
+                          "nk-drop-item": isItemHasChildren
                         })}
                       >
-                        <Link className={activeClassName(_item.path)} href={generateRouter(_item.path)}>{t(_item.label)}</Link>
+                        <Link 
+                          className={activeClassName(_item.path)} 
+                          href={generateRouter(_item.path)}
+                          onClick={(e) => {
+                            if (isItemHasChildren) {
+                              e.preventDefault();
+                              const el = document.getElementById(`dropdown-${_item.path}`)
+                              el.classList.toggle('dropdown')
+                              el.querySelectorAll('a').forEach((_el) => {
+                                _el.style.display = (_el.style.display === 'none' || !_el.style.display) ? 'block' : 'none'
+                              })
+                            }
+                          }}
+                        >{t(_item.label)}</Link>
                         {
                           isItemHasChildren && (
-                            <ul className="dropdown sub-menu">
+                            <ul id={`dropdown-${_item.path}`} className="dropdown">
                               {
                                 _item.children.map(_itemChild => {
                                   return (
@@ -149,7 +165,7 @@ export default function NavBar() {
                   })
                 }
                 <li
-                  className="menu-item menu-item-type-custom menu-item-object-custom text-uppercase"
+                  className="mb-15 text-uppercase"
                 >
                   <WalletMultiButton />
                 </li>

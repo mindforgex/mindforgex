@@ -28,7 +28,10 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
         {
           data?.map(_item => {
             return (
-              <GridItem colSpan={4} rowSpan={1}>
+              <GridItem key={_item._id} 
+                colSpan={{ base: 12, sm: 12, md: 6, xl: 4 }}
+                rowSpan={1}
+              >
                 <Flex
                   key={_item.channelName}
                   direction={'column'}
