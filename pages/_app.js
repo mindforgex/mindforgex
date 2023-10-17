@@ -15,6 +15,7 @@ import WalletContext from '../components/WalletContext'
 import Head from 'next/head'
 import { SEO_CONTENT, _window } from '../utils/seo'
 import { appWithTranslation } from 'next-i18next'
+import Script from 'next/script'
 
 function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,7 +54,31 @@ function MyApp({ Component, pageProps }) {
         <meta property="og:image" content={SEO_CONTENT.image} />
 
         <meta name="theme-color" content="#00000099" />
+
       </Head>
+      {/* Google Tag Manager */}
+      <Script strategy="lazyOnload" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
+      <Script id='ga' strategy="lazyOnload">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}', {
+            page_path: window.location.pathname,
+          });
+        `}
+      </Script>
+      {/* Google Tag Manager (noscript) */}
+      <noscript>
+        <iframe 
+          src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
+          height="0" 
+          width="0"
+          style={{ visibility: 'hidden', display: 'none' }}
+        />
+      </noscript>
+      {/* End Google Tag Manager (noscript) */}
+      {/* End Google Tag Manager */}
       <ChakraProvider theme={theme} resetCss={false} position="relative">
         <WalletContext>
           {isLoading ? (
