@@ -1,8 +1,9 @@
-import { Flex, Progress, ProgressLabel, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Link, Progress, ProgressLabel, Text } from '@chakra-ui/react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import React from 'react';
 import BreadCrumbs from '../components/BreadCrumbs';
+import ChakraCarousel from '../components/ChakraCarousel';
 
 const AboutUs = () => {
   return (
@@ -13,14 +14,20 @@ const AboutUs = () => {
       <Flex className={'container'} direction={'column'}>
         <Flex className="nk-gap-2" />
         <BreadCrumbs label={'About Us'} root={{ label: '', href: '' }} />
-        <Text as={'h2'} textTransform={'initial'} fontSize={'2xl'} mt={8} px={4}>
+        <Text
+          as={'h2'}
+          textTransform={'initial'}
+          fontSize={{ xl: '2xl', sm: 'xl' }}
+          mt={8}
+          px={4}>
           MindForgeX is a quest system for live streamers, designed to build and engage with their fanbase by leveraging cNFT technology.
         </Text>
-        <Flex direction={'column'} mt={12}>
+        <Flex direction={'column'} mt={{ xl: 12, sm: 2 }}>
           <Text
             as={'h3'}
             fontWeight={'semibold'}
             overflow={'hidden'}
+            fontSize={{ xl: '1.75rem', sm: 'md' }}
             textAlign={'right'}
             mt={4}
             _before={{
@@ -39,7 +46,7 @@ const AboutUs = () => {
           </Text>
           <Text
             as={'p'}
-            fontSize={'md'}
+            fontSize={{ xl: 'md', sm: 'sm' }}
             color={'white'}
             fontWeight={'normal'}
             lineHeight={2}
@@ -53,6 +60,7 @@ const AboutUs = () => {
             as={'h3'}
             fontWeight={'semibold'}
             overflow={'hidden'}
+            fontSize={{ xl: '1.75rem', sm: 'md' }}
             textAlign={'left'}
             mt={4}
             _after={{
@@ -62,7 +70,7 @@ const AboutUs = () => {
               h: '2px',
               pos: 'relative',
               verticalAlign: 'bottom',
-              w: '100%',
+              w: { xl: '100%', sm: '50%' },
               left: '0.8em',
               mr: '-50%'
             }}
@@ -71,7 +79,7 @@ const AboutUs = () => {
           </Text>
           <Text
             as={'p'}
-            fontSize={'md'}
+            fontSize={{ xl: 'md', sm: 'sm' }}
             color={'white'}
             fontWeight={'normal'}
             lineHeight={2}
@@ -86,7 +94,8 @@ const AboutUs = () => {
             mt={4}
             fontWeight={'semibold'}
             overflow={'hidden'}
-            textAlign={'left'}
+            fontSize={{ xl: '1.75rem', sm: 'md' }}
+            textAlign={'right'}
             _before={{
               bg: '#dd163b',
               content:`""`,
@@ -94,7 +103,7 @@ const AboutUs = () => {
               h: '2px',
               pos: 'relative',
               verticalAlign: 'bottom',
-              w: '100%',
+              w: { xl: '100%', sm: '75%' },
               right: '0.8em',
               ml: '-50%'
             }}
@@ -103,7 +112,7 @@ const AboutUs = () => {
           </Text>
           <Text
             as={'p'}
-            fontSize={'md'}
+            fontSize={{ xl: 'md', sm: 'sm' }}
             color={'white'}
             fontWeight={'normal'}
             lineHeight={2}
@@ -115,7 +124,7 @@ const AboutUs = () => {
           </Text>
           <Text
             as={'p'}
-            fontSize={'md'}
+            fontSize={{ xl: 'md', sm: 'sm' }}
             color={'white'}
             fontWeight={'normal'}
             lineHeight={2}
@@ -127,7 +136,7 @@ const AboutUs = () => {
           </Text>
           <Text
             as={'p'}
-            fontSize={'md'}
+            fontSize={{ xl: 'md', sm: 'sm' }}
             color={'white'}
             fontWeight={'normal'}
             lineHeight={2}
@@ -141,6 +150,7 @@ const AboutUs = () => {
             as={'h3'}
             fontWeight={'semibold'}
             overflow={'hidden'}
+            fontSize={{ xl: '1.75rem', sm: 'md' }}
             textAlign={'left'}
             mt={4}
             _after={{
@@ -159,7 +169,7 @@ const AboutUs = () => {
           </Text>
           <Text
             as={'p'}
-            fontSize={'md'}
+            fontSize={{ xl: 'md', sm: 'sm' }}
             color={'white'}
             fontWeight={'normal'}
             lineHeight={2}
@@ -171,7 +181,7 @@ const AboutUs = () => {
           </Text>
           <Text
             as={'p'}
-            fontSize={'xl'}
+            fontSize={{ xl: 'xl', sm: 'md' }}
             color={'white'}
             fontWeight={'normal'}
             lineHeight={2}
@@ -180,24 +190,24 @@ const AboutUs = () => {
             overflow={'hidden'}
           >
             <Flex alignItems={'center'}>
-              <Progress h={'2.2rem'} value={80} w={'50%'}  bg={'gray.400'} colorScheme={'blue'}>
-                <ProgressLabel fontSize={'md'} mr={'auto'} textAlign={'left'}>
+              <Progress h={'2.2rem'} value={80}  bg={'gray.400'} colorScheme={'blue'} w={{ xl: '50%', sm: '100%' }}>
+                <ProgressLabel fontSize={{ xl: 'md', sm: 'sm' }} mr={'auto'} textAlign={'left'}>
                   <Text as={'span'} mx={8}>Javascript / Nodejs (React + Nestjs)</Text>
                   <Text as={'span'}>80%</Text>
                 </ProgressLabel>
               </Progress>
             </Flex>
             <Flex alignItems={'center'} my={4}>
-              <Progress colorScheme={'green'} bg={'gray.400'} h={'2.2rem'} value={10} w={'50%'}>
-                <ProgressLabel fontSize={'md'} mr={'auto'} textAlign={'left'}>
+              <Progress colorScheme={'green'} bg={'gray.400'} h={'2.2rem'} value={10} w={{ xl: '50%', sm: '100%' }}>
+                <ProgressLabel fontSize={{ xl: 'md', sm: 'sm' }} mr={'auto'} textAlign={'left'}>
                   <Text as={'span'} mx={8}>Shyft API</Text>
                   <Text as={'span'}>10%</Text>
                 </ProgressLabel>
               </Progress>
             </Flex>
             <Flex alignItems={'center'}>
-              <Progress colorScheme={'orange'} bg={'gray.400'} h={'2.2rem'} value={10} w={'50%'}>
-                <ProgressLabel fontSize={'md'} mr={'auto'} textAlign={'left'}>
+              <Progress colorScheme={'orange'} bg={'gray.400'} h={'2.2rem'} value={10} w={{ xl: '50%', sm: '100%' }}>
+                <ProgressLabel fontSize={{ xl: 'md', sm: 'sm' }} mr={'auto'} textAlign={'left'}>
                   <Text as={'span'} mx={8}>Solana wallet adapter</Text>
                   <Text as={'span'}>10%</Text>
                 </ProgressLabel>
@@ -206,7 +216,7 @@ const AboutUs = () => {
           </Text>
           <Text
             as={'p'}
-            fontSize={'md'}
+            fontSize={{ xl: 'md', sm: 'sm' }}
             color={'white'}
             fontWeight={'normal'}
             lineHeight={2}
@@ -216,6 +226,45 @@ const AboutUs = () => {
           >
             Join MindForgeX as we redefine the future of live streaming, offering streamers and their fans an unparalleled experience in building lasting connections.
           </Text>
+          <Text
+            as={'h3'}
+            mt={4}
+            fontWeight={'semibold'}
+            overflow={'hidden'}
+            fontSize={{ xl: '1.75rem', sm: 'md' }}
+            textAlign={'right'}
+            _before={{
+              bg: '#dd163b',
+              content:`""`,
+              display: 'inline-block',
+              h: '2px',
+              pos: 'relative',
+              verticalAlign: 'bottom',
+              w: '100%',
+              right: '0.8em',
+              ml: '-50%'
+            }}
+          >
+           Partnership
+          </Text>
+          <ChakraCarousel gap={32} mt={8}>
+            <Box>
+              <Link
+                href='https://orada.co.jp'
+                target="_blank"
+              >
+                <Image w={36} src='/assets/Orada.png' alt='Orada' />
+              </Link>
+            </Box>
+            <Box>
+              <Link
+                href='https://relipa.global/'
+                target="_blank"
+              >
+                <Image w={24} src='https://relipa.global/user-page/img/logo-white.png' alt='Relipa' />
+              </Link>
+            </Box>
+          </ChakraCarousel>
         </Flex>
       </Flex>
     </>
