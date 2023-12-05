@@ -6,51 +6,49 @@ import { useTranslation } from "next-i18next";
 export default function SocialList({ detail }) {
   const socialLinks = detail?.socialLinks?.reduce((a, v) => ({ ...a, [v.name]: v.url }), {}) || {}
   const { t } = useTranslation('common');
+  const listSocial = [
+    {
+      type: "YOUTUBE",
+      link: socialLinks?.youtube,
+      className: "nk-social-youtube",
+      icon: <BsYoutube />,
+    },
+    {
+      type: "TWITCH",
+      link: socialLinks?.twitch,
+      className: "nk-social-twitch",
+      icon: <BsTwitch />,
+    },
+    {
+      type: "TWITTER",
+      link: socialLinks?.twitter,
+      className: "nk-social-twitch",
+      icon: <BsTwitter />,
+    },
+    {
+      type: "INSTAGRAM",
+      link: socialLinks?.instagram,
+      className: "nk-social-instagram",
+      icon: <BsInstagram />,
+    },
+  ];
 
   return (
     <Section title={t('social_link')}>
       <div className="lazyblock-squadforce-social-links-Z1TH6RW wp-block-lazyblock-squadforce-social-links">
         <ul className="nk-social-links-3 nk-social-links-cols-4">
-          <li>
-            <Link
-              className="nk-social-youtube"
-              href={socialLinks.youtube || "#"}
-              rel="nofollow"
-              target="_blank"
-            >
-              <BsYoutube />
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="nk-social-twitch"
-              href={socialLinks.twitch || "#"}
-              target="_blank"
-            >
-              <BsTwitch />
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="nk-social-twitch"
-              href={socialLinks.twitter || "#"}
-              rel="nofollow"
-              target="_blank"
-            >
-              <BsTwitter />
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="nk-social-instagram"
-              href={socialLinks.instagram || "#"}
-              rel="nofollow"
-              target="_blank"
-            >
-              <BsInstagram />
-            </Link>
-          </li>
-
+          {listSocial.map((social) => (
+            <li key={social.type}>
+              <Link
+                className={social.className}
+                href={social.link || "#"}
+                rel="nofollow"
+                target="_blank"
+              >
+                {social.icon}
+              </Link>
+            </li>
+          ))}
           {/* 
           <li>
             <Link
@@ -151,6 +149,5 @@ export default function SocialList({ detail }) {
         </ul>
       </div>
     </Section>
-
-  )
+  );
 }
