@@ -7,7 +7,20 @@ module.exports = async (phase, { defaultConfig }) => {
   const nextConfig = {
     ...defaultConfig,
     reactStrictMode: false,
-    i18n: i18n
+    i18n: i18n,
+    async headers() {
+      return [
+        {
+          source: "/(.*)",
+          headers: [
+            {
+              key: "Cross-Origin-Opener-Policy",
+              value: "same-origin-allow-popups, same-origin",
+            },
+          ],
+        },
+      ];
+    },
   };
 
   return nextConfig;

@@ -16,6 +16,7 @@ import Head from 'next/head'
 import { SEO_CONTENT, _window } from '../utils/seo'
 import { appWithTranslation } from 'next-i18next'
 import Script from 'next/script'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -80,15 +81,17 @@ function MyApp({ Component, pageProps }) {
       {/* End Google Tag Manager (noscript) */}
       {/* End Google Tag Manager */}
       <ChakraProvider theme={theme} resetCss={false} position="relative">
-        <WalletContext>
-          {isLoading ? (
-            <LoadingComponent />
-          ) : (
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          )}
-        </WalletContext>
+      <GoogleOAuthProvider>
+          <WalletContext>
+            {isLoading ? (
+              <LoadingComponent />
+            ) : (
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            )}
+          </WalletContext>
+        </GoogleOAuthProvider>
       </ChakraProvider>
     </>
   )

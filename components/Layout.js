@@ -3,9 +3,19 @@ import NavBar from "./NavBar";
 import { Image } from "@chakra-ui/react";
 import Footer from "./Footer";
 import useLoginListener from "../hooks/useLoginListener";
+import AdminLayout from "../layouts/AdminLayout";
+import { useRouter } from "next/router";
 
 export default function Layout({ children }) {
-  useLoginListener()
+  useLoginListener();
+  const router = useRouter();
+
+  const isAdmin = true;
+  if (isAdmin && router.asPath.includes('manager')) return (
+    <AdminLayout isAdmin={isAdmin}>
+      {children}
+    </AdminLayout>
+  )
 
   return (
     <div className="content woocommerce woocommerce-page">
