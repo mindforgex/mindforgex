@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react'
 import BreadCrumbs from '../../components/BreadCrumbs'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useAppRedireact } from '../../utils/hook'
 import { Button, Flex, Text, useToast } from '@chakra-ui/react';
-import { getUserInfo, saveUserInfo, setU } from '../../utils/helpers'
+import { getUserInfo, saveUserInfo } from '../../utils/helpers'
 import supabase, { signInWithDiscord } from '../../utils/supabase'
-import { connectToDiscord } from '../../services/authService';
+import { connectToDiscord, connectToTwitch, getTwitchUserProfile } from '../../services/authService';
+import queryString from 'query-string';
+import { useCallback } from 'react';
 
 export const getServerSideProps = async ({ locale }) => {
   return {
@@ -17,10 +18,9 @@ export const getServerSideProps = async ({ locale }) => {
 
 function Profile() {
   const { t } = useTranslation()
-  const [generateRouter] = useAppRedireact()
   const userInfo = getUserInfo()
   const toast = useToast()
-  const [refresh, setRefresh] = useState(0)
+  const [_, setRefresh] = useState(0)
 
   const onSignInDiscord = () => {
     signInWithDiscord()
@@ -36,9 +36,20 @@ function Profile() {
       })
   }
 
+  const onSignInTwitch = () => {
+    const encodePathParameter = queryString.stringify({
+      response_type: 'token',
+      client_id: process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID,
+      redirect_uri: process.env.NEXT_PUBLIC_URL + '/profile',
+      state: true,
+      scope: 'user:read:follows'
+    })
+    window.open('https://id.twitch.tv/oauth2/authorize' + '?' + encodePathParameter)
+  }
+
   useEffect(() => {
     if (!userInfo || (userInfo.user.discordId && userInfo.user.discordUsername)) return;
-  
+
     supabase.auth.getSession()
       .then((res) => {
         if (res.data.session) {
@@ -54,7 +65,7 @@ function Profile() {
           return connectToDiscord({ discordId: data.user.user_metadata.provider_id, discordUsername: data.user.user_metadata.name })
         } else {
           toast({
-            title: t('profile.confirm_connect_with_discord_failed'),
+            title: t('profile.confirm_connect_to_discord_failed'),
             description: t('msg.something_went_wrong'),
             status: 'error',
             isClosable: true,
@@ -62,12 +73,51 @@ function Profile() {
         }
       })
       .then((resp) => {
-        if (resp && resp.message) {
+        if (resp) {
           saveUserInfo(userInfo)
           setRefresh(Math.random())
         }
       })
-  }, [userInfo])
+  }, [userInfo, toast, t])
+  
+  const checkTwitchCallback = useCallback(async () => {
+    try {
+      if (!location.hash.length) return;
+      const decodeData = queryString.parse(location.hash.slice(1))
+      if (!decodeData.access_token) return;
+  
+      const twitchProfile = await getTwitchUserProfile(decodeData.access_token)
+      if (!twitchProfile) {
+        toast({
+          title: t('profile.connect_to_twitch_failed'),
+          description: t('msg.something_went_wrong'),
+          status: 'error',
+          isClosable: true,
+        })
+        location.hash = ''
+        return;
+      }
+
+      const updateUserData = {
+        twitchId: twitchProfile.id,
+        twitchLogin: twitchProfile.login,
+        twitchAccessToken: decodeData.access_token,
+      }
+      const resp = await connectToTwitch(updateUserData);
+      if (resp) {
+        saveUserInfo({ ...userInfo, user: { ...userInfo.user, ...updateUserData } })
+        setRefresh(Math.random())
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    location.hash = ''
+  }, [userInfo, toast, t])
+
+  useEffect(() => {
+    checkTwitchCallback()
+  }, [checkTwitchCallback])
 
   return (
     <>
@@ -99,13 +149,13 @@ function Profile() {
               {
                 userInfo?.user?.discordUsername ? (
                   <Flex alignItems='center'>
-                    <Text mr={8} as='div' fontSize='larger'>{userInfo?.user?.discordUsername?.split('#')[0] || ""}</Text>
-                    <Button
+                    <Text mr={8} fontSize='larger'>{userInfo?.user?.discordUsername?.replace('#0', '') || ""}</Text>
+                    {/* <Button
                       className='nk-btn nk-btn-color-main-1'
                       bg='#dd163b !important'
                       color='#fff'
                       onClick={() => { }}
-                    >{t('profile.disconnect')}</Button>
+                    >{t('profile.disconnect')}</Button> */}
                   </Flex>
                 ) : (
                   <Button
@@ -113,7 +163,31 @@ function Profile() {
                     bg='#dd163b !important'
                     color='#fff'
                     onClick={onSignInDiscord}
-                  >{t('profile.connect_with_discord')}</Button>
+                  >{t('profile.connect_to_discord')}</Button>
+                )
+              }
+            </Flex>
+
+            <Flex gap={8} flexWrap='wrap' alignItems='center'>
+              <Text flexBasis={150} fontSize='larger' as='label'>Twitch:</Text>
+              {
+                userInfo?.user?.twitchLogin ? (
+                  <Flex alignItems='center'>
+                    <Text fontSize='larger'>{userInfo?.user?.twitchLogin?.replace('#0', '') || ""}</Text>
+                    {/* <Button
+                      className='nk-btn nk-btn-color-main-1'
+                      bg='#dd163b !important'
+                      color='#fff'
+                      onClick={() => { }}
+                    >{t('profile.disconnect')}</Button> */}
+                  </Flex>
+                ) : (
+                  <Button
+                    className='nk-btn nk-btn-color-main-1'
+                    bg='#dd163b !important'
+                    color='#fff'
+                    onClick={onSignInTwitch}
+                  >{t('profile.connect_to_twitch')}</Button>
                 )
               }
             </Flex>

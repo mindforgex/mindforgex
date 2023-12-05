@@ -104,9 +104,9 @@
   },
   "profile": {
     "authorize_discord_failed": "Discordの認可が失敗した",
-    "confirm_connect_with_discord_failed": "Discordとの接続確認が失敗した",
+    "confirm_connect_to_discord_failed": "Discordとの接続確認が失敗した",
     "wallet_address": "ウォレットのアドレス",
-    "connect_with_discord": "Discordと接続する",
+    "connect_to_discord": "Discordと接続する",
     "disconnect_discord_success": "Discordと接続した",
     "disconnect": "接続を解除する"
   },

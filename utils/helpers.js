@@ -1,6 +1,5 @@
 import cookie from 'react-cookies'
 import { STORAGE } from './constants';
-import { Transaction } from "@solana/web3.js";
 
 export const numberFormatter = (n) => {
   if (n < 1e3) return n;
@@ -40,15 +39,3 @@ export const subAddress = (address) => {
   const after = address.substr(-4);
   return `${before}...${after}`;
 };
-
-export async function confirmTransactionFromFrontend(connection, encodedTransaction, wallet)
-{
-    const recoveredTransaction = Transaction.from(
-      Buffer.from(encodedTransaction, 'base64')
-    );
-    const signedTx = await wallet.signTransaction(recoveredTransaction);
-    const confirmTransaction = await connection.sendRawTransaction(
-      signedTx.serialize()
-    );
-    return confirmTransaction;
-}
