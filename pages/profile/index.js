@@ -131,25 +131,16 @@ function Profile() {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <Flex columnGap={8} rowGap={1} flexWrap='wrap'>
-              <Text 
-                flexBasis={150} 
-                fontSize='larger' 
-                as='label'
-              >{t('profile.wallet_address')}:</Text>
-              <Text 
-                flexBasis={450}
-                fontSize='larger' 
-                textOverflow='ellipsis'
-                overflow='clip'
-              >{userInfo?.user?.walletAddress}</Text>
+            <Flex gap={8} flexWrap='wrap' mb={3}>
+              <Text flexBasis={150} fontSize='larger' as='label'>{t('profile.wallet_address')}:</Text>
+              <Text flexBasis={150} fontSize='larger' as='div'>{userInfo?.user?.walletAddress}</Text>
             </Flex>
-            <Flex columnGap={8} rowGap={1} flexWrap='wrap' alignItems='center'>
+            <Flex gap={8} flexWrap='wrap' alignItems='center' mb={3}>
               <Text flexBasis={150} fontSize='larger' as='label'>Discord:</Text>
               {
                 userInfo?.user?.discordUsername ? (
                   <Flex alignItems='center'>
-                    <Text mr={8} fontSize='larger'>{userInfo?.user?.discordUsername?.replace('#0', '') || ""}</Text>
+                    <Text fontSize='larger' as='div'>{userInfo?.user?.discordUsername?.replace('#0', '') || ""}</Text>
                     {/* <Button
                       className='nk-btn nk-btn-color-main-1'
                       bg='#dd163b !important'
@@ -168,12 +159,12 @@ function Profile() {
               }
             </Flex>
 
-            <Flex gap={8} flexWrap='wrap' alignItems='center'>
+            <Flex gap={8} flexWrap='wrap' alignItems='center' mb={3}>
               <Text flexBasis={150} fontSize='larger' as='label'>Twitch:</Text>
               {
                 userInfo?.user?.twitchLogin ? (
                   <Flex alignItems='center'>
-                    <Text fontSize='larger'>{userInfo?.user?.twitchLogin?.replace('#0', '') || ""}</Text>
+                    <Text fontSize='larger' as='div'>{userInfo?.user?.twitchLogin?.replace('#0', '') || ""}</Text>
                     {/* <Button
                       className='nk-btn nk-btn-color-main-1'
                       bg='#dd163b !important'
