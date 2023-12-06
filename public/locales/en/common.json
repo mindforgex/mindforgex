@@ -41,7 +41,8 @@
             "verify_failed": "Verify task failed!",
             "completed": "Completed",
             "verify": "Verify",
-            "join_channel": "Join this channel"
+            "join_channel": "Join this channel",
+            "follow_channel": "Follow this channel"
         },
         "statistic": "Statistic",
         "published_posts": "Published Posts",

@@ -64,6 +64,17 @@ const TaskItem = ({ task, index, userInfo, channelId, setTasks }) => {
               </>
             )
           }
+          {
+            task.taskType === TASK_TYPE.SUBSCRIBE_TWITCH && (
+              <>
+                <br />
+                {t('channel.task.follow_channel')}
+                <Link ml='1' color="#dd163b" href={task.taskInfo?.link || '#'} target='_blank'>
+                  {task.taskInfo?.title}
+                </Link>
+              </>
+            )
+          }
         </Text>
       </Flex>
       <Flex ml={'auto'}>

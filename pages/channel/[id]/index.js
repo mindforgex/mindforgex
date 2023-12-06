@@ -70,6 +70,7 @@ function DetailChannel() {
   useEffect(() => {
     const getDetail = async () => {
       const res = await getDetailChannel(router.query.id);
+      if (!res) return;
       const nftCollectionData = await Promise.all(
         res?.nftCollections?.map(async (_item) => {
           const getMetadataRes = await axios.get(_item.metadata_uri)
