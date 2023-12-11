@@ -6,3 +6,4 @@ export const userVerifyTask = async(taskId, params) => await post(`/tasks/${task
 export const subscribeChannel = async(channelId) => await post(`/channels/${channelId}/subscribe`);
 export const generateTransactionEncode = async(channelId, params) => await post(`/channels/${channelId}/gen_transaction`, params);
 export const donateChannel = async(channelId, params) => await post(`/channels/${channelId}/donate`, params);
+export const createChannel = async(payload) => await post('/channels', payload);
