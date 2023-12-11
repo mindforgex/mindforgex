@@ -41,7 +41,8 @@
             "verify_failed": "Verify task failed!",
             "completed": "Completed",
             "verify": "Verify",
-            "join_channel": "Join this channel"
+            "join_channel": "Join this channel",
+            "follow_channel": "Follow this channel"
         },
         "statistic": "Statistic",
         "published_posts": "Published Posts",
@@ -105,10 +106,12 @@
     },
     "profile": {
         "authorize_discord_failed": "Authorize Discord failed",
-        "confirm_connect_with_discord_failed": "Confirm connect with Discord failed",
+        "confirm_connect_to_discord_failed": "Confirm connect to Discord failed",
         "wallet_address": "Wallet address",
-        "connect_with_discord": "Connect to Discord",
-        "disconnect_discord_success": "Disconnect with Discord successful",
+        "connect_to_discord": "Connect to Discord",
+        "disconnect_discord_success": "Disconnect from Discord successful",
+        "connect_to_twitch": "Connect to Twitch",
+        "connect_to_twitch_failed": "Connect to Twitch failed",
         "disconnect": "Disconnect"
     },
     "msg": {

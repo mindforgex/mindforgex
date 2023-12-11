@@ -5,7 +5,7 @@ import ListingModal from './ListingModal';
 import axios from 'axios';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { confirmTransactionFromFrontend } from '../../utils/helpers';
+import { confirmTransactionFromFrontend } from '../../utils/transactionSigner';
 import { listingOrder, cancelListingOrder } from '../../services';
 import { useMemo } from 'react';
 import CancelListingModal from './CancelListingModal';
