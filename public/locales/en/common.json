@@ -44,7 +44,13 @@
             "join_channel": "Join this channel"
         },
         "statistic": "Statistic",
-        "published_posts": "Published Posts"
+        "published_posts": "Published Posts",
+        "share": "Share",
+        "share_social": "Share to social networks",
+        "share_facebook": "Share on Facebook",
+        "share_x": "Share on X",
+        "facebook": "facebook",
+        "x": "x"
     },
     "nft": {
         "no_data": "Nothing to display",

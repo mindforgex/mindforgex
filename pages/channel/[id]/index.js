@@ -18,7 +18,22 @@ import { PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import axios from 'axios';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
+} from "@chakra-ui/react";
+import { FaFacebook, FaTwitter } from "react-icons/fa";
 import Statistic from '../../../components/Channel/Statistic'
+
+const SOCIAL_SHARE = {
+  FACEBOOK: "FACEBOOK",
+  TWITTER: "TWITTER",
+};
 
 function DetailChannel() {
   const router = useRouter();
@@ -145,6 +160,22 @@ function DetailChannel() {
     });
   };
 
+  const handleShare = (type) => {
+    const url = encodeURIComponent(window.location.href);
+    let shareUrl = "";
+    switch (type) {
+      case SOCIAL_SHARE.FACEBOOK:
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case SOCIAL_SHARE.TWITTER:
+        shareUrl = `https://twitter.com/intent/tweet?url=${url}`;
+        break;
+      default:
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+    }
+    window.open(shareUrl, "_blank");
+  };
+
   const donateTooltip = useMemo(() => {
     return t(publicKey ? 'channel.donate_idol' : 'please_connect_wallet');
   }, [publicKey]);
@@ -219,6 +250,85 @@ function DetailChannel() {
                           {t("channel.donate")}
                         </Button>
                       </Tooltip>
+                      <Popover>
+                        <PopoverTrigger>
+                          <Button
+                            display={"flex"}
+                            alignItems={"center"}
+                            justifyContent={"center"}
+                            px={"20px"}
+                            py={"15px"}
+                            fontSize={"0.87rem"}
+                            textTransform={"uppercase"}
+                            lineHeight={1.2}
+                            height={"fit-content"}
+                          >
+                            {t("channel.share")}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          color="white"
+                          bg="#292e38"
+                        >
+                          <PopoverHeader pt={4} fontWeight="bold" border="0">
+                            {t("channel.share_social")}
+                          </PopoverHeader>
+                          <PopoverArrow bg="#292e38" />
+                          <PopoverCloseButton />
+                          <PopoverBody
+                            border="0"
+                            display="flex"
+                            alignItems="center"
+                            gap={4}
+                            pb={6}
+                          >
+                            <Tooltip
+                              label={t("channel.share_facebook")}
+                              placement="bottom"
+                            >
+                              <Button
+                                colorScheme={"facebook"}
+                                display={"flex"}
+                                alignItems={"center"}
+                                justifyContent={"center"}
+                                px={"20px"}
+                                py={"15px"}
+                                fontSize={"0.87rem"}
+                                textTransform={"uppercase"}
+                                lineHeight={1.2}
+                                onClick={() =>
+                                  handleShare(SOCIAL_SHARE.FACEBOOK)
+                                }
+                                leftIcon={<FaFacebook />}
+                              >
+                                {t("channel.facebook")}
+                              </Button>
+                            </Tooltip>
+                            <Tooltip
+                              label={t("channel.share_x")}
+                              placement="bottom"
+                            >
+                              <Button
+                                display={"flex"}
+                                alignItems={"center"}
+                                justifyContent={"center"}
+                                px={"20px"}
+                                py={"15px"}
+                                fontSize={"0.87rem"}
+                                textTransform={"uppercase"}
+                                lineHeight={1.2}
+                                onClick={() =>
+                                  handleShare(SOCIAL_SHARE.TWITTER)
+                                }
+                                leftIcon={<FaTwitter />}
+                                colorScheme="twitter"
+                              >
+                                {t("channel.x")}
+                              </Button>
+                            </Tooltip>
+                          </PopoverBody>
+                        </PopoverContent>
+                      </Popover>
                     </div>
 
                     <div className="mt-10" />

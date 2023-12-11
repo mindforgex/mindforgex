@@ -43,7 +43,13 @@
       "verify": "確認する"
     },
     "statistic": "統計",
-    "published_posts": "投稿を公開した"
+    "published_posts": "投稿を公開した",
+    "share": "Share",
+    "share_social": "Share to social networks",
+    "share_facebook": "Share on Facebook",
+    "share_x": "Share on X",
+    "facebook": "facebook",
+    "x": "x"
   },
   "nft": {
     "no_data": "何も表示されない",
