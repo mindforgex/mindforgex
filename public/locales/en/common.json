@@ -72,6 +72,21 @@
             "select_item_placeholder": "Select listing item...",
             "btn_listing": "Listing nft",
             "required_amount": "Please enter price"
+        },
+        "wallet": {
+            "account_logged": "Account has been logged in",
+            "account_not_registered": "This account hasn't been registered",
+            "please_sign_up": "Dont't have any account? Please Sign Up",
+            "select_wallet": "Select wallet",
+            "no_wallet": "No wallet found. Please download a supported Solana wallet",
+            "coppy_address": "Coppy address",
+            "disconnect": "Disconnect",
+            "sign_up": "Sign Up",
+            "sign_in": "Sign In",
+            "amount_placeholder": "Enter price ...",
+            "select_item_placeholder": "Select listing item...",
+            "btn_listing": "Listing nft",
+            "required_amount": "Please enter price"
         }
     },
     "social_link": "Social Link",
@@ -139,5 +154,14 @@
             "nft_name": "NFT name: {{name}}",
             "btn_buy": "Buy"
         }
+    },
+    "validate": {
+      "required": "Required",
+      "is_email": "Is email",
+      "is_url": "Is URL",
+      "string_max_100": "Max 100",
+      "string_max_255": "Max 255",
+      "string_max_1000": "Max 1000",
+      "number_min_18": "Min 18"
     }
 }

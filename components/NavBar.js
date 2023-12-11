@@ -1,4 +1,4 @@
-import { Image, Link } from "@chakra-ui/react";
+import { Button, Image, Link } from "@chakra-ui/react";
 import React from "react";
 import {
   WalletMultiButton
@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { useTranslation } from 'next-i18next';
 import SwitchLanguage from "./SwitchLanguage";
 import { useAppRedireact } from "../utils/hook";
+import SelectWalletButton from "./Auth/SelectWalletButton";
 
 export default function NavBar() {
   const { t } = useTranslation('common');
@@ -80,7 +81,8 @@ export default function NavBar() {
                 <li
                   className=" ghost_menu__item"
                 >
-                  <WalletMultiButton />
+                  {/* <WalletMultiButton /> */}
+                  <SelectWalletButton />
                 </li>
                 <li>
                   <SwitchLanguage />
@@ -167,7 +169,7 @@ export default function NavBar() {
                 <li
                   className="mb-15 text-uppercase"
                 >
-                  <WalletMultiButton />
+                  <SelectWalletButton />
                 </li>
 
                 <li>

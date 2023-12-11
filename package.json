@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@hookform/resolvers": "^3.3.2",
     "@leecheuk/react-google-login": "^5.4.1",
     "@react-oauth/google": "^0.12.1",
     "@solana/wallet-adapter-base": "^0.9.23",
@@ -19,6 +20,7 @@
     "@solana/wallet-adapter-react-ui": "^0.9.34",
     "@solana/wallet-adapter-wallets": "^0.19.23",
     "@supabase/supabase-js": "^2.38.0",
+    "@tanstack/react-query": "^5.12.2",
     "axios": "^1.4.0",
     "classnames": "^2.3.2",
     "framer-motion": "^10.12.4",
@@ -34,7 +36,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.48.2",
     "react-icons": "^4.8.0",
-    "react-paginate": "^8.2.0"
+    "react-paginate": "^8.2.0",
+    "yup": "^1.3.2"
   },
   "devDependencies": {
     "eslint": "8.38.0",
