@@ -20,7 +20,14 @@ const RadioGroupController = ({ control, name, label, option = [] }) => {
       }) => {
         return (
           <FormControl>
-            <FormLabel as="p" color={"white"} fontSize={"md"} mt={6} mb={1}>
+            <FormLabel
+              as="p"
+              color={"white"}
+              fontSize={"md"}
+              mt={6}
+              mb={1}
+              textTransform={"capitalize"}
+            >
               {label}
             </FormLabel>
             <RadioGroup onChange={onChange} value={value}>
