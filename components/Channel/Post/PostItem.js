@@ -1,10 +1,10 @@
-import { Avatar, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Heading, Image, Stack, Text, Tooltip } from "@chakra-ui/react";
 import moment from "moment";
 import React from "react";
 import Task from "./Task";
 import { useTranslation } from "next-i18next";
 
-const PostItem = ({ post, avatar, channelName, channelId }) => {
+const PostItem = ({ post, avatar, channelName, channelId, isAuthor, onOpenModalEdit }) => {
   const { images } = post;
   const [thumbnail] = images;
   const { t } = useTranslation('common');
@@ -34,6 +34,21 @@ const PostItem = ({ post, avatar, channelName, channelId }) => {
       </Flex>
       <Text as="p" dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br />") }}></Text>
       <Task post={post} channelId={channelId} />
+      {isAuthor && (
+        <Stack justifyContent={"end"} flexDirection={"row"} mt={8}>
+          <Tooltip label={`Edit post ${post?.title}`} placement="bottom">
+            <Button
+              py={"15px"}
+              fontSize={"0.87rem"}
+              textTransform={"uppercase"}
+              lineHeight={1.2}
+              onClick={() => onOpenModalEdit(post)}
+            >
+              Edit
+            </Button>
+          </Tooltip>
+        </Stack>
+      )}
     </Flex>
   )
 }

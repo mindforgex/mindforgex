@@ -3,6 +3,8 @@ export const FIELD_TYPE = {
   SELECT: "SELECT",
   RADIO: "RADIO",
   FILE: "FILE",
+  TEXTAREA: "TEXTAREA",
+  CHECKBOX: "CHECKBOX",
 };
 
 export const INPUT_TYPE = {

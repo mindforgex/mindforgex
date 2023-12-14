@@ -13,6 +13,7 @@ import {
   PopoverBody,
   PopoverArrow,
   PopoverCloseButton,
+  Stack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { MOCK_DETAIL_PROFILE_DATA } from "../../../utils/data";
@@ -45,10 +46,12 @@ import {
 } from "../../../hooks/api/useChannel";
 import UpdateAboutMeModel from "../../../components/Channel/UpdateAboutMeModel";
 import { optionError, optionSuccess } from "../../../utils/optionToast";
+import CreateOrUpdatePostModel from "../../../components/Channel/CreateOrUpdatePostModel";
 
 const MODAL_DONATE = "modal_donate";
 const MODAL_UPDATE_CHANNEL = "modal_update_channel";
 const MODAL_UPDATE_ABOUT_ME = "modal_update_about_me";
+const MODAL_CREATE_OR_UPDATE_POST = "modal_create_or_update_post";
 
 const SOCIAL_SHARE = {
   FACEBOOK: "FACEBOOK",
@@ -83,11 +86,13 @@ function DetailChannel() {
   const [isLoading, setIsLoading] = useState(false);
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
+  const [currentPost, setCurrentPost] = useState(null);
   const { t } = useTranslation("common");
   const { open, close, modalState } = useModalState({
     [MODAL_DONATE]: false,
     [MODAL_UPDATE_CHANNEL]: false,
     [MODAL_UPDATE_ABOUT_ME]: false,
+    [MODAL_CREATE_OR_UPDATE_POST]: false,
   });
 
   const isAuthor = useMemo(() => {
@@ -429,17 +434,19 @@ function DetailChannel() {
                       }}
                     />
                     {isAuthor && (
-                      <Tooltip label={"Edit channel"} placement="bottom">
-                        <Button
-                          py={"15px"}
-                          fontSize={"0.87rem"}
-                          textTransform={"uppercase"}
-                          lineHeight={1.2}
-                          onClick={() => open(MODAL_UPDATE_CHANNEL)}
-                        >
-                          Edit
-                        </Button>
-                      </Tooltip>
+                      <Stack justifyContent={"end"} flexDirection={"row"}>
+                        <Tooltip label={"Edit channel"} placement="bottom">
+                          <Button
+                            py={"15px"}
+                            fontSize={"0.87rem"}
+                            textTransform={"uppercase"}
+                            lineHeight={1.2}
+                            onClick={() => open(MODAL_UPDATE_CHANNEL)}
+                          >
+                            Edit
+                          </Button>
+                        </Tooltip>
+                      </Stack>
                     )}
 
                     <Statistic detail={detailChannel} />
@@ -456,28 +463,50 @@ function DetailChannel() {
                       }}
                     />
                     {isAuthor && (
-                      <Tooltip label={"Edit about me"} placement="bottom">
-                        <Button
-                          py={"15px"}
-                          fontSize={"0.87rem"}
-                          textTransform={"uppercase"}
-                          lineHeight={1.2}
-                          onClick={() => open(MODAL_UPDATE_ABOUT_ME)}
-                        >
-                          Edit
-                        </Button>
-                      </Tooltip>
+                      <Stack justifyContent={"end"} flexDirection={"row"}>
+                        <Tooltip label={"Edit about me"} placement="bottom">
+                          <Button
+                            py={"15px"}
+                            fontSize={"0.87rem"}
+                            textTransform={"uppercase"}
+                            lineHeight={1.2}
+                            onClick={() => open(MODAL_UPDATE_ABOUT_ME)}
+                          >
+                            Edit
+                          </Button>
+                        </Tooltip>
+                      </Stack>
                     )}
                     <div style={{ marginTop: "60px" }} />
 
                     <section className="nk-decorated-h-2">
                       <h3 className="px-4">{t("channel.posts")}</h3>
                     </section>
+                    {true && (
+                      <Stack justifyContent={"end"} flexDirection={"row"}>
+                        <Tooltip label={"Create post"} placement="bottom">
+                          <Button
+                            py={"15px"}
+                            fontSize={"0.87rem"}
+                            textTransform={"uppercase"}
+                            lineHeight={1.2}
+                            onClick={() => open(MODAL_CREATE_OR_UPDATE_POST)}
+                          >
+                            Create
+                          </Button>
+                        </Tooltip>
+                      </Stack>
+                    )}
                     <ChannelPost
                       posts={detailChannel.posts}
                       avatar={detailChannel?.avatarUrl}
                       channelName={detailChannel?.channelName}
                       channelId={detailChannel._id}
+                      isAuthor={isAuthor}
+                      onOpenModalEdit={(post) => {
+                        setCurrentPost(post);
+                        open(MODAL_CREATE_OR_UPDATE_POST);
+                      }}
                     />
                   </div>
                 </article>
@@ -530,6 +559,16 @@ function DetailChannel() {
           isOpen={modalState[MODAL_UPDATE_ABOUT_ME]}
           onConfirm={donateForChannel}
           onClose={() => close(MODAL_UPDATE_ABOUT_ME)}
+        />
+      )}
+      {modalState[MODAL_CREATE_OR_UPDATE_POST] && (
+        <CreateOrUpdatePostModel
+          detailChannel={detailChannel}
+          currentPost={currentPost}
+          setCurrentPost={setCurrentPost}
+          isOpen={modalState[MODAL_CREATE_OR_UPDATE_POST]}
+          onConfirm={donateForChannel}
+          onClose={() => close(MODAL_CREATE_OR_UPDATE_POST)}
         />
       )}
     </>
