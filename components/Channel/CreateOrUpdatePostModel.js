@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import {
   Button,
   Modal,
@@ -13,12 +13,9 @@ import {
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 import InputController from "../Form/InputController";
-import RadioGroupController from "../Form/RadioGroupController";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useUpdateAboutMe } from "../../hooks/api/useChannel";
 import { FIELD_TYPE } from "../Form/constant";
-import useValidateUpdateAboutMe from "../../hooks/validate/useValidateUpdateAboutMe";
 import TextareaController from "../Form/TextareaController";
 import useValidateCreateOrUpdatePost from "../../hooks/validate/useValidateCreateOrUpdatePost";
 import UploadFileController from "../Form/UploadFileController";
@@ -37,7 +34,8 @@ const CreateOrUpdatePostModel = ({
   const toast = useToast();
   const { listField, validationSchema, defaultValues } =
     useValidateCreateOrUpdatePost();
-  const { mutate: createPost, creating } = useCreatePost({
+
+  const { mutate: createPost, isLoading: creating } = useCreatePost({
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
@@ -53,7 +51,8 @@ const CreateOrUpdatePostModel = ({
       });
     },
   });
-  const { mutate: updatePost, updating } = useUpdatePost({
+
+  const { mutate: updatePost, isLoading: updating } = useUpdatePost({
     id: currentPost?._id,
     onSuccess: async (success) => {
       toast({
@@ -61,10 +60,10 @@ const CreateOrUpdatePostModel = ({
         title: "Update post successfully",
       });
       setCurrentPost(null);
-      // onClose();
+      onClose();
     },
     onError: (error) => {
-      console.log("error", error)
+      console.log("error", error);
       toast({
         ...optionError,
         title: "Update post failed",
@@ -77,6 +76,16 @@ const CreateOrUpdatePostModel = ({
     resolver: yupResolver(validationSchema),
   });
 
+  useEffect(() => {
+    if (currentPost) {
+      const { _id, title, content, tasks } = currentPost;
+      const formatTask = tasks
+        .filter((task) => task.status === "active")
+        .map((task) => task.taskType);
+      reset({ title, content, tasks: formatTask });
+    }
+  }, [currentPost]);
+
   const onSubmit = (data) => {
     currentPost
       ? updatePost({
@@ -88,18 +97,6 @@ const CreateOrUpdatePostModel = ({
           channelId: detailChannel._id,
         });
   };
-
-  console.log("currentPost", currentPost);
-
-  useEffect(() => {
-    if (currentPost) {
-      const { _id, title, content, tasks } = currentPost;
-      const formatTask = tasks
-        .filter((task) => task.status === "active")
-        .map((task) => task.taskType);
-      reset({ title, content, tasks: formatTask });
-    }
-  }, [currentPost]);
 
   return (
     <>

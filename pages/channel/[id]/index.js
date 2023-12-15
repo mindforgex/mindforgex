@@ -47,11 +47,13 @@ import {
 import UpdateAboutMeModel from "../../../components/Channel/UpdateAboutMeModel";
 import { optionError, optionSuccess } from "../../../utils/optionToast";
 import CreateOrUpdatePostModel from "../../../components/Channel/CreateOrUpdatePostModel";
+import DeletePostModel from "../../../components/Channel/DeletePostModel";
 
 const MODAL_DONATE = "modal_donate";
 const MODAL_UPDATE_CHANNEL = "modal_update_channel";
 const MODAL_UPDATE_ABOUT_ME = "modal_update_about_me";
 const MODAL_CREATE_OR_UPDATE_POST = "modal_create_or_update_post";
+const MODAL_DELETE_POST = "modal_delete_post";
 
 const SOCIAL_SHARE = {
   FACEBOOK: "FACEBOOK",
@@ -93,6 +95,7 @@ function DetailChannel() {
     [MODAL_UPDATE_CHANNEL]: false,
     [MODAL_UPDATE_ABOUT_ME]: false,
     [MODAL_CREATE_OR_UPDATE_POST]: false,
+    [MODAL_DELETE_POST]: false,
   });
 
   const isAuthor = useMemo(() => {
@@ -507,6 +510,10 @@ function DetailChannel() {
                         setCurrentPost(post);
                         open(MODAL_CREATE_OR_UPDATE_POST);
                       }}
+                      onOpenModalDelete={(post) => {
+                        setCurrentPost(post);
+                        open(MODAL_DELETE_POST);
+                      }}
                     />
                   </div>
                 </article>
@@ -549,7 +556,6 @@ function DetailChannel() {
         <UpdateChannelModel
           detailChannel={detailChannel}
           isOpen={modalState[MODAL_UPDATE_CHANNEL]}
-          onConfirm={donateForChannel}
           onClose={() => close(MODAL_UPDATE_CHANNEL)}
         />
       )}
@@ -557,7 +563,6 @@ function DetailChannel() {
         <UpdateAboutMeModel
           detailChannel={detailChannel}
           isOpen={modalState[MODAL_UPDATE_ABOUT_ME]}
-          onConfirm={donateForChannel}
           onClose={() => close(MODAL_UPDATE_ABOUT_ME)}
         />
       )}
@@ -567,8 +572,16 @@ function DetailChannel() {
           currentPost={currentPost}
           setCurrentPost={setCurrentPost}
           isOpen={modalState[MODAL_CREATE_OR_UPDATE_POST]}
-          onConfirm={donateForChannel}
           onClose={() => close(MODAL_CREATE_OR_UPDATE_POST)}
+        />
+      )}
+      {modalState[MODAL_DELETE_POST] && (
+        <DeletePostModel
+          detailChannel={detailChannel}
+          currentPost={currentPost}
+          setCurrentPost={setCurrentPost}
+          isOpen={modalState[MODAL_DELETE_POST]}
+          onClose={() => close(MODAL_DELETE_POST)}
         />
       )}
     </>

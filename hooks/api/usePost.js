@@ -1,22 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  createPost,
-  getChannel,
-  subscribeChannel,
-  updateAboutMe,
-  updateChannel,
-  updatePost,
-} from "../../services";
-
-export function useDetailChannel(channelId) {
-  const res = useQuery({
-    queryKey: ["detail_channel", channelId],
-    queryFn: () => getChannel(channelId),
-    refetchOnWindowFocus: false,
-    enabled: Boolean(channelId),
-  });
-  return res;
-}
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createPost, deletePost, updatePost } from "../../services";
 
 export function useCreatePost({ onSuccess, onError }) {
   const queryClient = useQueryClient();
@@ -44,10 +27,10 @@ export function useUpdatePost({ id, onSuccess, onError }) {
   });
 }
 
-export function useUpdateAboutMe({ id, onSuccess, onError }) {
+export function useDeletePost({ id, onSuccess, onError }) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (payload) => await updateAboutMe(id, payload),
+    mutationFn: async (payload) => await deletePost(id),
     onSuccess: async (success) => {
       await queryClient.invalidateQueries("detail_channel");
       onSuccess();
@@ -57,17 +40,3 @@ export function useUpdateAboutMe({ id, onSuccess, onError }) {
     },
   });
 }
-
-export function useSubscribeChannel({ onSuccess, onError }) {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (payload) => await subscribeChannel(payload),
-    onSuccess: async (success) => {
-      await queryClient.invalidateQueries("detail_channel");
-      onSuccess();
-    },
-    onError: (error) => onError(error),
-  });
-}
-
-export function useDeleteChannel() {}

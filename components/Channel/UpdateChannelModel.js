@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import {
   Button,
   Modal,
@@ -20,6 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useUpdateChannel } from "../../hooks/api/useChannel";
 import moment from "moment";
 import { FIELD_TYPE } from "../Form/constant";
+import { optionError, optionSuccess } from "../../utils/optionToast";
 
 const UpdateChannelModel = ({ isOpen, onClose, detailChannel }) => {
   const { t } = useTranslation("common");
@@ -30,19 +31,15 @@ const UpdateChannelModel = ({ isOpen, onClose, detailChannel }) => {
     id: detailChannel?._id,
     onSuccess: async (success) => {
       toast({
+        ...optionSuccess,
         title: "Update channel in successfully",
-        status: "success",
-        isClosable: true,
-        position: "top",
       });
-      onClose(); 
+      onClose();
     },
     onError: (error) => {
       toast({
+        ...optionError,
         title: "Update channel failed",
-        status: "error",
-        isClosable: true,
-        position: "top",
       });
     },
   });
