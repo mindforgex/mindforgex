@@ -10,6 +10,7 @@ export const FIELD_TYPE = {
 export const INPUT_TYPE = {
   TEXT: "text",
   DATE: "date",
+  DATE_TIME: "datetime-local",
   NUMBER: "number",
   FILE: "file",
 };

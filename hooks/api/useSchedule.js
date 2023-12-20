@@ -6,9 +6,12 @@ import {
   updateSchedule,
 } from "../../services";
 
+const KEY_GET_SCHEDULES = "schedules";
+const KEY_GET_SCHEDULE = "schedule";
+
 export function useGetSchedules(params) {
   const res = useQuery({
-    queryKey: ["schedules", params],
+    queryKey: [KEY_GET_SCHEDULES, params],
     queryFn: () => getSchedules(params),
     refetchOnWindowFocus: false,
   });
@@ -17,7 +20,7 @@ export function useGetSchedules(params) {
 
 export function useGetSchedule(scheduleId) {
   const res = useQuery({
-    queryKey: ["schedule", scheduleId],
+    queryKey: [KEY_GET_SCHEDULE, scheduleId],
     queryFn: () => getChannel(scheduleId),
     refetchOnWindowFocus: false,
     enabled: Boolean(scheduleId),
@@ -30,7 +33,7 @@ export function useCreateSchedule({ onSuccess, onError }) {
   return useMutation({
     mutationFn: async (payload) => await createSchedule(payload),
     onSuccess: async (success) => {
-      await queryClient.invalidateQueries("schedules");
+      await queryClient.invalidateQueries(KEY_GET_SCHEDULES);
       onSuccess();
     },
     onError: (error) => onError(error),
@@ -42,7 +45,7 @@ export function useUpdateSchedule({ id, onSuccess, onError }) {
   return useMutation({
     mutationFn: async (payload) => await updateSchedule(id, payload),
     onSuccess: async (success) => {
-      await queryClient.invalidateQueries("schedules");
+      await queryClient.invalidateQueries(KEY_GET_SCHEDULES);
       onSuccess();
     },
     onError: (error) => {
@@ -56,7 +59,7 @@ export function useDeleteSchedule({ id, onSuccess, onError }) {
   return useMutation({
     mutationFn: async (payload) => await deleteSchedule(id),
     onSuccess: async (success) => {
-      await queryClient.invalidateQueries("schedules");
+      await queryClient.invalidateQueries(KEY_GET_SCHEDULES);
       onSuccess();
     },
     onError: (error) => {

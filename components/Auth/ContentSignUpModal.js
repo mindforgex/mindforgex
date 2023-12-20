@@ -56,7 +56,7 @@ const ContentSignUpModal = ({ setTypeContent }) => {
     discord: "",
     youtube: "",
     x: "",
-    // avatar: null,
+    file: null,
     walletAddress: "",
   };
 
@@ -144,12 +144,14 @@ const ContentSignUpModal = ({ setTypeContent }) => {
     let formatData;
     if (dataForm.userType === USER_TYPE.USER) {
       formatData = {
+        file: null,
         userType: dataForm.userType,
         email: dataForm.email,
       };
     } else {
       formatData = {
         ...dataForm,
+        file: null,
         discord: dataForm.discord || null,
         youtube: dataForm.youtube || null,
         x: dataForm.x || null,
@@ -282,7 +284,7 @@ const ContentSignUpModal = ({ setTypeContent }) => {
           />
           <InputController control={control} name="email" label="Email" />
           {watch("userType") === USER_TYPE.KOL && (
-            <FormChanelKOL control={control} />
+            <FormChanelKOL control={control} watch={watch} />
           )}
         </Stack>
       </ModalBody>

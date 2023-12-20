@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import PostItem from "./PostItem";
+import { PAGINATION } from "../../../utils/constants";
+import { useGetPosts } from "../../../hooks/api/usePost";
+import Pagination from "../../Pagination";
 
 const ChannelPost = ({
-  posts,
+  // posts,
   avatar,
   channelName,
   channelId,
@@ -11,10 +14,18 @@ const ChannelPost = ({
   onOpenModalEdit,
   onOpenModalDelete,
 }) => {
+  const [params, setParams] = useState({
+    channelId: channelId,
+    pageIndex: PAGINATION.PAGE_INDEX,
+    pageSize: PAGINATION.PAGE_SIZE,
+  });
+
+  const { data: posts, isLoading } = useGetPosts(params);
+  console.log("postspostsposts", posts)
   return (
     <>
       <Flex alignContent={"center"} w={`100%`} direction={"column"} mt={4}>
-        {posts?.map((post) => (
+        {posts?.items?.map((post) => (
           <PostItem
             key={post._id}
             post={post}
@@ -27,6 +38,12 @@ const ChannelPost = ({
           />
         ))}
       </Flex>
+      <Pagination
+        pageCount={posts?.meta?.totalPages}
+        onPageChange={(pageIndex) =>
+          setParams({ ...params, pageIndex: pageIndex + 1 })
+        }
+      />
     </>
   );
 };

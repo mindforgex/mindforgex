@@ -1,6 +1,11 @@
 import ReactPaginate from "react-paginate";
 
-export default function Pagination({ pageCount, onPageChange }) {
+export default function Pagination({
+  pageCount,
+  onPageChange,
+  marginPagesDisplayed = 2,
+  pageRangeDisplayed = 3,
+}) {
   return (
     <div className="nk-pagination nk-pagination-center">
       <nav>
@@ -14,13 +19,13 @@ export default function Pagination({ pageCount, onPageChange }) {
           breakClassName="nk-pagination-item"
           breakLinkClassName="nk-pagination-item"
           pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
+          marginPagesDisplayed={marginPagesDisplayed}
+          pageRangeDisplayed={pageRangeDisplayed}
           onPageChange={({ selected }) => onPageChange(selected)}
           containerClassName="pagination"
           activeClassName="nk-pagination-current"
         />
       </nav>
     </div>
-  )
+  );
 }

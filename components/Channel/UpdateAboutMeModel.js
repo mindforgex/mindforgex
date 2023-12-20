@@ -12,14 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
-import InputController from "../Form/InputController";
-import RadioGroupController from "../Form/RadioGroupController";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUpdateAboutMe } from "../../hooks/api/useChannel";
-import { FIELD_TYPE } from "../Form/constant";
 import useValidateUpdateAboutMe from "../../hooks/validate/useValidateUpdateAboutMe";
 import { optionError, optionSuccess } from "../../utils/optionToast";
+import { fields } from "../../utils/fields";
 
 const UpdateAboutMeModel = ({ isOpen, onClose, detailChannel }) => {
   const { t } = useTranslation("common");
@@ -79,31 +77,7 @@ const UpdateAboutMeModel = ({ isOpen, onClose, detailChannel }) => {
               },
             }}
           >
-            {listField.map((field) => {
-              switch (field.type) {
-                case FIELD_TYPE.INPUT:
-                  return (
-                    <InputController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      type={field.typeInput}
-                      placeholder={field?.placeholder}
-                    />
-                  );
-                case FIELD_TYPE.RADIO:
-                  return (
-                    <RadioGroupController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      option={field.option}
-                    />
-                  );
-                default:
-                  return <></>;
-              }
-            })}
+            {listField.map((field) => fields[field.type](field, control))}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onUpdate)}>

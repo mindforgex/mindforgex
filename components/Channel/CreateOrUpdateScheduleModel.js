@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Modal,
@@ -12,19 +12,15 @@ import {
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
-import InputController from "../Form/InputController";
-import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FIELD_TYPE } from "../Form/constant";
-import TextareaController from "../Form/TextareaController";
-import UploadFileController from "../Form/UploadFileController";
-import CheckboxGroupController from "../Form/CheckboxGroupController";
 import { optionError, optionSuccess } from "../../utils/optionToast";
 import useValidateCreateOrUpdateSchedule from "../../hooks/validate/useValidateCreateOrUpdateSchedule";
 import {
   useCreateSchedule,
   useUpdateSchedule,
 } from "../../hooks/api/useSchedule";
+import { fields } from "../../utils/fields";
+import moment from "moment";
 
 const CreateOrUpdateScheduleModel = ({
   isOpen,
@@ -75,31 +71,32 @@ const CreateOrUpdateScheduleModel = ({
     },
   });
 
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, watch } = useForm({
     defaultValues,
     resolver: yupResolver(validationSchema),
   });
 
-  // useEffect(() => {
-  //   if (currentSchedule) {
-  //     const { _id, title, content, tasks } = currentSchedule;
-  //     const formatTask = tasks
-  //       .filter((task) => task.status === "active")
-  //       .map((task) => task.taskType);
-  //     reset({ title, content, tasks: formatTask });
-  //   }
-  // }, [currentSchedule]);
+  useEffect(() => {
+    if (currentSchedule) {
+      const { _id, cover, title, description, date } = currentSchedule;
+      console.log(moment(date).format("YYYY-MM-DD hh:mm a"));
+      reset({
+        title,
+        description,
+        date: moment(date).format("YYYY-MM-DD HH:mm"),
+        cover
+      });
+    }
+  }, [currentSchedule]);
 
   const onSubmit = (data) => {
-    currentSchedule
-      ? updateSchedule({
-          ...data,
-          channelId: detailChannel._id,
-        })
-      : createSchedule({
-          ...data,
-          channelId: detailChannel._id,
-        });
+    const formData = new FormData();
+    formData.append("file", data.file);
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("date", data.date);
+    formData.append("channelId", detailChannel._id);
+    currentSchedule ? updateSchedule(formData) : createSchedule(formData);
   };
 
   return (
@@ -122,49 +119,9 @@ const CreateOrUpdateScheduleModel = ({
               },
             }}
           >
-            {listField.map((field) => {
-              switch (field.type) {
-                case FIELD_TYPE.INPUT:
-                  return (
-                    <InputController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      type={field.typeInput}
-                      placeholder={field?.placeholder}
-                    />
-                  );
-                case FIELD_TYPE.TEXTAREA:
-                  return (
-                    <TextareaController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      option={field.option}
-                    />
-                  );
-                case FIELD_TYPE.FILE:
-                  return (
-                    <UploadFileController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      type={field.typeInput}
-                    />
-                  );
-                case FIELD_TYPE.CHECKBOX:
-                  return (
-                    <CheckboxGroupController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      option={field.option}
-                    />
-                  );
-                default:
-                  return <></>;
-              }
-            })}
+            {listField.map((field) =>
+              fields[field.type](field, control, watch)
+            )}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onSubmit)}>

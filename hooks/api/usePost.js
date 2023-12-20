@@ -1,12 +1,23 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPost, deletePost, updatePost } from "../../services";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createPost, deletePost, getPosts, updatePost } from "../../services";
+
+const KEY_GET_POSTS = "posts";
+
+export function useGetPosts(params) {
+  const res = useQuery({
+    queryKey: [KEY_GET_POSTS, params],
+    queryFn: () => getPosts(params),
+    refetchOnWindowFocus: false,
+  });
+  return res;
+}
 
 export function useCreatePost({ onSuccess, onError }) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (payload) => await createPost(payload),
     onSuccess: async (success) => {
-      await queryClient.invalidateQueries("detail_channel");
+      await queryClient.invalidateQueries(KEY_GET_POSTS);
       onSuccess();
     },
     onError: (error) => onError(error),
@@ -18,7 +29,7 @@ export function useUpdatePost({ id, onSuccess, onError }) {
   return useMutation({
     mutationFn: async (payload) => await updatePost(id, payload),
     onSuccess: async (success) => {
-      await queryClient.invalidateQueries("detail_channel");
+      await queryClient.invalidateQueries(KEY_GET_POSTS);
       onSuccess();
     },
     onError: (error) => {
@@ -32,7 +43,7 @@ export function useDeletePost({ id, onSuccess, onError }) {
   return useMutation({
     mutationFn: async (payload) => await deletePost(id),
     onSuccess: async (success) => {
-      await queryClient.invalidateQueries("detail_channel");
+      await queryClient.invalidateQueries(KEY_GET_POSTS);
       onSuccess();
     },
     onError: (error) => {

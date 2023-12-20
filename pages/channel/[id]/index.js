@@ -528,7 +528,7 @@ function DetailChannel() {
                       posts={detailChannel.posts}
                       avatar={detailChannel?.avatarUrl}
                       channelName={detailChannel?.channelName}
-                      channelId={detailChannel._id}
+                      channelId={router.query?.id}
                       isAuthor={isAuthor}
                       onOpenModalEdit={(post) => {
                         setCurrentPost(post);
