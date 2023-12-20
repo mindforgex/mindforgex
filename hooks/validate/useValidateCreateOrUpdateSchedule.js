@@ -29,7 +29,7 @@ const useValidateCreateOrUpdateSchedule = () => {
     {
       type: FIELD_TYPE.INPUT,
       name: "date",
-      typeInput: INPUT_TYPE.DATE,
+      typeInput: INPUT_TYPE.DATE_TIME,
       label: "Date & time",
     },
   ];
@@ -37,9 +37,11 @@ const useValidateCreateOrUpdateSchedule = () => {
   const validationSchema = Yup.object().shape({
     title: Yup.string()
       .required(t("validate.required"))
+      .min(30, t("validate.string_max_500"))
       .max(500, t("validate.string_max_500")),
     description: Yup.string()
       .required(t("validate.required"))
+      .min(60, t("validate.string_max_500"))
       .max(10000, t("validate.string_max_10000")),
   });
 
@@ -47,7 +49,7 @@ const useValidateCreateOrUpdateSchedule = () => {
     file: "",
     title: "",
     description: "",
-    date: moment(),
+    date: moment().format("YYYY-MM-DD HH:mm"),
   };
 
   return { listField, validationSchema, defaultValues };

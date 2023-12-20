@@ -16,7 +16,7 @@ import { useAppRedireact } from '../utils/hook';
 export default function Channel() {
   const [channels, setChannels] = useState([]);
   const [pageParams] = useState({ pageSize: 6, pageIndex: 1 });
-  const [postParams] = useState({ pageSize: 5, pageIndex: 1 });
+  const [postParams] = useState({ pageSize: 20, pageIndex: 1 });
   const [posts, setPosts] = useState([]);
   const { t } = useTranslation('common');
   const router = useRouter()
@@ -31,7 +31,7 @@ export default function Channel() {
 
     const getTopPost = async () => {
       const data = await getPosts(postParams);
-      setPosts(data.slice(0, 5))
+      setPosts(data.items)
     }
     getAppChannels && getAppChannels();
     getTopPost && getTopPost();

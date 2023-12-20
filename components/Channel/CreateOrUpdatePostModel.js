@@ -12,16 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
-import InputController from "../Form/InputController";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FIELD_TYPE } from "../Form/constant";
-import TextareaController from "../Form/TextareaController";
 import useValidateCreateOrUpdatePost from "../../hooks/validate/useValidateCreateOrUpdatePost";
-import UploadFileController from "../Form/UploadFileController";
-import CheckboxGroupController from "../Form/CheckboxGroupController";
 import { useCreatePost, useUpdatePost } from "../../hooks/api/usePost";
 import { optionError, optionSuccess } from "../../utils/optionToast";
+import { fields } from "../../utils/fields";
 
 const CreateOrUpdatePostModel = ({
   isOpen,
@@ -71,7 +67,7 @@ const CreateOrUpdatePostModel = ({
     },
   });
 
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, watch } = useForm({
     defaultValues,
     resolver: yupResolver(validationSchema),
   });
@@ -90,10 +86,12 @@ const CreateOrUpdatePostModel = ({
     currentPost
       ? updatePost({
           ...data,
+          file: null,
           channelId: detailChannel._id,
         })
       : createPost({
           ...data,
+          file: null,
           channelId: detailChannel._id,
         });
   };
@@ -118,49 +116,7 @@ const CreateOrUpdatePostModel = ({
               },
             }}
           >
-            {listField.map((field) => {
-              switch (field.type) {
-                case FIELD_TYPE.INPUT:
-                  return (
-                    <InputController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      type={field.typeInput}
-                      placeholder={field?.placeholder}
-                    />
-                  );
-                case FIELD_TYPE.TEXTAREA:
-                  return (
-                    <TextareaController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      option={field.option}
-                    />
-                  );
-                case FIELD_TYPE.FILE:
-                  return (
-                    <UploadFileController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      type={field.typeInput}
-                    />
-                  );
-                case FIELD_TYPE.CHECKBOX:
-                  return (
-                    <CheckboxGroupController
-                      control={control}
-                      name={field.name}
-                      label={field.label}
-                      option={field.option}
-                    />
-                  );
-                default:
-                  return <></>;
-              }
-            })}
+            {listField.map((field) => fields[field.type](field, control, watch))}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onSubmit)}>

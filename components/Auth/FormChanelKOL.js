@@ -1,9 +1,8 @@
 import React from "react";
-import InputController from "../Form/InputController";
-import UploadFileController from "../Form/UploadFileController";
 import { FIELD_TYPE, INPUT_TYPE } from "../Form/constant";
+import { fields } from "../../utils/fields";
 
-const FormChanelKOL = ({ control }) => {
+const FormChanelKOL = ({ control, watch }) => {
   const listField = [
     {
       type: FIELD_TYPE.INPUT,
@@ -49,39 +48,12 @@ const FormChanelKOL = ({ control }) => {
     },
     {
       type: FIELD_TYPE.FILE,
-      name: "avatar",
+      name: "file",
       typeInput: INPUT_TYPE.FILE,
-      label: "avatar",
+      label: "file",
     },
   ];
-  return (
-    <>
-      {listField.map((field) => {
-        switch (field.type) {
-          case FIELD_TYPE.INPUT:
-            return (
-              <InputController
-                control={control}
-                name={field.name}
-                label={field.label}
-                type={field.typeInput}
-              />
-            );
-          case FIELD_TYPE.FILE:
-            return (
-              <UploadFileController
-                control={control}
-                name={field.name}
-                label={field.label}
-                type={field.typeInput}
-              />
-            );
-          default:
-            return <></>;
-        }
-      })}
-    </>
-  );
+  return <>{listField.map((field) => fields[field.type](field, control, watch))}</>;
 };
 
 export default FormChanelKOL;

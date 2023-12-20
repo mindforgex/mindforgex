@@ -164,6 +164,8 @@
       "string_max_500": "Max 500",
       "string_max_1000": "Max 1000",
       "string_max_10000": "Max 10000",
+      "string_min_30": "Min 30",
+      "string_max_60": "Min 60",
       "number_min_18": "Min 18"
     }
 }
