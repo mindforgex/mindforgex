@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import {
   Button,
   Modal,
@@ -19,6 +19,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useUpdateAboutMe } from "../../hooks/api/useChannel";
 import { FIELD_TYPE } from "../Form/constant";
 import useValidateUpdateAboutMe from "../../hooks/validate/useValidateUpdateAboutMe";
+import { optionError, optionSuccess } from "../../utils/optionToast";
 
 const UpdateAboutMeModel = ({ isOpen, onClose, detailChannel }) => {
   const { t } = useTranslation("common");
@@ -29,19 +30,15 @@ const UpdateAboutMeModel = ({ isOpen, onClose, detailChannel }) => {
     id: detailChannel?._id,
     onSuccess: async (success) => {
       toast({
+        ...optionSuccess,
         title: "Update about me in successfully",
-        status: "success",
-        isClosable: true,
-        position: "top",
       });
       onClose();
     },
     onError: (error) => {
       toast({
+        ...optionError,
         title: "Update about me failed",
-        status: "error",
-        isClosable: true,
-        position: "top",
       });
     },
   });

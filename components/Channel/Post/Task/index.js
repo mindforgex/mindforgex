@@ -57,7 +57,7 @@ const Task = ({ channelId, post }) => {
   return (
     <Flex direction={'column'}>
       <Text as="h4" my={4}>{t('channel.task.title')}</Text>
-      {tasks.map((task, index) => (
+      {tasks.filter(task => task.status === "active").map((task, index) => (
         <TaskItem
           key={task._id}
           task={task}
