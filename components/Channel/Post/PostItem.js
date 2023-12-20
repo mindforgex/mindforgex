@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   Heading,
+  IconButton,
   Image,
   Stack,
   Text,
@@ -12,6 +13,8 @@ import moment from "moment";
 import React from "react";
 import Task from "./Task";
 import { useTranslation } from "next-i18next";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 const PostItem = ({
   post,
@@ -69,29 +72,25 @@ const PostItem = ({
       {isAuthor && (
         <Stack flexDirection={"row"} justifyContent={"end"}>
           <Stack justifyContent={"end"} flexDirection={"row"} mt={8}>
-            <Tooltip label={`Edit post ${post?.title}`} placement="bottom">
-              <Button
-                py={"15px"}
-                fontSize={"0.87rem"}
-                textTransform={"uppercase"}
-                lineHeight={1.2}
-                onClick={() => onOpenModalEdit(post)}
-              >
-                Edit
-              </Button>
+            <Tooltip label={`Delete post ${post?.title}`} placement="bottom">
+              <IconButton
+                onClick={() => onOpenModalDelete(post)}
+                backgroundColor={"transparent"}
+                _hover={{}}
+                _active={{}}
+                icon={<MdDeleteForever fontSize={"26px"} color="white" />}
+              />
             </Tooltip>
           </Stack>
           <Stack justifyContent={"end"} flexDirection={"row"} mt={8}>
-            <Tooltip label={`Delete post ${post?.title}`} placement="bottom">
-              <Button
-                py={"15px"}
-                fontSize={"0.87rem"}
-                textTransform={"uppercase"}
-                lineHeight={1.2}
-                onClick={() => onOpenModalDelete(post)}
-              >
-                Delete
-              </Button>
+            <Tooltip label={`Edit post ${post?.title}`} placement="bottom">
+              <IconButton
+                onClick={() => onOpenModalEdit(post)}
+                backgroundColor={"transparent"}
+                _hover={{}}
+                _active={{}}
+                icon={<FaEdit fontSize={"26px"} color="white" />}
+              />
             </Tooltip>
           </Stack>
         </Stack>

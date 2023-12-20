@@ -14,6 +14,7 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   Stack,
+  IconButton,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { MOCK_DETAIL_PROFILE_DATA } from "../../../utils/data";
@@ -38,7 +39,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import axios from "axios";
 import Statistic from "../../../components/Channel/Statistic";
 import { useModalState } from "../../../hooks/useModalState";
-import { FaFacebook, FaTwitter } from "react-icons/fa";
+import { FaEdit, FaFacebook, FaPlusSquare, FaTwitter } from "react-icons/fa";
 import UpdateChannelModel from "../../../components/Channel/UpdateChannelModel";
 import {
   useDetailChannel,
@@ -48,12 +49,16 @@ import UpdateAboutMeModel from "../../../components/Channel/UpdateAboutMeModel";
 import { optionError, optionSuccess } from "../../../utils/optionToast";
 import CreateOrUpdatePostModel from "../../../components/Channel/CreateOrUpdatePostModel";
 import DeletePostModel from "../../../components/Channel/DeletePostModel";
+import LivestreamList from "../../../components/LivestreamList";
+import CreateOrUpdateScheduleModel from "../../../components/Channel/CreateOrUpdateScheduleModel";
+import moment from "moment";
 
 const MODAL_DONATE = "modal_donate";
 const MODAL_UPDATE_CHANNEL = "modal_update_channel";
 const MODAL_UPDATE_ABOUT_ME = "modal_update_about_me";
 const MODAL_CREATE_OR_UPDATE_POST = "modal_create_or_update_post";
 const MODAL_DELETE_POST = "modal_delete_post";
+const MODAL_CREATE_OR_UPDATE_SCHEDULE = "modal_create_or_update_schedule";
 
 const SOCIAL_SHARE = {
   FACEBOOK: "FACEBOOK",
@@ -89,6 +94,7 @@ function DetailChannel() {
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
   const [currentPost, setCurrentPost] = useState(null);
+  const [currentSchedule, setCurrentSchedule] = useState(null);
   const { t } = useTranslation("common");
   const { open, close, modalState } = useModalState({
     [MODAL_DONATE]: false,
@@ -96,6 +102,7 @@ function DetailChannel() {
     [MODAL_UPDATE_ABOUT_ME]: false,
     [MODAL_CREATE_OR_UPDATE_POST]: false,
     [MODAL_DELETE_POST]: false,
+    [MODAL_CREATE_OR_UPDATE_SCHEDULE]: false,
   });
 
   const isAuthor = useMemo(() => {
@@ -103,6 +110,25 @@ function DetailChannel() {
     const idUserFromChannel = detailChannel?.userId;
     return idUserCurrent === idUserFromChannel;
   }, [userInfo, detailChannel]);
+
+  const socialLinks = useMemo(() => {
+    if (dataDetail) {
+      return dataDetail.socialLinks.reduce(
+        (a, v) => ({
+          ...a,
+          [v.name]: {
+            icon: v.icon,
+            url: v.url,
+            totalFollower: v.totalFollower,
+          },
+        }),
+        {}
+      );
+    }
+    return {};
+  }, [dataDetail]);
+
+  // const socialLinks = detail?.socialLinks?.reduce((a, v) => ({ ...a, [v.name]: v.url }), {}) || {}
 
   const userSubscribeChannel = async () => {
     if (!userInfo?.user?.walletAddress) {
@@ -279,7 +305,7 @@ function DetailChannel() {
                           <ProfileInfo
                             metadata={{
                               key: t("channel.birthday"),
-                              value: detailChannel?.dateOfBirth,
+                              value: moment(detailChannel?.dateOfBirth).format("DD MMM, YYYY"),
                             }}
                           />
                           <ProfileInfo
@@ -298,14 +324,16 @@ function DetailChannel() {
                           <ProfileInfo
                             metadata={{
                               key: t("channel.followers"),
-                              value: numberFormatter(detailChannel?.follower),
+                              value: numberFormatter(
+                                detailChannel?.follower || 0
+                              ),
                             }}
                           />
                           <ProfileInfo
                             metadata={{
                               key: t("channel.youtube_followers"),
                               value: numberFormatter(
-                                detailChannel?.followerYoutube
+                                socialLinks?.youtube?.totalFollower || 0
                               ),
                             }}
                           />
@@ -313,7 +341,7 @@ function DetailChannel() {
                             metadata={{
                               key: t("channel.twitch_followers"),
                               value: numberFormatter(
-                                detailChannel?.followerTwitter
+                                socialLinks?.x?.totalFollower || 0
                               ),
                             }}
                           />
@@ -439,15 +467,13 @@ function DetailChannel() {
                     {isAuthor && (
                       <Stack justifyContent={"end"} flexDirection={"row"}>
                         <Tooltip label={"Edit channel"} placement="bottom">
-                          <Button
-                            py={"15px"}
-                            fontSize={"0.87rem"}
-                            textTransform={"uppercase"}
-                            lineHeight={1.2}
+                          <IconButton
                             onClick={() => open(MODAL_UPDATE_CHANNEL)}
-                          >
-                            Edit
-                          </Button>
+                            backgroundColor={"transparent"}
+                            _hover={{}}
+                            _active={{}}
+                            icon={<FaEdit fontSize={"26px"} color="white" />}
+                          />
                         </Tooltip>
                       </Stack>
                     )}
@@ -468,15 +494,13 @@ function DetailChannel() {
                     {isAuthor && (
                       <Stack justifyContent={"end"} flexDirection={"row"}>
                         <Tooltip label={"Edit about me"} placement="bottom">
-                          <Button
-                            py={"15px"}
-                            fontSize={"0.87rem"}
-                            textTransform={"uppercase"}
-                            lineHeight={1.2}
+                          <IconButton
                             onClick={() => open(MODAL_UPDATE_ABOUT_ME)}
-                          >
-                            Edit
-                          </Button>
+                            backgroundColor={"transparent"}
+                            _hover={{}}
+                            _active={{}}
+                            icon={<FaEdit fontSize={"26px"} color="white" />}
+                          />
                         </Tooltip>
                       </Stack>
                     )}
@@ -485,18 +509,18 @@ function DetailChannel() {
                     <section className="nk-decorated-h-2">
                       <h3 className="px-4">{t("channel.posts")}</h3>
                     </section>
-                    {true && (
+                    {isAuthor && (
                       <Stack justifyContent={"end"} flexDirection={"row"}>
                         <Tooltip label={"Create post"} placement="bottom">
-                          <Button
-                            py={"15px"}
-                            fontSize={"0.87rem"}
-                            textTransform={"uppercase"}
-                            lineHeight={1.2}
+                          <IconButton
                             onClick={() => open(MODAL_CREATE_OR_UPDATE_POST)}
-                          >
-                            Create
-                          </Button>
+                            backgroundColor={"transparent"}
+                            _hover={{}}
+                            _active={{}}
+                            icon={
+                              <FaPlusSquare fontSize={"26px"} color="white" />
+                            }
+                          />
                         </Tooltip>
                       </Stack>
                     )}
@@ -537,6 +561,14 @@ function DetailChannel() {
                         {t("channel.detail")} {">"}
                       </button>
                     </Section>
+                    <LivestreamList
+                      channelId={router.query?.id}
+                      isAuthor={isAuthor}
+                      onOpenModal={(schedule) => {
+                        setCurrentSchedule(schedule);
+                        open(MODAL_CREATE_OR_UPDATE_SCHEDULE);
+                      }}
+                    />
                   </div>
                 </aside>
               </div>
@@ -582,6 +614,15 @@ function DetailChannel() {
           setCurrentPost={setCurrentPost}
           isOpen={modalState[MODAL_DELETE_POST]}
           onClose={() => close(MODAL_DELETE_POST)}
+        />
+      )}
+      {modalState[MODAL_CREATE_OR_UPDATE_SCHEDULE] && (
+        <CreateOrUpdateScheduleModel
+          detailChannel={detailChannel}
+          currentSchedule={currentSchedule}
+          setCurrentSchedule={setCurrentSchedule}
+          isOpen={modalState[MODAL_CREATE_OR_UPDATE_SCHEDULE]}
+          onClose={() => close(MODAL_CREATE_OR_UPDATE_SCHEDULE)}
         />
       )}
     </>

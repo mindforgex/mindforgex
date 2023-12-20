@@ -38,3 +38,8 @@ export const TASK_TYPE = {
   JOIN_DISCORD: 'JOIN_DISCORD',
   SUBSCRIBE_TWITCH: 'SUBSCRIBE_TWITCH'
 }
+
+export const PAGINATION = {
+  PAGE_INDEX: 1,
+  PAGE_SIZE: 10,
+};
