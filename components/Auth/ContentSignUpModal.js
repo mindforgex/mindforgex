@@ -24,6 +24,7 @@ import FormChanelKOL from "./FormChanelKOL";
 import { useCreateChannel } from "../../hooks/api/useChannel";
 import { TYPE_CONTENT } from "./constant";
 import { getAndSaveUser } from "../../utils/auth";
+import moment from "moment";
 
 const USER_TYPE = {
   KOL: "1",
@@ -32,6 +33,7 @@ const USER_TYPE = {
 
 const ContentSignUpModal = ({ setTypeContent }) => {
   const { t } = useTranslation("common");
+  const currentDate = moment();
   const { select, wallet, wallets, publicKey, disconnect, connecting } =
     useWallet();
   const { mutate: createChannel, isLoading } = useCreateChannel({
@@ -48,13 +50,13 @@ const ContentSignUpModal = ({ setTypeContent }) => {
     userType: USER_TYPE.KOL,
     email: "",
     name: "",
-    age: "",
-    nickName: "",
+    channelName: "",
     description: "",
-    // avatar: "",
+    dateOfBirth: null,
     discord: "",
     youtube: "",
     x: "",
+    // avatar: null,
     walletAddress: "",
   };
 
@@ -76,7 +78,7 @@ const ContentSignUpModal = ({ setTypeContent }) => {
           .required(t("validate.required"))
           .max(255, t("validate.string_max_255")),
     }),
-    nickName: Yup.string().when("userType", {
+    channelName: Yup.string().when("userType", {
       is: (value) => value === USER_TYPE.KOL,
       then: () =>
         Yup.string()
@@ -90,13 +92,15 @@ const ContentSignUpModal = ({ setTypeContent }) => {
           .required(t("validate.required"))
           .max(1000, t("validate.string_max_1000")),
     }),
-    age: Yup.string().when("userType", {
+    dateOfBirth: Yup.string().when("userType", {
       is: (value) => value === USER_TYPE.KOL,
       then: () =>
-        Yup.number()
-          .transform((value) => (isNaN(value) ? undefined : value))
+        Yup.date()
           .required(t("validate.required"))
-          .min(18, t("validate.number_min_18")),
+          .max(
+            moment().subtract(18, "years").endOf("year"),
+            t("validate.number_min_18")
+          ),
     }),
     discord: Yup.string().when("userType", {
       is: (value) => value === USER_TYPE.KOL,
@@ -161,7 +165,15 @@ const ContentSignUpModal = ({ setTypeContent }) => {
         </Text>
       </ModalHeader>
       <ModalCloseButton />
-      <ModalBody>
+      <ModalBody
+        maxHeight={"68vh"}
+        overflowY={"auto"}
+        sx={{
+          "::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
         <Stack>
           <Text as="p" color={"white"} fontSize={"md"} p={0} m={0}>
             {t("modal.wallet.select_wallet")}:
@@ -262,13 +274,13 @@ const ContentSignUpModal = ({ setTypeContent }) => {
           <RadioGroupController
             control={control}
             name="userType"
-            label="User type:"
+            label="User type"
             option={[
               { value: USER_TYPE.KOL, label: "Streamers, KOLs, KOCs" },
               { value: USER_TYPE.USER, label: "Fans, Followers, Users" },
             ]}
           />
-          <InputController control={control} name="email" label="Email:" />
+          <InputController control={control} name="email" label="Email" />
           {watch("userType") === USER_TYPE.KOL && (
             <FormChanelKOL control={control} />
           )}

@@ -13,12 +13,12 @@ import {
 } from "@chakra-ui/react"
 import { useTranslation } from "next-i18next";
 
-const DonateModal = ({isOpen, setOpen, onConfirm}) => {
+const DonateModal = ({isOpen, onClose, onConfirm}) => {
   const { t } = useTranslation('common');
   const [donate, setDonate] = useState(0);
   const inputDonate = useRef();
   const toast = useToast();
-  const onClose = () => {
+  const handleCloseModal = () => {
     !donate && toast({
       title: t('modal.donate.required_amount'),
       status: 'error',
@@ -26,7 +26,7 @@ const DonateModal = ({isOpen, setOpen, onConfirm}) => {
       position: 'top'
     });
     !donate && inputDonate.current.focus();
-    donate && setOpen(!isOpen);
+    donate && onClose();
     donate && onConfirm({ donate });
   };
 
@@ -56,10 +56,10 @@ const DonateModal = ({isOpen, setOpen, onConfirm}) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+            <Button colorScheme='blue' mr={3} onClick={handleCloseModal}>
               {t('modal.donate.btn_donate')}
             </Button>
-            <Button onClick={() => setOpen(!isOpen)}>{t('modal.btn_cancel')}</Button>
+            <Button onClick={onClose}>{t('modal.btn_cancel')}</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

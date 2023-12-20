@@ -1,64 +1,57 @@
 import React from "react";
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { Controller } from "react-hook-form";
 import InputController from "../Form/InputController";
-
-const FIELD_TYPE = {
-  INPUT: "INPUT",
-  SELECT: "SELECT",
-  RADIO: "RADIO",
-  FILE: "FILE",
-};
+import UploadFileController from "../Form/UploadFileController";
+import { FIELD_TYPE, INPUT_TYPE } from "../Form/constant";
 
 const FormChanelKOL = ({ control }) => {
   const listField = [
     {
       type: FIELD_TYPE.INPUT,
       name: "name",
-      typeInput: "text",
+      typeInput: INPUT_TYPE.TEXT,
       label: "name",
     },
     {
       type: FIELD_TYPE.INPUT,
-      name: "age",
-      typeInput: "number",
-      label: "age",
-    },
-    {
-      type: FIELD_TYPE.INPUT,
-      name: "nickName",
-      typeInput: "text",
-      label: "nickName",
+      name: "channelName",
+      typeInput: INPUT_TYPE.TEXT,
+      label: "channelName",
     },
     {
       type: FIELD_TYPE.INPUT,
       name: "description",
-      typeInput: "text",
+      typeInput: INPUT_TYPE.TEXT,
       label: "description",
     },
     {
-      type: FIELD_TYPE.FILE,
-      name: "avatar",
-      typeInput: "text",
-      label: "avatar",
+      type: FIELD_TYPE.INPUT,
+      name: "dateOfBirth",
+      typeInput: INPUT_TYPE.DATE,
+      label: "dateOfBirth",
     },
     {
       type: FIELD_TYPE.INPUT,
       name: "discord",
-      typeInput: "text",
+      typeInput: INPUT_TYPE.TEXT,
       label: "discord",
     },
     {
       type: FIELD_TYPE.INPUT,
       name: "youtube",
-      typeInput: "text",
+      typeInput: INPUT_TYPE.TEXT,
       label: "youtube",
     },
     {
       type: FIELD_TYPE.INPUT,
       name: "x",
-      typeInput: "text",
+      typeInput: INPUT_TYPE.TEXT,
       label: "x",
+    },
+    {
+      type: FIELD_TYPE.FILE,
+      name: "avatar",
+      typeInput: INPUT_TYPE.FILE,
+      label: "avatar",
     },
   ];
   return (
@@ -68,6 +61,15 @@ const FormChanelKOL = ({ control }) => {
           case FIELD_TYPE.INPUT:
             return (
               <InputController
+                control={control}
+                name={field.name}
+                label={field.label}
+                type={field.typeInput}
+              />
+            );
+          case FIELD_TYPE.FILE:
+            return (
+              <UploadFileController
                 control={control}
                 name={field.name}
                 label={field.label}

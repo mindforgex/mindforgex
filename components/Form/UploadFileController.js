@@ -7,13 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { Controller } from "react-hook-form";
 
-const InputController = ({
-  control,
-  name,
-  label,
-  type = "text",
-  placeholder = "",
-}) => {
+const UploadFileController = ({ control, name, label, type = "text" }) => {
   return (
     <Controller
       control={control}
@@ -34,12 +28,7 @@ const InputController = ({
             >
               {label}
             </FormLabel>
-            <Input
-              type={type}
-              onChange={onChange}
-              value={value}
-              placeholder={placeholder}
-            />
+            <input type="file" />
             {error?.message && (
               <FormErrorMessage>{error?.message}</FormErrorMessage>
             )}
@@ -50,4 +39,4 @@ const InputController = ({
   );
 };
 
-export default InputController;
+export default UploadFileController;
