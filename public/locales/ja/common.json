@@ -21,6 +21,8 @@
     "donate_success": " {{donate}}SOLでアイドルに寄付した",
     "subscribe_success": "チャンネル登録が完了した！",
     "subscribe_failed": "チャンネル登録が失敗した!",
+    "unsubscribe_success": "Unsubscribe channel success!",
+    "unsubscribe_failed": "Unsubscribe channel failed!",
     "about_me": "私について",
     "posts": "投稿",
     "detail": "詳細",
