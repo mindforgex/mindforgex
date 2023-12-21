@@ -9,6 +9,7 @@ const useValidateCreateOrUpdateSchedule = () => {
     {
       type: FIELD_TYPE.FILE,
       name: "file",
+      nameUrl: "cover",
       typeInput: INPUT_TYPE.FILE,
       label: "Cover",
     },

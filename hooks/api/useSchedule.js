@@ -5,9 +5,7 @@ import {
   getSchedules,
   updateSchedule,
 } from "../../services";
-
-const KEY_GET_SCHEDULES = "schedules";
-const KEY_GET_SCHEDULE = "schedule";
+import { KEY_GET_SCHEDULE, KEY_GET_SCHEDULES } from "../../utils/constants";
 
 export function useGetSchedules(params) {
   const res = useQuery({

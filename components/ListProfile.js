@@ -58,7 +58,7 @@ export default function ListProfile({ data, total = 100, onPageChange = () => { 
                       <Image
                         width={300}
                         height={300}
-                        src={_item.avatarUrl}
+                        src={`${process.env.NEXT_PUBLIC_API_URL}/${_item.avatarUrl}`}
                         className="attachment-medium size-medium"
                         alt=""
                       />{" "}

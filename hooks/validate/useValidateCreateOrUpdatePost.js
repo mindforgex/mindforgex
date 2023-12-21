@@ -15,6 +15,7 @@ const useValidateCreateOrUpdatePost = () => {
     {
       type: FIELD_TYPE.FILE,
       name: "file",
+      nameUrl: "image",
       typeInput: INPUT_TYPE.FILE,
       label: "image",
     },
@@ -63,7 +64,7 @@ const useValidateCreateOrUpdatePost = () => {
   });
 
   const defaultValues = {
-    file: "",
+    file: null,
     title: "",
     content: "",
     tasks: [],

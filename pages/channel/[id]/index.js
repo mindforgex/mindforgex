@@ -52,6 +52,7 @@ import DeletePostModel from "../../../components/Channel/DeletePostModel";
 import LivestreamList from "../../../components/LivestreamList";
 import CreateOrUpdateScheduleModel from "../../../components/Channel/CreateOrUpdateScheduleModel";
 import moment from "moment";
+import ManageTaskListModel from "../../../components/Channel/ManageTaskListModel";
 
 const MODAL_DONATE = "modal_donate";
 const MODAL_UPDATE_CHANNEL = "modal_update_channel";
@@ -59,6 +60,7 @@ const MODAL_UPDATE_ABOUT_ME = "modal_update_about_me";
 const MODAL_CREATE_OR_UPDATE_POST = "modal_create_or_update_post";
 const MODAL_DELETE_POST = "modal_delete_post";
 const MODAL_CREATE_OR_UPDATE_SCHEDULE = "modal_create_or_update_schedule";
+const MODAL_MANAGE_TASK_LIST = "modal_manage_task_list";
 
 const SOCIAL_SHARE = {
   FACEBOOK: "FACEBOOK",
@@ -103,6 +105,7 @@ function DetailChannel() {
     [MODAL_CREATE_OR_UPDATE_POST]: false,
     [MODAL_DELETE_POST]: false,
     [MODAL_CREATE_OR_UPDATE_SCHEDULE]: false,
+    [MODAL_MANAGE_TASK_LIST]: false,
   });
 
   const isAuthor = useMemo(() => {
@@ -127,8 +130,6 @@ function DetailChannel() {
     }
     return {};
   }, [dataDetail]);
-
-  // const socialLinks = detail?.socialLinks?.reduce((a, v) => ({ ...a, [v.name]: v.url }), {}) || {}
 
   const userSubscribeChannel = async () => {
     if (!userInfo?.user?.walletAddress) {
@@ -285,7 +286,7 @@ function DetailChannel() {
                         <Image
                           width={300}
                           height={300}
-                          src={detailChannel.avatarUrl}
+                          src={`${process.env.NEXT_PUBLIC_API_URL}/${detailChannel.avatarUrl}`}
                           className="attachment-large size-large mr-3"
                           alt=""
                         />{" "}
@@ -305,7 +306,9 @@ function DetailChannel() {
                           <ProfileInfo
                             metadata={{
                               key: t("channel.birthday"),
-                              value: moment(detailChannel?.dateOfBirth).format("DD MMM, YYYY"),
+                              value: moment(detailChannel?.dateOfBirth).format(
+                                "DD MMM, YYYY"
+                              ),
                             }}
                           />
                           <ProfileInfo
@@ -538,6 +541,10 @@ function DetailChannel() {
                         setCurrentPost(post);
                         open(MODAL_DELETE_POST);
                       }}
+                      onOpenModalManageTaskList={(post) => {
+                        setCurrentPost(post);
+                        open(MODAL_MANAGE_TASK_LIST);
+                      }}
                     />
                   </div>
                 </article>
@@ -623,6 +630,15 @@ function DetailChannel() {
           setCurrentSchedule={setCurrentSchedule}
           isOpen={modalState[MODAL_CREATE_OR_UPDATE_SCHEDULE]}
           onClose={() => close(MODAL_CREATE_OR_UPDATE_SCHEDULE)}
+        />
+      )}
+      {modalState[MODAL_MANAGE_TASK_LIST] && (
+        <ManageTaskListModel
+          detailChannel={detailChannel}
+          currentPost={currentPost}
+          setCurrentPost={setCurrentPost}
+          isOpen={modalState[MODAL_MANAGE_TASK_LIST]}
+          onClose={() => close(MODAL_MANAGE_TASK_LIST)}
         />
       )}
     </>

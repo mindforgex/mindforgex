@@ -11,6 +11,7 @@ import { Controller } from "react-hook-form";
 const UploadFileController = ({
   control,
   name,
+  nameUrl = "",
   label,
   watch,
   accept = "image/*",
@@ -25,7 +26,7 @@ const UploadFileController = ({
       }) => {
         return (
           <>
-            {watch(name) && (
+            {(watch(name) || watch(nameUrl)) && (
               <Box
                 w={"168px"}
                 h={"168px"}
@@ -38,7 +39,14 @@ const UploadFileController = ({
                 display={"flex"}
                 alignItems={"center"}
               >
-                <img src={URL.createObjectURL(watch(name))} alt="" />
+                {watch(name) ? (
+                  <img src={URL.createObjectURL(watch(name))} alt="" />
+                ) : (
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/${watch(nameUrl)}`}
+                    alt=""
+                  />
+                )}
               </Box>
             )}
             <FormControl isInvalid={error?.message}>

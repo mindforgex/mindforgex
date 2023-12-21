@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import PostItem from "./PostItem";
 import { PAGINATION } from "../../../utils/constants";
@@ -13,21 +13,28 @@ const ChannelPost = ({
   isAuthor,
   onOpenModalEdit,
   onOpenModalDelete,
+  onOpenModalManageTaskList,
 }) => {
   const [params, setParams] = useState({
     channelId: channelId,
     pageIndex: PAGINATION.PAGE_INDEX,
     pageSize: PAGINATION.PAGE_SIZE,
   });
+  const [posts, setPosts] = useState(null);
+  const { data: dataPosts, isLoading } = useGetPosts(params);
+  useEffect(() => {
+    if (dataPosts) {
+      console.log("postspostsposts", posts);
+      setPosts(dataPosts);
+    }
+  }, [JSON.stringify(dataPosts)]);
 
-  const { data: posts, isLoading } = useGetPosts(params);
-  console.log("postspostsposts", posts)
   return (
     <>
       <Flex alignContent={"center"} w={`100%`} direction={"column"} mt={4}>
         {posts?.items?.map((post) => (
           <PostItem
-            key={post._id}
+            key={post._id + post.name}
             post={post}
             avatar={avatar}
             channelName={channelName}
@@ -35,6 +42,7 @@ const ChannelPost = ({
             isAuthor={isAuthor}
             onOpenModalEdit={onOpenModalEdit}
             onOpenModalDelete={onOpenModalDelete}
+            onOpenModalManageTaskList={onOpenModalManageTaskList}
           />
         ))}
       </Flex>
@@ -48,4 +56,4 @@ const ChannelPost = ({
   );
 };
 
-export default React.memo(ChannelPost);
+export default (ChannelPost);

@@ -1,6 +1,7 @@
 import CheckboxGroupController from "../components/Form/CheckboxGroupController";
 import InputController from "../components/Form/InputController";
 import RadioGroupController from "../components/Form/RadioGroupController";
+import SelectController from "../components/Form/SelectController";
 import TextareaController from "../components/Form/TextareaController";
 import UploadFileController from "../components/Form/UploadFileController";
 import { FIELD_TYPE } from "../components/Form/constant";
@@ -28,6 +29,7 @@ export const fields = {
       control={control}
       watch={watch}
       name={field.name}
+      nameUrl={field?.nameUrl}
       label={field.label}
       type={field.typeInput}
     />
@@ -46,6 +48,15 @@ export const fields = {
       name={field.name}
       label={field.label}
       option={field.option}
+    />
+  ),
+  [FIELD_TYPE.SELECT]: (field, control) => (
+    <SelectController
+      control={control}
+      name={field.name}
+      label={field.label}
+      option={field.option}
+      placeholder={field?.placeholder}
     />
   ),
 };
