@@ -94,7 +94,7 @@ const UpdateChannelModel = ({ isOpen, onClose, detailChannel }) => {
         profestionalFeild,
         email,
         sex,
-        dateOfBirth,
+        dateOfBirth: moment(dateOfBirth).format("YYYY-MM-DD"),
         discord: discord?.url,
         youtube: youtube?.url,
         x: x?.url,

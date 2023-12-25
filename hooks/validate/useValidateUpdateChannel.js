@@ -178,7 +178,7 @@ const useValidateUpdateChannel = () => {
     profestionalFeild: "",
     email: "",
     sex: SEX_TYPE.MALE,
-    dateOfBirth: null,
+    dateOfBirth: moment().format("YYYY-MM-DD"),
     aboutMe: "",
     discord: "",
     youtube: "",

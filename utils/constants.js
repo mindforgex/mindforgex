@@ -43,3 +43,17 @@ export const PAGINATION = {
   PAGE_INDEX: 1,
   PAGE_SIZE: 10,
 };
+
+export const USER_TYPE = {
+  KOL: "1",
+  USER: "2",
+};
+
+export const KEY_GET_CHANNELS = "channels";
+export const KEY_GET_CHANNEL = "channel";
+export const KEY_GET_SCHEDULES = "schedules";
+export const KEY_GET_SCHEDULE = "schedule";
+export const KEY_GET_TASKS = "tasks";
+export const KEY_GET_TASK = "task";
+export const KEY_GET_POSTS = "posts";
+export const KEY_GET_POST = "post";

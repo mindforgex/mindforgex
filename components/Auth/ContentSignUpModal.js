@@ -17,19 +17,15 @@ import { useTranslation } from "next-i18next";
 import { useWallet } from "@solana/wallet-adapter-react";
 import RadioGroupController from "../Form/RadioGroupController";
 import { useForm } from "react-hook-form";
-import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputController from "../Form/InputController";
-import FormChanelKOL from "./FormChanelKOL";
 import { useCreateChannel } from "../../hooks/api/useChannel";
 import { TYPE_CONTENT } from "./constant";
 import { getAndSaveUser } from "../../utils/auth";
 import moment from "moment";
-
-const USER_TYPE = {
-  KOL: "1",
-  USER: "2",
-};
+import { fields } from "../../utils/fields";
+import useValidateCreateChannel from "../../hooks/validate/useValidateCreateChannel";
+import { USER_TYPE } from "../../utils/constants";
 
 const ContentSignUpModal = ({ setTypeContent }) => {
   const { t } = useTranslation("common");
@@ -45,89 +41,12 @@ const ContentSignUpModal = ({ setTypeContent }) => {
       console.log("error", error);
     },
   });
-
-  const defaultValues = {
-    userType: USER_TYPE.KOL,
-    email: "",
-    name: "",
-    channelName: "",
-    description: "",
-    dateOfBirth: null,
-    discord: "",
-    youtube: "",
-    x: "",
-    file: null,
-    walletAddress: "",
-  };
-
-  const validation = Yup.object().shape({
-    walletAddress: Yup.string().required("required"),
-    userType: Yup.string().required(t("validate.required")),
-    email: Yup.string().when("userType", {
-      is: (value) => value === USER_TYPE.USER,
-      then: () =>
-        Yup.string()
-          .required(t("validate.required"))
-          .email(t("validate.is_email"))
-          .max(100, t("validate.string_max_100")),
-    }),
-    name: Yup.string().when("userType", {
-      is: (value) => value === USER_TYPE.KOL,
-      then: () =>
-        Yup.string()
-          .required(t("validate.required"))
-          .max(255, t("validate.string_max_255")),
-    }),
-    channelName: Yup.string().when("userType", {
-      is: (value) => value === USER_TYPE.KOL,
-      then: () =>
-        Yup.string()
-          .required(t("validate.required"))
-          .max(255, t("validate.string_max_255")),
-    }),
-    description: Yup.string().when("userType", {
-      is: (value) => value === USER_TYPE.KOL,
-      then: () =>
-        Yup.string()
-          .required(t("validate.required"))
-          .max(1000, t("validate.string_max_1000")),
-    }),
-    dateOfBirth: Yup.string().when("userType", {
-      is: (value) => value === USER_TYPE.KOL,
-      then: () =>
-        Yup.date()
-          .required(t("validate.required"))
-          .max(
-            moment().subtract(18, "years").endOf("year"),
-            t("validate.number_min_18")
-          ),
-    }),
-    discord: Yup.string().when("userType", {
-      is: (value) => value === USER_TYPE.KOL,
-      then: () =>
-        Yup.string()
-          .url(t("validate.is_url"))
-          .max(255, t("validate.string_max_255")),
-    }),
-    youtube: Yup.string().when("userType", {
-      is: (value) => value === USER_TYPE.KOL,
-      then: () =>
-        Yup.string()
-          .url(t("validate.is_url"))
-          .max(255, t("validate.string_max_255")),
-    }),
-    x: Yup.string().when("userType", {
-      is: (value) => value === USER_TYPE.KOL,
-      then: () =>
-        Yup.string()
-          .url(t("validate.is_url"))
-          .max(255, t("validate.string_max_255")),
-    }),
-  });
+  const { listField, validationSchema, defaultValues } =
+    useValidateCreateChannel();
 
   const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues,
-    resolver: yupResolver(validation),
+    resolver: yupResolver(validationSchema),
   });
 
   const listWalletReady = useMemo(
@@ -144,20 +63,23 @@ const ContentSignUpModal = ({ setTypeContent }) => {
     let formatData;
     if (dataForm.userType === USER_TYPE.USER) {
       formatData = {
-        file: null,
         userType: dataForm.userType,
         email: dataForm.email,
       };
     } else {
       formatData = {
         ...dataForm,
-        file: null,
+        dateOfBirth: moment(data.dateOfBirth).toISOString(),
         discord: dataForm.discord || null,
         youtube: dataForm.youtube || null,
         x: dataForm.x || null,
       };
     }
-    createChannel(formatData);
+    const formData = new FormData();
+    Object.entries(formatData).forEach(([key, value]) =>
+      formData.append(key, value)
+    );
+    createChannel(formData);
   };
   return (
     <>
@@ -284,7 +206,11 @@ const ContentSignUpModal = ({ setTypeContent }) => {
           />
           <InputController control={control} name="email" label="Email" />
           {watch("userType") === USER_TYPE.KOL && (
-            <FormChanelKOL control={control} watch={watch} />
+            <>
+              {listField.map((field) =>
+                fields[field.type](field, control, watch)
+              )}
+            </>
           )}
         </Stack>
       </ModalBody>

@@ -14,6 +14,7 @@ import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import useValidateCreateOrUpdatePost from "../../hooks/validate/useValidateCreateOrUpdatePost";
 import { useCreatePost, useUpdatePost } from "../../hooks/api/usePost";
 import { optionError, optionSuccess } from "../../utils/optionToast";
@@ -30,6 +31,9 @@ const CreateOrUpdatePostModel = ({
   const toast = useToast();
   const { listField, validationSchema, defaultValues } =
     useValidateCreateOrUpdatePost();
+  const validationRequiredFile = Yup.object().shape({
+    file: Yup.mixed().required("A file is required"),
+  });
 
   const { mutate: createPost, isLoading: creating } = useCreatePost({
     onSuccess: async (success) => {
@@ -69,31 +73,31 @@ const CreateOrUpdatePostModel = ({
 
   const { control, handleSubmit, reset, watch } = useForm({
     defaultValues,
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(
+      currentPost
+        ? validationSchema
+        : validationSchema.concat(validationRequiredFile)
+    ),
   });
 
   useEffect(() => {
     if (currentPost) {
-      const { _id, title, content, tasks } = currentPost;
+      const { _id, title, content, tasks, images } = currentPost;
       const formatTask = tasks
         .filter((task) => task.status === "active")
         .map((task) => task.taskType);
-      reset({ title, content, tasks: formatTask });
+      reset({ title, content, tasks: formatTask, image: images[0] });
     }
   }, [currentPost]);
 
   const onSubmit = (data) => {
-    currentPost
-      ? updatePost({
-          ...data,
-          file: null,
-          channelId: detailChannel._id,
-        })
-      : createPost({
-          ...data,
-          file: null,
-          channelId: detailChannel._id,
-        });
+    const { tasks, image, ...dataForm } = data;
+    const formatData = { ...dataForm, channelId: detailChannel._id };
+    const formData = new FormData();
+    Object.entries(formatData).forEach(([key, value]) =>
+      formData.append(key, value)
+    );
+    currentPost ? updatePost(formData) : createPost(formData);
   };
 
   return (
@@ -116,7 +120,9 @@ const CreateOrUpdatePostModel = ({
               },
             }}
           >
-            {listField.map((field) => fields[field.type](field, control, watch))}
+            {listField.map((field) =>
+              fields[field.type](field, control, watch)
+            )}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onSubmit)}>

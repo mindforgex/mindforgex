@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createPost, deletePost, getPosts, updatePost } from "../../services";
-
-const KEY_GET_POSTS = "posts";
+import { KEY_GET_POSTS } from "../../utils/constants";
 
 export function useGetPosts(params) {
   const res = useQuery({

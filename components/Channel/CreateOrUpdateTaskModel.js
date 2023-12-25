@@ -9,57 +9,68 @@ import {
   ModalOverlay,
   useToast,
   Text,
+  Link,
+  Flex,
+  Stack,
+  Tooltip,
+  IconButton,
+  Box,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { optionError, optionSuccess } from "../../utils/optionToast";
-import useValidateCreateOrUpdateSchedule from "../../hooks/validate/useValidateCreateOrUpdateSchedule";
 import {
   useCreateSchedule,
   useUpdateSchedule,
 } from "../../hooks/api/useSchedule";
 import { fields } from "../../utils/fields";
 import moment from "moment";
+import useValidateCreateOrUpdateTask from "../../hooks/validate/useValidateCreateOrUpdateTask";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
+import { useCreateTask, useUpdateTask } from "../../hooks/api/useTask";
 
-const CreateOrUpdateScheduleModel = ({
+const CreateOrUpdateTaskModel = ({
   isOpen,
   onClose,
-  detailChannel,
-  currentSchedule,
-  setCurrentSchedule,
+  currentPost,
+  currentTask,
+  setCurrentTask,
 }) => {
   const { t } = useTranslation("common");
   const toast = useToast();
   const { listField, validationSchema, defaultValues } =
-    useValidateCreateOrUpdateSchedule();
+    useValidateCreateOrUpdateTask();
+  console.log("currentPost", currentPost);
+  console.log("currentTask", currentTask);
 
-  const { mutate: createSchedule, isLoading: creating } = useCreateSchedule({
+  const { mutate: createTask, isLoading: creating } = useCreateTask({
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: "Create schedule successfully",
+        title: "Create task successfully",
       });
-      setCurrentSchedule(null);
-      onClose();
+      setCurrentTask(null);
+      // onClose();
     },
     onError: (error) => {
       toast({
         ...optionError,
-        title: "Create schedule failed",
+        title: "Create task failed",
       });
     },
   });
 
-  const { mutate: updateSchedule, isLoading: updating } = useUpdateSchedule({
-    id: currentSchedule?._id,
+  const { mutate: updateSchedule, isLoading: updating } = useUpdateTask({
+    id: currentTask?._id,
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
         title: "Update schedule successfully",
       });
-      setCurrentSchedule(null);
-      onClose();
+      setCurrentTask(null);
+      // onClose();
     },
     onError: (error) => {
       console.log("error", error);
@@ -76,35 +87,36 @@ const CreateOrUpdateScheduleModel = ({
   });
 
   useEffect(() => {
-    if (currentSchedule) {
-      const { _id, cover, title, description, date } = currentSchedule;
-      console.log(moment(date).format("YYYY-MM-DD hh:mm a"));
+    if (currentTask) {
+      const { name, description, taskInfo, taskType } = currentTask;
+      const { link, serverId, title } = taskInfo;
       reset({
-        title,
+        name,
         description,
-        date: moment(date).format("YYYY-MM-DD HH:mm"),
-        cover,
+        link,
+        serverId,
+        title,
+        taskType,
       });
     }
-  }, [currentSchedule]);
+  }, [currentTask]);
 
-  const onSubmit = ({ cover, ...data }) => {
-    const formData = new FormData();
-    const formatData = { ...data, channelId: detailChannel._id };
-    Object.entries(formatData).forEach(([key, value]) =>
-      formData.append(key, value)
-    );
-    currentSchedule ? updateSchedule(formData) : createSchedule(formData);
+  const onSubmit = (data) => {
+    const formatData = {
+      ...data,
+      postId: currentPost._id,
+    };
+    currentTask ? updateSchedule(formatData) : createTask(formatData);
   };
 
   return (
     <>
       <Modal closeOnOverlayClick={false} isOpen={isOpen} isCentered size={"xl"}>
         <ModalOverlay />
-        <ModalContent bg={"#181c23"}>
+        <ModalContent bg={"#181c23"} height={"68vh"}>
           <ModalHeader color={"white"} borderBottom={"1px"}>
             <Text as="h4" m={0} textAlign={"center"}>
-              {currentSchedule ? "Update schedule" : "Create schedule"}
+              {currentTask ? "Update schedule" : "Create schedule"}
             </Text>
           </ModalHeader>
           <ModalBody
@@ -123,12 +135,12 @@ const CreateOrUpdateScheduleModel = ({
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onSubmit)}>
-              {currentSchedule ? "Update" : "Create"}
+              {currentTask ? "Update" : "Create"}
             </Button>
             <Button
               onClick={() => {
                 onClose();
-                setCurrentSchedule(null);
+                setCurrentTask(null);
               }}
             >
               {t("modal.btn_cancel")}
@@ -140,4 +152,4 @@ const CreateOrUpdateScheduleModel = ({
   );
 };
 
-export default React.memo(CreateOrUpdateScheduleModel);
+export default React.memo(CreateOrUpdateTaskModel);

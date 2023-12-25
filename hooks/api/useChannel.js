@@ -6,9 +6,9 @@ import {
   updateAboutMe,
   updateChannel,
 } from "../../services";
+import { KEY_GET_CHANNEL } from "../../utils/constants";
 
-const KEY_GET_CHANNELS = "schedules";
-const KEY_GET_CHANNEL = "schedule";
+
 
 export function useDetailChannel(channelId) {
   const res = useQuery({

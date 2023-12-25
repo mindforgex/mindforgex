@@ -13,7 +13,7 @@ import moment from "moment";
 import React from "react";
 import Task from "./Task";
 import { useTranslation } from "next-i18next";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTasks } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 
 const PostItem = ({
@@ -24,6 +24,7 @@ const PostItem = ({
   isAuthor,
   onOpenModalEdit,
   onOpenModalDelete,
+  onOpenModalManageTaskList
 }) => {
   const { images } = post;
   const [thumbnail] = images;
@@ -43,7 +44,7 @@ const PostItem = ({
       <Flex w={`100%`}>
         <Image
           height={800}
-          src={thumbnail}
+          src={`${process.env.NEXT_PUBLIC_API_URL}/${thumbnail}`}
           alt={post?.title}
           title={post?.title}
         />
@@ -79,6 +80,17 @@ const PostItem = ({
                 _hover={{}}
                 _active={{}}
                 icon={<MdDeleteForever fontSize={"26px"} color="white" />}
+              />
+            </Tooltip>
+          </Stack>
+          <Stack justifyContent={"end"} flexDirection={"row"} mt={8}>
+            <Tooltip label={`Manage the task list of post ${post?.title}`} placement="bottom">
+              <IconButton
+                onClick={() => onOpenModalManageTaskList(post)}
+                backgroundColor={"transparent"}
+                _hover={{}}
+                _active={{}}
+                icon={<FaTasks fontSize={"26px"} color="white" />}
               />
             </Tooltip>
           </Stack>
