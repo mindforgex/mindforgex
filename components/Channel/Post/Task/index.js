@@ -1,5 +1,5 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useToast } from '@chakra-ui/react';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import TaskItem from './TaskItem';
 import { getUserInfo } from '../../../../utils/helpers';
 import { claimNFT } from '../../../../services/postService';
@@ -17,6 +17,13 @@ const Task = ({ channelId, post }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const resultRef = useRef()
   const userInfo = getUserInfo();
+
+  useEffect(() => {
+    if (post) {
+      setTasks(post.tasks);
+    }
+  }, [post]);
+
   const isFinished = useMemo(() => {
     if (userInfo?.user?.walletAddress) {
       return tasks.filter(t => {
@@ -57,7 +64,7 @@ const Task = ({ channelId, post }) => {
   return (
     <Flex direction={'column'}>
       <Text as="h4" my={4}>{t('channel.task.title')}</Text>
-      {post?.tasks.map((task, index) => (
+      {tasks.map((task, index) => (
         <TaskItem
           key={task._id}
           task={task}

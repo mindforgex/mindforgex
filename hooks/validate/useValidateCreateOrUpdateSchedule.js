@@ -47,7 +47,7 @@ const useValidateCreateOrUpdateSchedule = () => {
   });
 
   const defaultValues = {
-    file: "",
+    file: null,
     title: "",
     description: "",
     date: moment().format("YYYY-MM-DD HH:mm"),

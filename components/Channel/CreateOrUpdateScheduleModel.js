@@ -21,6 +21,7 @@ import {
 } from "../../hooks/api/useSchedule";
 import { fields } from "../../utils/fields";
 import moment from "moment";
+import * as Yup from "yup";
 
 const CreateOrUpdateScheduleModel = ({
   isOpen,
@@ -33,6 +34,9 @@ const CreateOrUpdateScheduleModel = ({
   const toast = useToast();
   const { listField, validationSchema, defaultValues } =
     useValidateCreateOrUpdateSchedule();
+  const validationRequiredFile = Yup.object().shape({
+    file: Yup.mixed().required("A file is required"),
+  });
 
   const { mutate: createSchedule, isLoading: creating } = useCreateSchedule({
     onSuccess: async (success) => {
@@ -72,7 +76,11 @@ const CreateOrUpdateScheduleModel = ({
 
   const { control, handleSubmit, reset, watch } = useForm({
     defaultValues,
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(
+      currentSchedule
+        ? validationSchema
+        : validationSchema.concat(validationRequiredFile)
+    ),
   });
 
   useEffect(() => {
