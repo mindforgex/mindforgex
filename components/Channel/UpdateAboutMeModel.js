@@ -64,7 +64,7 @@ const UpdateAboutMeModel = ({ isOpen, onClose, detailChannel }) => {
         <ModalContent bg={"#181c23"}>
           <ModalHeader color={"white"} borderBottom={"1px"}>
             <Text as="h4" m={0} textAlign={"center"}>
-              Update about me
+              {detailChannel?.aboutMe ? "Update about me" : "Create about me"}
             </Text>
           </ModalHeader>
           <ModalBody
@@ -81,7 +81,7 @@ const UpdateAboutMeModel = ({ isOpen, onClose, detailChannel }) => {
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onUpdate)}>
-              Update
+              {detailChannel?.aboutMe ? "Update" : "Create"}
             </Button>
             <Button onClick={onClose}>{t("modal.btn_cancel")}</Button>
           </ModalFooter>

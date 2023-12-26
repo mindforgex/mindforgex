@@ -44,7 +44,7 @@ const ContentSignUpModal = ({ setTypeContent }) => {
   const { listField, validationSchema, defaultValues } =
     useValidateCreateChannel();
 
-  const { control, handleSubmit, watch, setValue } = useForm({
+  const { control, handleSubmit, watch, setValue, setError } = useForm({
     defaultValues,
     resolver: yupResolver(validationSchema),
   });
@@ -59,8 +59,12 @@ const ContentSignUpModal = ({ setTypeContent }) => {
   }, [publicKey]);
 
   const onSubmit = (data) => {
-    const { walletAddress, ...dataForm } = data;
+    const { walletAddress, discord, youtube, x, ...dataForm } = data;
     let formatData;
+    if (dataForm.userType === USER_TYPE.KOL && !watch("file")) {
+      setError("file", { message: "File requeid" });
+      return;
+    }
     if (dataForm.userType === USER_TYPE.USER) {
       formatData = {
         userType: dataForm.userType,
@@ -70,9 +74,9 @@ const ContentSignUpModal = ({ setTypeContent }) => {
       formatData = {
         ...dataForm,
         dateOfBirth: moment(data.dateOfBirth).toISOString(),
-        discord: dataForm.discord || null,
-        youtube: dataForm.youtube || null,
-        x: dataForm.x || null,
+        ...(discord && { discord }),
+        ...(youtube && { youtube }),
+        ...(x && { x }),
       };
     }
     const formData = new FormData();

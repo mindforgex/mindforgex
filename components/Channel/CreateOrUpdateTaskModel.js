@@ -42,8 +42,6 @@ const CreateOrUpdateTaskModel = ({
   const toast = useToast();
   const { listField, validationSchema, defaultValues } =
     useValidateCreateOrUpdateTask();
-  console.log("currentPost", currentPost);
-  console.log("currentTask", currentTask);
 
   const { mutate: createTask, isLoading: creating } = useCreateTask({
     onSuccess: async (success) => {
@@ -52,7 +50,7 @@ const CreateOrUpdateTaskModel = ({
         title: "Create task successfully",
       });
       setCurrentTask(null);
-      // onClose();
+      onClose();
     },
     onError: (error) => {
       toast({
@@ -67,16 +65,16 @@ const CreateOrUpdateTaskModel = ({
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: "Update schedule successfully",
+        title: "Update task successfully",
       });
       setCurrentTask(null);
-      // onClose();
+      onClose();
     },
     onError: (error) => {
       console.log("error", error);
       toast({
         ...optionError,
-        title: "Update schedule failed",
+        title: "Update task failed",
       });
     },
   });
@@ -116,7 +114,7 @@ const CreateOrUpdateTaskModel = ({
         <ModalContent bg={"#181c23"} height={"68vh"}>
           <ModalHeader color={"white"} borderBottom={"1px"}>
             <Text as="h4" m={0} textAlign={"center"}>
-              {currentTask ? "Update schedule" : "Create schedule"}
+              {currentTask ? "Update task" : "Create task"}
             </Text>
           </ModalHeader>
           <ModalBody

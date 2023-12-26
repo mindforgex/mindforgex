@@ -1,12 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createPost, deletePost, getPosts, updatePost } from "../../services";
-import { KEY_GET_POSTS } from "../../utils/constants";
+import { createPost, deletePost, getPost, getPosts, updatePost } from "../../services";
+import { KEY_GET_POST, KEY_GET_POSTS } from "../../utils/constants";
 
 export function useGetPosts(params) {
   const res = useQuery({
     queryKey: [KEY_GET_POSTS, params],
     queryFn: () => getPosts(params),
     refetchOnWindowFocus: false,
+  });
+  return res;
+}
+
+export function useGetPost(postId) {
+  const res = useQuery({
+    queryKey: [KEY_GET_POST, postId],
+    queryFn: () => getPost(postId),
+    refetchOnWindowFocus: false,
+    enabled: Boolean(postId),
   });
   return res;
 }
