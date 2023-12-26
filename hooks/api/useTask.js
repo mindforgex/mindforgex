@@ -1,7 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createTask, deleteTask, getTasks, updateTask } from "../../services";
-import { KEY_GET_CHANNEL, KEY_GET_POSTS, KEY_GET_TASK, KEY_GET_TASKS } from "../../utils/constants";
-
+import {
+  KEY_GET_POSTS,
+  KEY_GET_TASK,
+  KEY_GET_TASKS,
+} from "../../utils/constants";
 
 export function useGetTasks(params) {
   const res = useQuery({

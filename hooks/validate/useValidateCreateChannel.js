@@ -61,14 +61,10 @@ const useValidateCreateChannel = () => {
   const validationSchema = Yup.object().shape({
     walletAddress: Yup.string().required("required"),
     userType: Yup.string().required(t("validate.required")),
-    email: Yup.string().when("userType", {
-      is: (value) => value === USER_TYPE.USER,
-      then: () =>
-        Yup.string()
-          .required(t("validate.required"))
-          .email(t("validate.is_email"))
-          .max(100, t("validate.string_max_100")),
-    }),
+    email: Yup.string()
+      .required(t("validate.required"))
+      .email(t("validate.is_email"))
+      .max(100, t("validate.string_max_100")),
     name: Yup.string().when("userType", {
       is: (value) => value === USER_TYPE.KOL,
       then: () =>

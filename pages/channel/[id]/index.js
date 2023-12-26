@@ -53,6 +53,7 @@ import LivestreamList from "../../../components/LivestreamList";
 import CreateOrUpdateScheduleModel from "../../../components/Channel/CreateOrUpdateScheduleModel";
 import moment from "moment";
 import ManageTaskListModel from "../../../components/Channel/ManageTaskListModel";
+import AboutMe from "../../../components/Channel/AboutMe";
 
 const MODAL_DONATE = "modal_donate";
 const MODAL_UPDATE_CHANNEL = "modal_update_channel";
@@ -494,55 +495,22 @@ function DetailChannel() {
                     <Statistic detail={detailChannel} />
                     <div style={{ marginTop: "60px" }} />
 
-                    <section className="nk-decorated-h-2">
-                      <h3 className="px-4">{t("channel.about_me")}</h3>
-                    </section>
-                    <div className="mt-10" />
-                    <div
-                      className="cyberpress-twitch"
-                      dangerouslySetInnerHTML={{
-                        __html: detailChannel.aboutMe,
-                      }}
+                    <AboutMe
+                      isAuthor={isAuthor}
+                      onOpenModal={() => open(MODAL_UPDATE_ABOUT_ME)}
+                      dataAboutMe={detailChannel?.aboutMe}
                     />
-                    {isAuthor && (
-                      <Stack justifyContent={"end"} flexDirection={"row"}>
-                        <Tooltip label={"Edit about me"} placement="bottom">
-                          <IconButton
-                            onClick={() => open(MODAL_UPDATE_ABOUT_ME)}
-                            backgroundColor={"transparent"}
-                            _hover={{}}
-                            _active={{}}
-                            icon={<FaEdit fontSize={"26px"} color="white" />}
-                          />
-                        </Tooltip>
-                      </Stack>
-                    )}
                     <div style={{ marginTop: "60px" }} />
 
-                    <section className="nk-decorated-h-2">
-                      <h3 className="px-4">{t("channel.posts")}</h3>
-                    </section>
-                    {isAuthor && (
-                      <Stack justifyContent={"end"} flexDirection={"row"}>
-                        <Tooltip label={"Create post"} placement="bottom">
-                          <IconButton
-                            onClick={() => open(MODAL_CREATE_OR_UPDATE_POST)}
-                            backgroundColor={"transparent"}
-                            _hover={{}}
-                            _active={{}}
-                            icon={
-                              <FaPlusSquare fontSize={"26px"} color="white" />
-                            }
-                          />
-                        </Tooltip>
-                      </Stack>
-                    )}
                     <ChannelPost
                       posts={detailChannel.posts}
                       avatar={detailChannel?.avatarUrl}
                       channelName={detailChannel?.channelName}
                       channelId={router.query?.id}
                       isAuthor={isAuthor}
+                      onOpenModalCreate={() =>
+                        open(MODAL_CREATE_OR_UPDATE_POST)
+                      }
                       onOpenModalEdit={(post) => {
                         setCurrentPost(post);
                         open(MODAL_CREATE_OR_UPDATE_POST);

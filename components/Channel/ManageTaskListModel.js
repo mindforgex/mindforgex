@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Modal,
@@ -17,19 +17,17 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { optionError, optionSuccess } from "../../utils/optionToast";
-import {
-  useCreateSchedule,
-  useUpdateSchedule,
-} from "../../hooks/api/useSchedule";
-import { fields } from "../../utils/fields";
-import moment from "moment";
-import useValidateCreateOrUpdateTask from "../../hooks/validate/useValidateCreateOrUpdateTask";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import CreateOrUpdateTaskModel from "./CreateOrUpdateTaskModel";
+import { useGetPost } from "../../hooks/api/usePost";
+import { TASK_TYPE } from "../../utils/constants";
+import { useModalState } from "../../hooks/useModalState";
+import DeleteTaskModel from "./DeleteTaskModel";
+import EmptyMsg from "../EmptyMsg";
+
+const MODAL_CREATE_OR_UPDATE_TASK = "modal_create_or_update_task";
+const MODAL_DELETE_TASK = "modal_delete_task";
 
 const ManageTaskListModel = ({
   isOpen,
@@ -40,11 +38,15 @@ const ManageTaskListModel = ({
 }) => {
   const { t } = useTranslation("common");
   const toast = useToast();
-  const [isOpenModal, setIsOpenModal] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
-  console.log("currentPost", currentPost);
-  const { tasks } = currentPost;
+  const { open, close, modalState } = useModalState({
+    [MODAL_CREATE_OR_UPDATE_TASK]: false,
+    [MODAL_DELETE_TASK]: false,
+  });
 
+  const { data: dataPost, isLoading: loadingDetail } = useGetPost(
+    currentPost?._id
+  );
   return (
     <>
       <Modal closeOnOverlayClick={false} isOpen={isOpen} isCentered size={"xl"}>
@@ -52,7 +54,7 @@ const ManageTaskListModel = ({
         <ModalContent bg={"#181c23"} height={"68vh"}>
           <ModalHeader color={"white"} borderBottom={"1px"}>
             <Text as="h4" m={0} textAlign={"center"}>
-              Manage task list
+              {t("channel.task.manage_list")}
             </Text>
           </ModalHeader>
           <ModalBody
@@ -64,66 +66,90 @@ const ManageTaskListModel = ({
                 display: "none",
               },
             }}
+            pt={4}
           >
-            {tasks?.map((task, index) => (
-              <Flex
-                key={task._id}
-                justifyContent={"space-between"}
-                columnGap={2}
-              >
-                <Box>
-                  <Text as={"h5"} mb={2} noOfLines={1}>
-                    {index + 1}. {task.name}
-                  </Text>
-                  <Text as="p" m={0} noOfLines={2}>
-                    {task.description}
-                  </Text>
-                  <Text as="p" m={0} noOfLines={2}>
-                    asdfaskdfbas ádfasđf
-                    <Link ml="1" color="#dd163b" href={"#"} target="_blank">
-                      aaaaaaaaaa
-                    </Link>
-                  </Text>
-                </Box>
-                <Flex flexDirection={"column"}>
-                  <Stack justifyContent={"end"} flexDirection={"row"}>
-                    <Tooltip label={"Edit channel"} placement="bottom">
-                      <IconButton
-                        onClick={() => {
-                          setCurrentTask(task);
-                          setIsOpenModal(true);
-                        }}
-                        backgroundColor={"transparent"}
-                        _hover={{}}
-                        _active={{}}
-                        icon={<FaEdit fontSize={"26px"} color="white" />}
-                      />
-                    </Tooltip>
-                  </Stack>
-                  <Stack justifyContent={"end"} flexDirection={"row"}>
-                    <Tooltip label={"Edit channel"} placement="bottom">
-                      <IconButton
-                        onClick={() => onOpenModal(schedule)}
-                        backgroundColor={"transparent"}
-                        _hover={{}}
-                        _active={{}}
-                        icon={
-                          <MdDeleteForever fontSize={"26px"} color="white" />
-                        }
-                      />
-                    </Tooltip>
-                  </Stack>
-                </Flex>
-              </Flex>
-            ))}
+            {dataPost?.tasks?.length && !loadingDetail ? (
+              <>
+                {dataPost?.tasks?.map((task, index) => (
+                  <Flex
+                    key={task._id}
+                    justifyContent={"space-between"}
+                    columnGap={2}
+                    mb={8}
+                  >
+                    <Box>
+                      <Text as={"h5"} mb={2} noOfLines={1}>
+                        {index + 1}. {task.name}
+                      </Text>
+                      <Text as="p" m={0} noOfLines={2}>
+                        {task.description}
+                      </Text>
+                      {(task.taskType === TASK_TYPE.JOIN_DISCORD ||
+                        task.taskType === TASK_TYPE.SUBSCRIBE_TWITCH) && (
+                        <Text as="p" m={0} noOfLines={2}>
+                          {task.taskType === TASK_TYPE.JOIN_DISCORD
+                            ? t("channel.task.join_channel")
+                            : t("channel.task.follow_channel")}
+                          <Link
+                            ml="1"
+                            color="#dd163b"
+                            href={task.taskInfo?.link || "#"}
+                            target="_blank"
+                          >
+                            {task.taskInfo?.title}
+                          </Link>
+                        </Text>
+                      )}
+                    </Box>
+                    <Flex flexDirection={"column"}>
+                      <Stack justifyContent={"end"} flexDirection={"row"}>
+                        <Tooltip label={"Edit channel"} placement="bottom">
+                          <IconButton
+                            onClick={() => {
+                              setCurrentTask(task);
+                              open(MODAL_CREATE_OR_UPDATE_TASK);
+                            }}
+                            backgroundColor={"transparent"}
+                            _hover={{}}
+                            _active={{}}
+                            icon={<FaEdit fontSize={"26px"} color="white" />}
+                          />
+                        </Tooltip>
+                      </Stack>
+                      <Stack justifyContent={"end"} flexDirection={"row"}>
+                        <Tooltip label={"Edit channel"} placement="bottom">
+                          <IconButton
+                            onClick={() => {
+                              setCurrentTask(task);
+                              open(MODAL_DELETE_TASK);
+                            }}
+                            backgroundColor={"transparent"}
+                            _hover={{}}
+                            _active={{}}
+                            icon={
+                              <MdDeleteForever
+                                fontSize={"26px"}
+                                color="white"
+                              />
+                            }
+                          />
+                        </Tooltip>
+                      </Stack>
+                    </Flex>
+                  </Flex>
+                ))}
+              </>
+            ) : (
+              <EmptyMsg />
+            )}
           </ModalBody>
           <ModalFooter>
             <Button
               colorScheme="blue"
               mr={3}
-              onClick={() => setIsOpenModal(true)}
+              onClick={() => open(MODAL_CREATE_OR_UPDATE_TASK)}
             >
-              Create
+              {t("create")}
             </Button>
             <Button
               onClick={() => {
@@ -136,11 +162,20 @@ const ManageTaskListModel = ({
           </ModalFooter>
         </ModalContent>
       </Modal>
-      {isOpenModal && (
+      {modalState[MODAL_CREATE_OR_UPDATE_TASK] && (
         <CreateOrUpdateTaskModel
           currentPost={currentPost}
-          isOpen={isOpenModal}
-          onClose={() => setIsOpenModal(false)}
+          isOpen={modalState[MODAL_CREATE_OR_UPDATE_TASK]}
+          onClose={() => close(MODAL_CREATE_OR_UPDATE_TASK)}
+          currentTask={currentTask}
+          setCurrentTask={setCurrentTask}
+        />
+      )}
+      {modalState[MODAL_DELETE_TASK] && (
+        <DeleteTaskModel
+          currentPost={currentPost}
+          isOpen={modalState[MODAL_DELETE_TASK]}
+          onClose={() => close(MODAL_DELETE_TASK)}
           currentTask={currentTask}
           setCurrentTask={setCurrentTask}
         />

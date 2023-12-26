@@ -18,6 +18,7 @@ const useValidateUpdateAboutMe = () => {
   const validationSchema = Yup.object().shape({
     aboutMe: Yup.string()
       .required(t("validate.required"))
+      .url(t("validate.is_url"))
       .max(1000, t("validate.string_max_1000")),
   });
 

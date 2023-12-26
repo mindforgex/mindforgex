@@ -9,26 +9,13 @@ import {
   ModalOverlay,
   useToast,
   Text,
-  Link,
-  Flex,
-  Stack,
-  Tooltip,
-  IconButton,
-  Box,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { optionError, optionSuccess } from "../../utils/optionToast";
-import {
-  useCreateSchedule,
-  useUpdateSchedule,
-} from "../../hooks/api/useSchedule";
 import { fields } from "../../utils/fields";
-import moment from "moment";
 import useValidateCreateOrUpdateTask from "../../hooks/validate/useValidateCreateOrUpdateTask";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import { useCreateTask, useUpdateTask } from "../../hooks/api/useTask";
 
 const CreateOrUpdateTaskModel = ({
@@ -42,22 +29,20 @@ const CreateOrUpdateTaskModel = ({
   const toast = useToast();
   const { listField, validationSchema, defaultValues } =
     useValidateCreateOrUpdateTask();
-  console.log("currentPost", currentPost);
-  console.log("currentTask", currentTask);
 
   const { mutate: createTask, isLoading: creating } = useCreateTask({
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: "Create task successfully",
+        title: t("channel.task.create_succ"),
       });
       setCurrentTask(null);
-      // onClose();
+      onClose();
     },
     onError: (error) => {
       toast({
         ...optionError,
-        title: "Create task failed",
+        title: t("channel.task.create_fail"),
       });
     },
   });
@@ -67,16 +52,15 @@ const CreateOrUpdateTaskModel = ({
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: "Update schedule successfully",
+        title: t("channel.task.update_succ"),
       });
       setCurrentTask(null);
-      // onClose();
+      onClose();
     },
     onError: (error) => {
-      console.log("error", error);
       toast({
         ...optionError,
-        title: "Update schedule failed",
+        title: t("channel.task.update_fail"),
       });
     },
   });
@@ -116,7 +100,9 @@ const CreateOrUpdateTaskModel = ({
         <ModalContent bg={"#181c23"} height={"68vh"}>
           <ModalHeader color={"white"} borderBottom={"1px"}>
             <Text as="h4" m={0} textAlign={"center"}>
-              {currentTask ? "Update schedule" : "Create schedule"}
+              {currentTask
+                ? t("channel.task.update")
+                : t("channel.task.create")}
             </Text>
           </ModalHeader>
           <ModalBody
@@ -135,7 +121,7 @@ const CreateOrUpdateTaskModel = ({
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onSubmit)}>
-              {currentTask ? "Update" : "Create"}
+              {currentTask ? t("update") : t("create")}
             </Button>
             <Button
               onClick={() => {

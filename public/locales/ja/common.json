@@ -1,5 +1,8 @@
 {
   "header": "MindForgeX",
+  "create": "Create",
+  "update": "Update",
+  "delete": "Delete",
   "top": {
     "feature_posts": "{{total}}人気投稿"
   },
@@ -23,13 +26,50 @@
     "subscribe_failed": "チャンネル登録が失敗した!",
     "unsubscribe_success": "Unsubscribe channel success!",
     "unsubscribe_failed": "Unsubscribe channel failed!",
-    "about_me": "私について",
+    "update": "Update channel",
+    "update_succ": "Update channel successfully",
+    "update_fail": "Update channel failed",
+    "about_me": {
+      "title": "私について",
+      "create": "Create about me",
+      "edit": "Edit about me",
+      "update": "Update about me",
+      "create_succ": "Create about me successfully",
+      "create_fail": "Create about me failed",
+      "update_succ": "Update about me successfully",
+      "update_fail": "Update about me failed",
+      "delete_succ": "Delete about me successfully",
+      "delete_fail": "Delete about me failed",
+      "not_support_video": "Sorry, your browser doesn't support videos."
+    },
     "posts": "投稿",
     "detail": "詳細",
     "collection": "コレクション",
     "post": {
-      "by": "によって",
-      "in": "{{time}}に"
+      "by": "By",
+      "in": "in {{time}}",
+      "create": "Create post",
+      "update": "Update post",
+      "edit_post": "Edit post {{post}}?",
+      "delete": "Delete post",
+      "create_succ": "Create post successfully",
+      "create_fail": "Create post failed",
+      "update_succ": "Update post successfully",
+      "update_fail": "Update post failed",
+      "delete_post": "Delete post {{post}}?",
+      "delete_succ": "Delete post successfully",
+      "delete_fail": "Delete post failed"
+    },
+    "schedule": {
+      "title": "Schedule",
+      "create": "Create schedule",
+      "update": "Update schedule",
+      "create_succ": "Create schedule successfully",
+      "create_fail": "Create schedule failed",
+      "update_succ": "Update schedule successfully",
+      "update_fail": "Update schedule failed",
+      "delete_succ": "Delete schedule successfully",
+      "delete_fail": "Delete schedule failed"
     },
     "task": {
       "claim_failed": "NFTクレームが失敗した",
@@ -42,7 +82,21 @@
       "verify_success": "タスクの確認が完了した！",
       "verify_failed": "タスクの確認が失敗した!",
       "completed": "完了した",
-      "verify": "確認する"
+      "verify": "確認する",
+      "join_channel": "Join this channel",
+      "follow_channel": "Follow this channel",
+      "create": "Create task",
+      "update": "Update task",
+      "delete": "Delete task",
+      "manage_list": "Manage task list",
+      "manage_list_of": "Manage the task list of post {{post}}?",
+      "create_succ": "Create task successfully",
+      "create_fail": "Create task failed",
+      "update_succ": "Update task successfully",
+      "update_fail": "Update task failed",
+      "delete_task": "Delete task {{task}}?",
+      "delete_succ": "Delete task successfully",
+      "delete_fail": "Delete task failed"
     },
     "statistic": "統計",
     "published_posts": "投稿を公開した",
@@ -87,7 +141,7 @@
       "select_item_placeholder": "Select listing item...",
       "btn_listing": "Listing nft",
       "required_amount": "Please enter price"
-  }
+    }
   },
   "social_link": "ソーシャルのリンク",
   "please_connect_wallet": "ウォレットを接続してください",
@@ -164,6 +218,7 @@
     "string_max_10000": "Max 10000",
     "string_min_30": "Min 30",
     "string_max_60": "Min 60",
-    "number_min_18": "Min 18"
+    "number_min_18": "Min 18",
+    "required_file": "File required"
   }
 }

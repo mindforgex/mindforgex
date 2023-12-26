@@ -32,26 +32,6 @@ const useValidateCreateOrUpdatePost = () => {
       label: "content",
       placeholder: "Inser link to attach video which introduce yourself...",
     },
-    {
-      type: FIELD_TYPE.CHECKBOX,
-      name: "tasks",
-      label:
-        "Select tasks which you want to assign for users in this post to verify",
-      option: [
-        {
-          value: TASK_TYPE.SUBSCRIBE_WEB3_CHANNEL,
-          label: "Subscribe MindForgeX channel",
-        },
-        {
-          value: TASK_TYPE.JOIN_DISCORD,
-          label: "Join Discord server",
-        },
-        {
-          value: TASK_TYPE.SUBSCRIBE_YOUTUBE,
-          label: "Subscribe Youtube channel",
-        },
-      ],
-    },
   ];
 
   const validationSchema = Yup.object().shape({

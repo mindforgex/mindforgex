@@ -32,14 +32,14 @@ const CreateOrUpdatePostModel = ({
   const { listField, validationSchema, defaultValues } =
     useValidateCreateOrUpdatePost();
   const validationRequiredFile = Yup.object().shape({
-    file: Yup.mixed().required("A file is required"),
+    file: Yup.mixed().required(t("validate.required_file")),
   });
 
   const { mutate: createPost, isLoading: creating } = useCreatePost({
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: "Create post successfully",
+        title: t("channel.post.create_succ"),
       });
       setCurrentPost(null);
       onClose();
@@ -47,7 +47,7 @@ const CreateOrUpdatePostModel = ({
     onError: (error) => {
       toast({
         ...optionError,
-        title: "Create post failed",
+        title: t("channel.post.create_fail"),
       });
     },
   });
@@ -57,16 +57,15 @@ const CreateOrUpdatePostModel = ({
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: "Update post successfully",
+        title: t("channel.post.update_succ"),
       });
       setCurrentPost(null);
       onClose();
     },
     onError: (error) => {
-      console.log("error", error);
       toast({
         ...optionError,
-        title: "Update post failed",
+        title: t("channel.post.update_fail"),
       });
     },
   });
@@ -107,7 +106,9 @@ const CreateOrUpdatePostModel = ({
         <ModalContent bg={"#181c23"}>
           <ModalHeader color={"white"} borderBottom={"1px"}>
             <Text as="h4" m={0} textAlign={"center"}>
-              {currentPost ? "Update post" : "Create post"}
+              {currentPost
+                ? t("channel.post.update")
+                : t("channel.post.create")}
             </Text>
           </ModalHeader>
           <ModalBody
@@ -126,7 +127,7 @@ const CreateOrUpdatePostModel = ({
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onSubmit)}>
-              {currentPost ? "Update" : "Create"}
+              {currentPost ? t("update") : t("create")}
             </Button>
             <Button
               onClick={() => {
