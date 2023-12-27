@@ -77,16 +77,26 @@ function DetailChannel() {
   const { mutate: subscribeChannel, isLoading: isLoadingSubscribeChannel } =
     useSubscribeChannel({
       onSuccess: async (success) => {
-        setSubscribed(true);
+        let msgSuccess = "channel.subscribe_success";
+        if (isUserSubscribed) {
+          setSubscribed(false);
+          msgSuccess = "channel.unsubscribe_success"
+        } else {
+          setSubscribed(true);
+        }
         toast({
           ...optionSuccess,
-          title: t("channel.subscribe_success"),
+          title: t(msgSuccess),
         });
       },
       onError: (error) => {
+        let msgFail = "channel.subscribe_failed";
+        if (isUserSubscribed) {
+          msgFail = "channel.unsubscribe_failed";
+        }
         toast({
           ...optionError,
-          title: t("channel.subscribe_failed"),
+          title: t(msgFail),
         });
       },
     });
@@ -138,7 +148,7 @@ function DetailChannel() {
         title: "Please connect wallet!",
       });
     }
-    if (isUserSubscribed) return;
+
     subscribeChannel(router.query.id);
   };
 
