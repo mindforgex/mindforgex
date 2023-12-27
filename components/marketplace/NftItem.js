@@ -14,7 +14,7 @@ const NftItem = ({ item }) => {
     <>
       <Flex
         h={{ xl: '488px' }}
-        maxW={{ xl: 'calc(25% - var(--chakra-space-4))', sm: 'calc(100% - var(--chakra-space-4))', md: 'calc(30% - var(--chakra-space-4))' }}
+        maxW={{ xl: 'calc(25% - var(--chakra-space-4))', sm: 'calc(100% - var(--chakra-space-4))', md: 'calc(33.33% - var(--chakra-space-4))' }}
         css={{ '& .swiper-wrapper': { paddingTop: '10px' } }}
       >
         <Flex
@@ -38,7 +38,7 @@ const NftItem = ({ item }) => {
         >
           <Flex pos="relative" mb={5} borderRadius="20" overflow="hidden">
             <AppLink href="#" _groupHover={{ transform: 'scale(1.05)' }} maxH={'298px'}>
-              <Image src={item.image ? item.image : `/assets/live_auction.jpg`} w="100%" transition="all 0.4s ease" />
+              <Image alt={item.title} src={item.image ? item.image : `/assets/live_auction.jpg`} w="100%" transition="all 0.4s ease" />
             </AppLink>
             <Flex
               pos="absolute"
@@ -100,8 +100,16 @@ const NftItem = ({ item }) => {
               </AppLink>
             </Text>
           </Flex>
-          <Flex mb="4px" justifyContent="space-between" alignItems="center" w="100%">
-            <Flex justifyContent="space-between" alignItems="center">
+          <Flex mb="4px" justifyContent="space-between" direction='column' w="100%">
+            <Flex>
+              <Text as="span" fontSize="md" lineHeight="21px" color="app.c_gray20">
+                {t('marketplace.current_price')}: &nbsp;
+              </Text>
+              <Text as="h5" lineHeight="22px" fontWeight="semibold" color="app.c_white">
+                {numberFormatter(item.price)} SOL
+              </Text>
+            </Flex>
+            <Flex alignItems="center">
               <Flex
                 w={{ xl: '44px' }}
                 h={{ xl: '44px' }}
@@ -110,24 +118,16 @@ const NftItem = ({ item }) => {
                 mr="12px"
                 css={{ flexShrink: '0' }}
               >
-                <Image src="/assets/ava.jpg" h="auto" w="100%" verticalAlign="middle" />
+                <Image alt={item.title} src="/assets/ava.jpg" h="auto" w="100%" verticalAlign="middle" />
               </Flex>
               <Flex direction="column">
                 <Text as="span" fontSize="md" lineHeight="21px" color="app.c_gray20">
                   {t('marketplace.seller')}
                 </Text>
-                <Text as="h6" lineHeight="22px" fontWeight="semibold" color="app.c_white">
+                <Text as="h6" lineHeight="22px" mb={0} fontWeight="semibold" color="app.c_white">
                   {subAddress(item.seller)}
                 </Text>
               </Flex>
-            </Flex>
-            <Flex direction="column" alignItems="flex-end">
-              <Text as="span" fontSize="md" lineHeight="21px" color="app.c_gray20">
-                {t('marketplace.current_price')}
-              </Text>
-              <Text as="h5" lineHeight="22px" fontWeight="semibold" color="app.c_white">
-                {numberFormatter(item.price)} SOL
-              </Text>
             </Flex>
           </Flex>
         </Flex>

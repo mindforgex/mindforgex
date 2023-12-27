@@ -227,8 +227,10 @@ function DetailChannel() {
                         __html: detailChannel?.description?.replace(/\n/g, "<br />")
                       }}
                     />
+
                     <Statistic detail={detailChannel} />
                     <div style={{ marginTop: '60px' }} />
+
                     <section className='nk-decorated-h-2'>
                       <h3 className='px-4'>{t('channel.about_me')}</h3>
                     </section>
@@ -239,6 +241,7 @@ function DetailChannel() {
                       }}
                     />
                     <div style={{ marginTop: '60px' }} />
+
                     <section className='nk-decorated-h-2'>
                       <h3 className='px-4'>{t('channel.posts')}</h3>
                     </section>

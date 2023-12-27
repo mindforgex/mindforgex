@@ -9,6 +9,7 @@ import { numberFormatter } from '../../utils/helpers';
 
 const Statistic = ({ detail }) => {
   const { t } = useTranslation('common');
+  const commonColSpan = { base: 12, sm: 6, md: 6, xl: 3 }
 
   return (
     <>
@@ -16,8 +17,12 @@ const Statistic = ({ detail }) => {
       <Flex className='nk-decorated-h-2'>
         <Text as={'h3'} px={4}>{t('channel.statistic')}</Text>
       </Flex>
-      <Grid templateColumns={'repeat(12, 1fr)'} w={'100%'} grap={6} mt={8}>
-        <GridItem colSpan={3} borderRightWidth={'1px'} borderRightColor={'#535353'}>
+      <Grid templateColumns={'repeat(12, 1fr)'} w={'100%'} gap={6} mt={8}>
+        <GridItem 
+          colSpan={commonColSpan}
+          borderRightWidth={'1px'} 
+          borderRightColor={'#535353'}
+        >
           <Tooltip label={t('channel.subscribe')}>
             <Flex
               alignItems={'center'}
@@ -44,7 +49,7 @@ const Statistic = ({ detail }) => {
             </Flex>
           </Tooltip>
         </GridItem>
-        <GridItem colSpan={3} borderRightWidth={'1px'} borderRightColor={'#535353'}>
+        <GridItem colSpan={commonColSpan} borderRightWidth={'1px'} borderRightColor={'#535353'}>
           <Tooltip label={t('channel.published_posts')}>
             <Flex
               alignItems={'center'}
@@ -71,7 +76,7 @@ const Statistic = ({ detail }) => {
             </Flex>
           </Tooltip>
         </GridItem>
-        <GridItem colSpan={3} borderRightWidth={'1px'} borderRightColor={'#535353'}>
+        <GridItem colSpan={commonColSpan} borderRightWidth={'1px'} borderRightColor={'#535353'}>
           <Tooltip label={t('channel.donate')}>
             <Flex
               alignItems={'center'}
@@ -99,7 +104,7 @@ const Statistic = ({ detail }) => {
             </Flex>
           </Tooltip>
         </GridItem>
-        <GridItem colSpan={3}>
+        <GridItem colSpan={commonColSpan}>
           <Tooltip label={t('channel.collection')}>
             <Flex
               alignItems={'center'}

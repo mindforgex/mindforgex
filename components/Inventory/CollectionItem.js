@@ -3,7 +3,7 @@ import { Avatar, Box, Button, CardFooter, Collapse, Modal, ModalBody, ModalClose
 import { Card, CardBody, CardHeader, Flex, Image, Text } from '@chakra-ui/react'
 import CollectionPack from './CollectionPack'
 import { requestExchangeCollection, confirmExchangeCollection } from '../../services/inventoryService'
-import { confirmTransactionFromFrontend  } from '../../utils/transactionSigner'
+import { confirmTransactionFromFrontend } from '../../utils/transactionSigner'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { FaAngleDown } from 'react-icons/fa'
 import classNames from 'classnames'
@@ -72,7 +72,7 @@ function CollectionItem({ data, onFetchCollection }) {
 
   return (
     <section className='mb-80' id={data.address}>
-      <Card 
+      <Card
         w='100%'
         backgroundColor='rgba(0, 0, 0, 0.6)'
         color='#fff'
@@ -84,23 +84,23 @@ function CollectionItem({ data, onFetchCollection }) {
         transition="all 0.3s ease-in-out"
       >
         <CardHeader borderBottom='1px solid #aaaaaa50' mb={3}>
-          <Flex justifyContent='space-between'>
+          <Flex justifyContent='space-between' flexWrap='wrap'>
             <Flex gap={4} display='flex' alignItems='center'>
               <h3>{data.name}</h3>
               <h5>({data.symbol})</h5>
             </Flex>
             <Flex alignItems='center' gap={6}>
-              <button 
-              // TODO: fix this
-                disabled={!isExchangeable } // || data.reward_history_data?.length === data.reward_data?.amount 
+              <button
+                // TODO: fix this
+                disabled={!isExchangeable} // || data.reward_history_data?.length === data.reward_data?.amount 
                 className={'nk-btn nk-btn-color-main-1'}
                 onClick={onOpenModal}
               >
                 {t('inventory.exchange')}
               </button>
-            
+
               <FaAngleDown
-                fontSize='20' 
+                fontSize='20'
                 className={classNames('expand-icon', { 'rotate-close': !isExpanded })}
                 onClick={toggleExpand}
               />
@@ -108,13 +108,13 @@ function CollectionItem({ data, onFetchCollection }) {
           </Flex>
         </CardHeader>
         <Collapse in={isExpanded} animateOpacity>
-          <CardBody>
-            <Flex gap={12}>
-              <Flex direction={'column'} flexBasis='350px'>
-                <Flex borderRadius={'full'} pos={'relative'} w={'100%'}>
+          <CardBody overflow={'auto'}>
+            <Flex gap={12} flexWrap='wrap'>
+              <Flex direction={{ base: 'column', md: 'column' }} flexBasis={{ base: '100%', lg: '250px' }}>
+                <Flex borderRadius={'full'} w='fit-content' mx='auto' pos={'relative'}>
                   <Avatar
-                    h={'250px'}
-                    w={'100%'}
+                    h={'225px'}
+                    w={'225px'}
                     display={'flex'}
                     src={data.image}
                     alt={data.name}
@@ -142,22 +142,20 @@ function CollectionItem({ data, onFetchCollection }) {
               </Flex>
 
               <Flex
-                  w='100%'
-                  flexWrap='wrap'
-                  gap={5}
-                  maxHeight={200}
-                >
-                  {
-                    nftInfo.map(_item => {
-                      return (
-                        <>
-                          <CollectionPack key={_item._id} data={_item} />
-                        </>
-                      )
-                    })
-                  }
+                flexWrap='wrap'
+                gap={5}
+                justifyContent='center'
+              >
+                {
+                  nftInfo.map(_item => {
+                    return (
+                      <>
+                        <CollectionPack key={_item._id} data={_item} />
+                      </>
+                    )
+                  })
+                }
               </Flex>
-
             </Flex>
           </CardBody>
         </Collapse>
@@ -172,7 +170,7 @@ function CollectionItem({ data, onFetchCollection }) {
             </Text>
             <ModalCloseButton />
           </ModalHeader>
-          
+
           <ModalBody>
             <Flex direction={'column'} alignItems={'center'}>
               <Avatar src={data.reward_data?.image_uri} boxSize={20} />
@@ -181,7 +179,7 @@ function CollectionItem({ data, onFetchCollection }) {
               </Text>
             </Flex>
           </ModalBody>
-          
+
           <ModalFooter mt={0} pt={0}>
             <Flex>
               <Button mr={3} onClick={onCloseModal} variant='ghost' color='#fff' _hover={{ bg: 'transparent' }}>

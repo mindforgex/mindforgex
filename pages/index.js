@@ -1,4 +1,4 @@
-import BreadCrumbs from '../components/BreadCrumbs';
+// import BreadCrumbs from '../components/BreadCrumbs';
 import ListProfile from '../components/ListProfile';
 import TopRecent from '../components/TopRecent';
 import Head from 'next/head';

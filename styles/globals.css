@@ -3667,6 +3667,11 @@ img.rounded {
   display: none;
 }
 
+.nk-navbar-side .nk-nav .nk-drop-item li>a {
+  padding-left: 48px;
+  padding-bottom: 12px;
+}
+
 .nk-navbar-side .dropdown>.bropdown-back>a::after {
   content: "";
   position: absolute;

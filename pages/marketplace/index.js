@@ -36,7 +36,7 @@ const Marketplace = () => {
         {isLoading && (
           <Grid templateColumns='repeat(12, 1fr)' templateRows='repeat(2, 1fr)' gap={6} minH={'61rem'}>
             {Array(8).fill(0).map((_, index) => (
-              <GridItem w='100%' h='auto' colSpan={{ base: 3, sm: 12, md: 6, xl: 3 }} rowSpan={1} key={`card-${index}`}>
+              <GridItem w='100%' h='auto' colSpan={{ base: 12, sm: 12, md: 6, xl: 3 }} rowSpan={1} key={`card-${index}`}>
                 <SkeletonCard />
               </GridItem>
             ))}
@@ -90,7 +90,7 @@ const Marketplace = () => {
                 </Flex>
               </Flex>
               <RenderSkeleton />
-              <Flex flexWrap={'wrap'} alignItems="center" w="100%" gap={4} minW='90rem'>
+              <Flex flexWrap={'wrap'} alignItems="center" w="100%" gap={4}>
                 {nfts.map((item, index) => <NftItem item={item} key={`nft-${index}`} />)}
               </Flex>
             </Flex>
