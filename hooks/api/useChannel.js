@@ -9,11 +9,12 @@ import {
 } from "../../services";
 import { KEY_GET_CHANNEL, KEY_GET_CHANNELS } from "../../utils/constants";
 
-export function useChannels(params) {
+export function useChannels(params, enabled) {
   const res = useQuery({
     queryKey: [KEY_GET_CHANNELS, params],
     queryFn: () => getChannels(params),
     refetchOnWindowFocus: false,
+    enabled,
   });
   return res;
 }

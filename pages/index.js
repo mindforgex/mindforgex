@@ -23,15 +23,17 @@ import SearchBox from "../components/SearchBox";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import { useGetPosts } from "../hooks/api/usePost";
 import { useChannels } from "../hooks/api/useChannel";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { STORAGE } from "../utils/constants";
 
 export default function Channel() {
-  const [pageParams, setPageParams] = useState({
+  const [pageParams, setPageParams, ready] = useLocalStorage(STORAGE.FILTER_DATA, {
     pageSize: 6,
     pageIndex: 1,
     textSearch: "",
   });
   const [postParams] = useState({ pageSize: 5, pageIndex: 1 });
-  const [textSearch, setTextSearch] = useState("");
+  const [textSearch, setTextSearch] = useState(pageParams?.textSearch);
   const { t } = useTranslation("common");
   const router = useRouter();
   const toast = useToast();
@@ -39,7 +41,13 @@ export default function Channel() {
   const { data: dataPosts, isLoading: isLoadingGetPosts } =
     useGetPosts(postParams);
   const { data: dataChannels, isLoading: isLoadingGetChannels } =
-    useChannels(pageParams);
+    useChannels(pageParams, ready);
+
+  useEffect(() => {
+    if (ready) {
+      setTextSearch(pageParams.textSearch);
+    }
+  }, [ready]);
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event) => {
@@ -93,10 +101,10 @@ export default function Channel() {
                         <IconButton
                           pr={2}
                           onClick={() => {
-                            setPageParams({
+                            setPageParams((pageParams) => ({
                               ...pageParams,
                               textSearch,
-                            });
+                            }));
                           }}
                           backgroundColor={"transparent"}
                           _hover={{}}

@@ -1,6 +1,7 @@
 export const STORAGE = {
   ACCESS_TOKEN: 'access_token',
-  USER_INFO: 'user_info'
+  USER_INFO: 'user_info',
+  FILTER_DATA: 'filter-data'
 }
 
 export const NAV_BAR_ITEM = [
