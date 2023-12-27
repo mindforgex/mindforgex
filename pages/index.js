@@ -1,70 +1,73 @@
 // import BreadCrumbs from '../components/BreadCrumbs';
-import ListProfile from '../components/ListProfile';
-import TopRecent from '../components/TopRecent';
-import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import { getChannels } from '../services';
-import { getPosts } from '../services/postService';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import supabase from '../utils/supabase';
-import { useRouter } from 'next/router';
-import { useToast } from '@chakra-ui/react';
-import { getUserInfo } from '../utils/helpers';
-import { useAppRedireact } from '../utils/hook';
+import ListProfile from "../components/ListProfile";
+import TopRecent from "../components/TopRecent";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import { getChannels } from "../services";
+import { getPosts } from "../services/postService";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import supabase from "../utils/supabase";
+import { useRouter } from "next/router";
+import {
+  Button,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightElement,
+  useToast,
+} from "@chakra-ui/react";
+import { getUserInfo } from "../utils/helpers";
+import { useAppRedireact } from "../utils/hook";
+import SearchBox from "../components/SearchBox";
+import { FaEdit, FaSearch } from "react-icons/fa";
+import { useGetPosts } from "../hooks/api/usePost";
+import { useChannels } from "../hooks/api/useChannel";
 
 export default function Channel() {
-  const [channels, setChannels] = useState([]);
-  const [pageParams] = useState({ pageSize: 6, pageIndex: 1 });
+  const [pageParams, setPageParams] = useState({
+    pageSize: 6,
+    pageIndex: 1,
+    textSearch: "",
+  });
   const [postParams] = useState({ pageSize: 5, pageIndex: 1 });
-  const [posts, setPosts] = useState([]);
-  const { t } = useTranslation('common');
-  const router = useRouter()
-  const toast = useToast()
-  const [generateRouter] = useAppRedireact()
-
-  useEffect(() => {
-    const getAppChannels = async () => {
-      const { items } = await getChannels(pageParams);
-      setChannels(items);
-    }
-
-    const getTopPost = async () => {
-      const data = await getPosts(postParams);
-      setPosts(data.items)
-    }
-    getAppChannels && getAppChannels();
-    getTopPost && getTopPost();
-  }, []);
+  const [textSearch, setTextSearch] = useState("");
+  const { t } = useTranslation("common");
+  const router = useRouter();
+  const toast = useToast();
+  const [generateRouter] = useAppRedireact();
+  const { data: dataPosts, isLoading: isLoadingGetPosts } =
+    useGetPosts(postParams);
+  const { data: dataChannels, isLoading: isLoadingGetChannels } =
+    useChannels(pageParams);
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event) => {
-      if (event === 'SIGNED_OUT') {
+      if (event === "SIGNED_OUT") {
         toast({
-          title: t('profile.disconnect_discord_success'),
+          title: t("profile.disconnect_discord_success"),
           description: "",
-          status: 'success',
+          status: "success",
           isClosable: true,
-        })
+        });
       } else {
-        const userInfo = getUserInfo()
-        const session = await supabase.auth.getSession()
+        const userInfo = getUserInfo();
+        const session = await supabase.auth.getSession();
         if (
-          userInfo && 
-          !(userInfo.user.discordUsername && userInfo.user.discordId) && 
+          userInfo &&
+          !(userInfo.user.discordUsername && userInfo.user.discordId) &&
           session.data.session
         ) {
-          router.push(generateRouter('profile'))
+          router.push(generateRouter("profile"));
         }
       }
-    })
-  }, [])
-
+    });
+  }, []);
 
   return (
     <>
       <Head>
-        <title>{t('header')}</title>
+        <title>{t("header")}</title>
       </Head>
       <div id="content" className="site-content">
         {/* <div className="nk-gap-2" /> */}
@@ -78,7 +81,31 @@ export default function Channel() {
               <div className="col-lg-8">
                 <article className="hentry">
                   <div className="entry-content">
-                    <ListProfile data={channels} />
+                    <InputGroup size={"md"} mb={10}>
+                      <Input
+                        pr="4.5rem"
+                        type="text"
+                        placeholder="Enter password"
+                        // value={textSearch}
+                        onChange={(e) => setTextSearch(e.target.value)}
+                      />
+                      <InputRightElement>
+                        <IconButton
+                          pr={2}
+                          onClick={() => {
+                            setPageParams({
+                              ...pageParams,
+                              textSearch,
+                            });
+                          }}
+                          backgroundColor={"transparent"}
+                          _hover={{}}
+                          _active={{}}
+                          icon={<FaSearch fontSize={"20px"} color="white" />}
+                        />
+                      </InputRightElement>
+                    </InputGroup>
+                    <ListProfile data={dataChannels?.items || []} />
                   </div>
                 </article>
               </div>
@@ -86,21 +113,23 @@ export default function Channel() {
               <div className="col-lg-4 nk-sidebar-sticky-parent">
                 <aside className="nk-sidebar nk-sidebar-sticky nk-sidebar-right">
                   <div>
-                    <TopRecent total={postParams.pageSize} data={posts} />
+                    <TopRecent
+                      total={postParams.pageSize}
+                      data={dataPosts?.items || []}
+                    />
                   </div>
                 </aside>
               </div>
             </div>
           </main>
         </div>
-      </div >
+      </div>
     </>
-  )
+  );
 }
-
 
 export const getServerSideProps = async ({ locale }) => {
   return {
-    props: { ...(await serverSideTranslations(locale, ['common'])) }
-  }
-}
+    props: { ...(await serverSideTranslations(locale, ["common"])) },
+  };
+};

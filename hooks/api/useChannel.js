@@ -2,15 +2,23 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createChannel,
   getChannel,
+  getChannels,
   subscribeChannel,
   updateAboutMe,
   updateChannel,
 } from "../../services";
-import { KEY_GET_CHANNEL } from "../../utils/constants";
+import { KEY_GET_CHANNEL, KEY_GET_CHANNELS } from "../../utils/constants";
 
+export function useChannels(params) {
+  const res = useQuery({
+    queryKey: [KEY_GET_CHANNELS, params],
+    queryFn: () => getChannels(params),
+    refetchOnWindowFocus: false,
+  });
+  return res;
+}
 
-
-export function useDetailChannel(channelId) {
+export function useChannel(channelId) {
   const res = useQuery({
     queryKey: [KEY_GET_CHANNEL, channelId],
     queryFn: () => getChannel(channelId),
