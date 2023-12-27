@@ -67,17 +67,20 @@ const ChannelPost = ({
                 onOpenModalManageTaskList={onOpenModalManageTaskList}
               />
             ))}
+            {+posts?.meta?.totalPages > 1 && (
+              <Pagination
+                pageCount={posts?.meta?.totalPages}
+                pageIndex={posts.meta.pageIndex}
+                onPageChange={(pageIndex) =>
+                  setParams({ ...params, pageIndex: pageIndex + 1 })
+                }
+              />
+            )}
           </>
         ) : (
           <EmptyMsg />
         )}
       </Flex>
-      <Pagination
-        pageCount={posts?.meta?.totalPages}
-        onPageChange={(pageIndex) =>
-          setParams({ ...params, pageIndex: pageIndex + 1 })
-        }
-      />
     </>
   );
 };

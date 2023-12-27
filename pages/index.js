@@ -86,7 +86,7 @@ export default function Channel() {
                         pr="4.5rem"
                         type="text"
                         placeholder="Enter password"
-                        // value={textSearch}
+                        value={textSearch}
                         onChange={(e) => setTextSearch(e.target.value)}
                       />
                       <InputRightElement>
@@ -105,7 +105,13 @@ export default function Channel() {
                         />
                       </InputRightElement>
                     </InputGroup>
-                    <ListProfile data={dataChannels?.items || []} />
+                    <ListProfile
+                      data={dataChannels?.items || []}
+                      meta={dataChannels?.meta}
+                      pageParams={pageParams}
+                      setPageParams={setPageParams}
+                      isLoading={isLoadingGetPosts}
+                    />
                   </div>
                 </article>
               </div>
