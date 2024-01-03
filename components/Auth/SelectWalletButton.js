@@ -28,6 +28,12 @@ const SelectWalletButton = () => {
     return TYPE_CONTENT.SIGN_IN;
   });
 
+  let titleButton = t("modal.wallet.select_wallet");
+  if (publicKey) {
+    const base58 = publicKey.toBase58();
+    titleButton = base58.slice(0, 4) + '..' + base58.slice(-4);
+  }
+
   return (
     <>
       <Button
@@ -48,7 +54,7 @@ const SelectWalletButton = () => {
         }}
         onClick={onOpen}
       >
-        {t("modal.wallet.select_wallet")}
+        {titleButton}
       </Button>
       <Modal onClose={onClose} isOpen={isOpen} isCentered size={"xl"}>
         <ModalOverlay />
