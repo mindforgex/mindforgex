@@ -11,26 +11,26 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
-import { useDeletePost } from "../../hooks/api/usePost";
 import { optionError, optionSuccess } from "../../utils/optionToast";
+import { useDeleteTask } from "../../hooks/api/useTask";
 
-const DeletePostModel = ({ isOpen, onClose, currentPost, setCurrentPost }) => {
+const DeleteTaskModel = ({ isOpen, onClose, currentTask, setCurrentTask }) => {
   const { t } = useTranslation("common");
   const toast = useToast();
-  const { mutate: deletePost, isLoading: deleting } = useDeletePost({
-    id: currentPost?._id,
+  const { mutate: deletePost, isLoading: deleting } = useDeleteTask({
+    id: currentTask?._id,
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: t("channel.post.delete_succ"),
+        title: t("channel.task.delete_succ"),
       });
-      setCurrentPost(null);
+      setCurrentTask(null);
       onClose();
     },
     onError: (error) => {
       toast({
         ...optionError,
-        title: t("channel.post.delete_fail"),
+        title: t("channel.task.delete_fail"),
       });
     },
   });
@@ -42,7 +42,7 @@ const DeletePostModel = ({ isOpen, onClose, currentPost, setCurrentPost }) => {
         <ModalContent bg={"#181c23"}>
           <ModalHeader color={"white"} borderBottom={"1px"}>
             <Text as="h4" m={0} textAlign={"center"}>
-              {t("channel.post.delete")}
+              {t("channel.task.delete")}
             </Text>
           </ModalHeader>
           <ModalBody
@@ -64,7 +64,7 @@ const DeletePostModel = ({ isOpen, onClose, currentPost, setCurrentPost }) => {
               textTransform={"capitalize"}
               textAlign={"center"}
             >
-              {t("channel.post.delete_post", { post: currentPost?.title })}
+              {t("channel.task.delete_task", { task: currentTask?.name })}
             </Text>
           </ModalBody>
           <ModalFooter>
@@ -79,7 +79,7 @@ const DeletePostModel = ({ isOpen, onClose, currentPost, setCurrentPost }) => {
             <Button
               onClick={() => {
                 onClose();
-                setCurrentPost(null);
+                setCurrentTask(null);
               }}
             >
               {t("modal.btn_cancel")}
@@ -91,4 +91,4 @@ const DeletePostModel = ({ isOpen, onClose, currentPost, setCurrentPost }) => {
   );
 };
 
-export default React.memo(DeletePostModel);
+export default React.memo(DeleteTaskModel);

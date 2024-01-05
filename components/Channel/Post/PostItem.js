@@ -73,7 +73,7 @@ const PostItem = ({
       {isAuthor && (
         <Stack flexDirection={"row"} justifyContent={"end"}>
           <Stack justifyContent={"end"} flexDirection={"row"} mt={8}>
-            <Tooltip label={`Delete post ${post?.title}`} placement="bottom">
+            <Tooltip label={t("channel.post.delete_post", { post: post?.title })} placement="bottom">
               <IconButton
                 onClick={() => onOpenModalDelete(post)}
                 backgroundColor={"transparent"}
@@ -84,7 +84,7 @@ const PostItem = ({
             </Tooltip>
           </Stack>
           <Stack justifyContent={"end"} flexDirection={"row"} mt={8}>
-            <Tooltip label={`Manage the task list of post ${post?.title}`} placement="bottom">
+            <Tooltip label={t("channel.task.manage_list_of", { post: post?.title })} placement="bottom">
               <IconButton
                 onClick={() => onOpenModalManageTaskList(post)}
                 backgroundColor={"transparent"}
@@ -95,7 +95,7 @@ const PostItem = ({
             </Tooltip>
           </Stack>
           <Stack justifyContent={"end"} flexDirection={"row"} mt={8}>
-            <Tooltip label={`Edit post ${post?.title}`} placement="bottom">
+            <Tooltip label={t("channel.post.edit_post", { post: post?.title })} placement="bottom">
               <IconButton
                 onClick={() => onOpenModalEdit(post)}
                 backgroundColor={"transparent"}

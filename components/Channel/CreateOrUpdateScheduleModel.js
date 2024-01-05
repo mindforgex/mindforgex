@@ -21,6 +21,7 @@ import {
 } from "../../hooks/api/useSchedule";
 import { fields } from "../../utils/fields";
 import moment from "moment";
+import * as Yup from "yup";
 
 const CreateOrUpdateScheduleModel = ({
   isOpen,
@@ -33,12 +34,15 @@ const CreateOrUpdateScheduleModel = ({
   const toast = useToast();
   const { listField, validationSchema, defaultValues } =
     useValidateCreateOrUpdateSchedule();
+  const validationRequiredFile = Yup.object().shape({
+    file: Yup.mixed().required(t("validate.required_file")),
+  });
 
   const { mutate: createSchedule, isLoading: creating } = useCreateSchedule({
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: "Create schedule successfully",
+        title: t("channel.schedule.create_succ"),
       });
       setCurrentSchedule(null);
       onClose();
@@ -46,7 +50,7 @@ const CreateOrUpdateScheduleModel = ({
     onError: (error) => {
       toast({
         ...optionError,
-        title: "Create schedule failed",
+        title: t("channel.schedule.create_fail"),
       });
     },
   });
@@ -56,7 +60,7 @@ const CreateOrUpdateScheduleModel = ({
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: "Update schedule successfully",
+        title: t("channel.schedule.update_succ"),
       });
       setCurrentSchedule(null);
       onClose();
@@ -65,14 +69,18 @@ const CreateOrUpdateScheduleModel = ({
       console.log("error", error);
       toast({
         ...optionError,
-        title: "Update schedule failed",
+        title: t("channel.schedule.update_fail"),
       });
     },
   });
 
   const { control, handleSubmit, reset, watch } = useForm({
     defaultValues,
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(
+      currentSchedule
+        ? validationSchema
+        : validationSchema.concat(validationRequiredFile)
+    ),
   });
 
   useEffect(() => {
@@ -104,7 +112,9 @@ const CreateOrUpdateScheduleModel = ({
         <ModalContent bg={"#181c23"}>
           <ModalHeader color={"white"} borderBottom={"1px"}>
             <Text as="h4" m={0} textAlign={"center"}>
-              {currentSchedule ? "Update schedule" : "Create schedule"}
+              {currentSchedule
+                ? t("channel.schedule.update")
+                : t("channel.schedule.create")}
             </Text>
           </ModalHeader>
           <ModalBody
@@ -123,7 +133,7 @@ const CreateOrUpdateScheduleModel = ({
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onSubmit)}>
-              {currentSchedule ? "Update" : "Create"}
+              {currentSchedule ? t("update") : t("create")}
             </Button>
             <Button
               onClick={() => {

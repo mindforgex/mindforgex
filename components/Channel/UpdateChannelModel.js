@@ -30,14 +30,14 @@ const UpdateChannelModel = ({ isOpen, onClose, detailChannel }) => {
     onSuccess: async (success) => {
       toast({
         ...optionSuccess,
-        title: "Update channel in successfully",
+        title: t("channel.update_succ"),
       });
       onClose();
     },
     onError: (error) => {
       toast({
         ...optionError,
-        title: "Update channel failed",
+        title: t("channel.update_fail"),
       });
     },
   });
@@ -112,7 +112,7 @@ const UpdateChannelModel = ({ isOpen, onClose, detailChannel }) => {
         <ModalContent bg={"#181c23"}>
           <ModalHeader color={"white"} borderBottom={"1px"}>
             <Text as="h4" m={0} textAlign={"center"}>
-              Update channel
+              {t("channel.update")}
             </Text>
           </ModalHeader>
           <ModalBody
@@ -129,7 +129,7 @@ const UpdateChannelModel = ({ isOpen, onClose, detailChannel }) => {
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit(onUpdate)}>
-              Update
+              {t("update")}
             </Button>
             <Button onClick={onClose}>{t("modal.btn_cancel")}</Button>
           </ModalFooter>
