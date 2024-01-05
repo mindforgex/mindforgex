@@ -5,6 +5,7 @@ export default function Pagination({
   onPageChange,
   marginPagesDisplayed = 2,
   pageRangeDisplayed = 3,
+  pageIndex = 1
 }) {
   return (
     <div className="nk-pagination nk-pagination-center">
@@ -24,6 +25,7 @@ export default function Pagination({
           onPageChange={({ selected }) => onPageChange(selected)}
           containerClassName="pagination"
           activeClassName="nk-pagination-current"
+          forcePage={pageIndex - 1}
         />
       </nav>
     </div>

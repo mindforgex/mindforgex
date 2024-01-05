@@ -42,7 +42,7 @@ import { useModalState } from "../../../hooks/useModalState";
 import { FaEdit, FaFacebook, FaPlusSquare, FaTwitter } from "react-icons/fa";
 import UpdateChannelModel from "../../../components/Channel/UpdateChannelModel";
 import {
-  useDetailChannel,
+  useChannel,
   useSubscribeChannel,
 } from "../../../hooks/api/useChannel";
 import UpdateAboutMeModel from "../../../components/Channel/UpdateAboutMeModel";
@@ -72,7 +72,7 @@ function DetailChannel() {
   const router = useRouter();
   const toast = useToast();
   const userInfo = getUserInfo();
-  const { data: dataDetail, isLoading: loadingDetail } = useDetailChannel(
+  const { data: dataDetail, isLoading: loadingDetail } = useChannel(
     router.query?.id
   );
   const { mutate: subscribeChannel, isLoading: isLoadingSubscribeChannel } =
@@ -127,6 +127,7 @@ function DetailChannel() {
 
   const socialLinks = useMemo(() => {
     if (dataDetail) {
+      console.log("dataDetail", dataDetail)
       return dataDetail.socialLinks.reduce(
         (a, v) => ({
           ...a,

@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
   Tooltip,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useMemo } from "react";
 import { useTranslation } from "next-i18next";
@@ -26,10 +27,11 @@ import moment from "moment";
 import { fields } from "../../utils/fields";
 import useValidateCreateChannel from "../../hooks/validate/useValidateCreateChannel";
 import { USER_TYPE } from "../../utils/constants";
+import { optionError } from "../../utils/optionToast";
 
 const ContentSignUpModal = ({ setTypeContent }) => {
   const { t } = useTranslation("common");
-  const currentDate = moment();
+  const toast = useToast();
   const { select, wallet, wallets, publicKey, disconnect, connecting } =
     useWallet();
   const { mutate: createChannel, isLoading } = useCreateChannel({
@@ -38,7 +40,10 @@ const ContentSignUpModal = ({ setTypeContent }) => {
       setTypeContent(TYPE_CONTENT.LOGGED);
     },
     onError: (error) => {
-      console.log("error", error);
+      toast({
+        ...optionError,
+        title: "Sign up failed",
+      });
     },
   });
   const { listField, validationSchema, defaultValues } =
