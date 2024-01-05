@@ -71,18 +71,21 @@ export default function LivestreamList({ channelId, isAuthor, onOpenModal }) {
               )}
             </Flex>
           ))}
+          {+schedules?.meta?.totalPages > 1 && (
+            <Pagination
+              pageCount={schedules?.meta?.totalPages}
+              onPageChange={(pageIndex) =>
+                setParams({ ...params, pageIndex: pageIndex + 1 })
+              }
+              pageIndex={schedules.meta.pageIndex}
+              marginPagesDisplayed={1}
+              pageRangeDisplayed={1}
+            />
+          )}
         </>
       ) : (
         <EmptyMsg />
       )}
-      <Pagination
-        pageCount={schedules?.meta?.totalPages}
-        onPageChange={(pageIndex) =>
-          setParams({ ...params, pageIndex: pageIndex + 1 })
-        }
-        marginPagesDisplayed={1}
-        pageRangeDisplayed={1}
-      />
       {isAuthor && (
         <Stack alignItems={"flex-start"}>
           <Tooltip label={"Edit channel"} placement="bottom">

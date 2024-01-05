@@ -72,14 +72,21 @@ const del = async (url, data) => {
   }
 }
 const _errorHandler = (err) => {
-  if (axios.isAxiosError(err)) {
-    return err.message
-  } else {
-    if (err.response && err.response.status === 401) {
-      // todo
+  // if (axios.isAxiosError(err)) {
+  //   return err.message
+  // } else {
+  //   if (err.response && err.response.status === 401) {
+  //     // todo
+  //   }
+  //   throw err
+  // }
+  if (err.response && err.response.status === 401) {
+    try {
+      //Handle refetch token
+    } catch (error) {
     }
-    throw err
   }
+  throw err;
 }
 
 export { get, post, del, put }

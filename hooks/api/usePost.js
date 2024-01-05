@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createPost, deletePost, getPost, getPosts, updatePost } from "../../services";
+import { createPost, deletePost, getPost, getPosts, react, updatePost } from "../../services";
 import { KEY_GET_POST, KEY_GET_POSTS } from "../../utils/constants";
 
 export function useGetPosts(params) {
@@ -51,6 +51,20 @@ export function useDeletePost({ id, onSuccess, onError }) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (payload) => await deletePost(id),
+    onSuccess: async (success) => {
+      await queryClient.invalidateQueries(KEY_GET_POSTS);
+      onSuccess();
+    },
+    onError: (error) => {
+      onError();
+    },
+  });
+}
+
+export function useReact({ id, onSuccess, onError }) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload) => await react(id),
     onSuccess: async (success) => {
       await queryClient.invalidateQueries(KEY_GET_POSTS);
       onSuccess();

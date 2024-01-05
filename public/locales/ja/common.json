@@ -71,6 +71,20 @@
       "delete_succ": "Delete schedule successfully",
       "delete_fail": "Delete schedule failed"
     },
+    "comment": {
+      "title": "Comment",
+      "create": "Create comment",
+      "update": "Update comment",
+      "create_succ": "Create comment successfully",
+      "create_fail": "Create comment failed",
+      "update_succ": "Update comment successfully",
+      "update_fail": "Update comment failed",
+      "delete_succ": "Delete comment successfully",
+      "delete_fail": "Delete comment failed",
+      "reply": "Reply",
+      "shares": "Shares",
+      "add": "Add your comment..."
+    },
     "task": {
       "claim_failed": "NFTクレームが失敗した",
       "title": "タスク",

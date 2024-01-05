@@ -1,6 +1,7 @@
 export const STORAGE = {
   ACCESS_TOKEN: 'access_token',
-  USER_INFO: 'user_info'
+  USER_INFO: 'user_info',
+  FILTER_DATA: 'filter-data'
 }
 
 export const NAV_BAR_ITEM = [
@@ -58,3 +59,5 @@ export const KEY_GET_TASKS = "tasks";
 export const KEY_GET_TASK = "task";
 export const KEY_GET_POSTS = "posts";
 export const KEY_GET_POST = "post";
+export const KEY_GET_COMMENTS = "comments";
+export const KEY_GET_COMMENT = "comment";

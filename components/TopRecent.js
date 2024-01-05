@@ -43,7 +43,8 @@ export default function TopRecent({ data, total }) {
                                   decoding="async"
                                   width={970}
                                   height={545}
-                                  src={_item.images?.[0]}
+                                  // src={_item.images?.[0]}
+                                  src={`${process.env.NEXT_PUBLIC_API_URL}/${_item.images?.[0]}`}
                                   className="lazyautosizes ls-is-cached vp-lazyloaded"
                                   alt=""
                                 />
