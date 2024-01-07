@@ -14,3 +14,5 @@ export const getTwitchUserProfile = async (accessToken) => {
   const [user] = users;
   return user;
 }
+
+export const disconnectSNS = (sns) => post(`/users/sns/disconnect`, { sns });

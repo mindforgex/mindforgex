@@ -51,6 +51,11 @@ export const USER_TYPE = {
   USER: "2",
 };
 
+export const SNS_TYPE = {
+  DISCORD: 'discord',
+  TWITCH: 'twitch'
+}
+
 export const KEY_GET_CHANNELS = "channels";
 export const KEY_GET_CHANNEL = "channel";
 export const KEY_GET_SCHEDULES = "schedules";
