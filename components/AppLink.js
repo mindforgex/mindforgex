@@ -2,11 +2,11 @@ import { Link } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 const AppLink = ({ href, children, close, ...rest }) => {
-  const navigate = useRouter();
+  const router = useRouter();
 
   const redirect = (event) => {
     event.preventDefault();
-    navigate(href);
+    router.push(href);
     close && close();
   };
 

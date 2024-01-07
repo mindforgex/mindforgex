@@ -6,9 +6,10 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Button, Flex, Text, useToast } from '@chakra-ui/react';
 import { getUserInfo, saveUserInfo } from '../../utils/helpers'
 import supabase, { signInWithDiscord } from '../../utils/supabase'
-import { connectToDiscord, connectToTwitch, getTwitchUserProfile } from '../../services/authService';
+import { connectToDiscord, connectToTwitch, disconnectSNS, getTwitchUserProfile } from '../../services/authService';
 import queryString from 'query-string';
 import { useCallback } from 'react';
+import { SNS_TYPE } from '../../utils/constants';
 
 export const getServerSideProps = async ({ locale }) => {
   return {
@@ -119,6 +120,22 @@ function Profile() {
     checkTwitchCallback()
   }, [checkTwitchCallback])
 
+  const onDisconnect = (sns) => {
+    disconnectSNS(sns)
+      .then((res) => {
+        saveUserInfo({ ...userInfo, user: { ...userInfo.user, ...res } })
+        setRefresh(Math.random())
+      })
+      .catch(() => {
+        toast({
+          title: '',
+          description: t('msg.something_went_wrong'),
+          status: 'error',
+          isClosable: true,
+        })
+      })
+  }
+
   return (
     <>
       <Head>
@@ -140,13 +157,13 @@ function Profile() {
               {
                 userInfo?.user?.discordUsername ? (
                   <Flex alignItems='center'>
-                    <Text fontSize='larger' as='div'>{userInfo?.user?.discordUsername?.replace('#0', '') || ""}</Text>
-                    {/* <Button
+                    <Text fontSize='larger' mr={5} as='div'>{userInfo?.user?.discordUsername?.replace('#0', '') || ""}</Text>
+                    <Button
                       className='nk-btn nk-btn-color-main-1'
                       bg='#dd163b !important'
                       color='#fff'
-                      onClick={() => { }}
-                    >{t('profile.disconnect')}</Button> */}
+                      onClick={() => onDisconnect(SNS_TYPE.DISCORD)}
+                    >{t('profile.disconnect')}</Button>
                   </Flex>
                 ) : (
                   <Button
@@ -164,13 +181,13 @@ function Profile() {
               {
                 userInfo?.user?.twitchLogin ? (
                   <Flex alignItems='center'>
-                    <Text fontSize='larger' as='div'>{userInfo?.user?.twitchLogin?.replace('#0', '') || ""}</Text>
-                    {/* <Button
+                    <Text fontSize='larger' mr={5} as='div'>{userInfo?.user?.twitchLogin?.replace('#0', '') || ""}</Text>
+                    <Button
                       className='nk-btn nk-btn-color-main-1'
                       bg='#dd163b !important'
                       color='#fff'
-                      onClick={() => { }}
-                    >{t('profile.disconnect')}</Button> */}
+                      onClick={() => onDisconnect(SNS_TYPE.TWITCH)}
+                    >{t('profile.disconnect')}</Button>
                   </Flex>
                 ) : (
                   <Button
